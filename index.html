@@ -1,0 +1,1496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<title>Craig/McDowell/Hopkins Cup — End of Season 2025/26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #00C853;
+  --white: #FFFFFF;
+  --black: #0A0A0A;
+  --yellow: #FFEB3B;
+  --pink: #FF1493;
+  --purple: #6A1B9A;
+  --orange: #FF6F00;
+  --cyan: #00BCD4;
+  --lime: #C6FF00;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; width: 100%; overflow: hidden; background: #000; color: var(--white); font-family: 'Inter', system-ui, sans-serif; }
+body { font-size: 16px; line-height: 1.3; }
+
+#scroller {
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+#scroller::-webkit-scrollbar { display: none; }
+#scroller { scrollbar-width: none; }
+
+.card {
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 5vw, 36px);
+  color: var(--black);
+}
+
+.card.dark { color: var(--white); }
+.display, .h1, .h2 { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif; letter-spacing: -0.01em; line-height: 0.92; text-transform: uppercase; font-weight: 400; }
+.h1 { font-size: clamp(56px, 18vw, 140px); }
+.h2 { font-size: clamp(44px, 12vw, 96px); }
+.h3 { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif; font-size: clamp(28px, 7vw, 56px); text-transform: uppercase; line-height: 1; letter-spacing: 0; }
+.kicker { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; font-size: 11px; opacity: 0.85; }
+.body { font-family: 'Inter', sans-serif; font-size: clamp(16px, 4.6vw, 20px); font-weight: 600; line-height: 1.25; }
+.tiny { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; opacity: 0.8; }
+
+.pad { padding-left: clamp(16px, 5vw, 32px); padding-right: clamp(16px, 5vw, 32px); }
+
+/* Animation utilities — applied when .in is added */
+.fade-up    { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.card.in .fade-up { opacity: 1; transform: none; }
+.slide-l    { opacity: 0; transform: translateX(-80px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.card.in .slide-l { opacity: 1; transform: none; }
+.slide-r    { opacity: 0; transform: translateX(80px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.card.in .slide-r { opacity: 1; transform: none; }
+.pop        { opacity: 0; transform: scale(0.6); transition: opacity .6s ease, transform .7s cubic-bezier(.2,1.3,.4,1); }
+.card.in .pop { opacity: 1; transform: scale(1); }
+
+/* Stagger helper */
+.stagger > * { transition-delay: 0s; }
+.card.in .stagger > *:nth-child(1)  { transition-delay: .05s; }
+.card.in .stagger > *:nth-child(2)  { transition-delay: .15s; }
+.card.in .stagger > *:nth-child(3)  { transition-delay: .25s; }
+.card.in .stagger > *:nth-child(4)  { transition-delay: .35s; }
+.card.in .stagger > *:nth-child(5)  { transition-delay: .45s; }
+.card.in .stagger > *:nth-child(6)  { transition-delay: .55s; }
+.card.in .stagger > *:nth-child(7)  { transition-delay: .65s; }
+.card.in .stagger > *:nth-child(8)  { transition-delay: .75s; }
+
+/* Backgrounds */
+.bg-1 { background: radial-gradient(120% 80% at 100% 0%, var(--yellow) 0%, var(--orange) 45%, var(--pink) 90%); color: var(--black); }
+.bg-2 { background: linear-gradient(160deg, var(--cyan) 0%, var(--green) 100%); color: var(--black); }
+.bg-3 { background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%); color: var(--white); }
+.bg-4 { background: radial-gradient(80% 100% at 50% 0%, var(--lime) 0%, var(--green) 50%, #006B33 100%); color: var(--black); }
+.bg-5 { background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%); color: var(--white); }
+.bg-6 { background: linear-gradient(135deg, var(--purple) 0%, #100016 100%); color: var(--white); }
+.bg-7 { background: radial-gradient(circle at 20% 20%, var(--yellow), var(--lime) 60%, var(--green) 100%); color: var(--black); }
+.bg-8 { background: linear-gradient(170deg, var(--orange), var(--pink)); color: var(--white); }
+.bg-9 { background: linear-gradient(180deg, var(--cyan), #0066B3); color: var(--white); }
+.bg-10 { background: radial-gradient(circle at 80% 90%, var(--pink), var(--purple) 60%, #1a001a 100%); color: var(--white); }
+.bg-11 { background: linear-gradient(135deg, var(--lime), var(--cyan)); color: var(--black); }
+.bg-12 { background: radial-gradient(circle at 50% 50%, var(--yellow), var(--orange) 60%, #4d2200 100%); color: var(--black); }
+.bg-mesh-pink { background:
+  radial-gradient(circle at 20% 20%, var(--pink) 0%, transparent 50%),
+  radial-gradient(circle at 80% 30%, var(--orange) 0%, transparent 55%),
+  radial-gradient(circle at 30% 90%, var(--purple) 0%, transparent 50%),
+  linear-gradient(135deg, #ff2e63, #6a1b9a);
+  color: var(--white);
+}
+.bg-mesh-citrus {
+  background:
+    radial-gradient(circle at 80% 10%, var(--yellow) 0%, transparent 50%),
+    radial-gradient(circle at 10% 80%, var(--cyan) 0%, transparent 55%),
+    linear-gradient(135deg, var(--lime), var(--green));
+  color: var(--black);
+}
+
+/* Specific helpers */
+.fill { flex: 1; display: flex; flex-direction: column; }
+.center { align-items: center; justify-content: center; text-align: center; }
+
+.row { display: flex; }
+.col { display: flex; flex-direction: column; }
+.between { justify-content: space-between; }
+.gap-s { gap: 6px; }
+.gap-m { gap: 14px; }
+.gap-l { gap: 28px; }
+
+/* Loading */
+#loading {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--pink), var(--purple)); color: var(--white);
+  z-index: 9999; font-family: 'Anton', sans-serif; font-size: 36px; letter-spacing: 0.04em;
+  transition: opacity 400ms ease;
+}
+#loading.gone { opacity: 0; pointer-events: none; }
+
+/* Table */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(15px, 4.6vw, 22px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+.tbl th, .tbl td {
+  padding: clamp(14px, 2.5vh, 28px) 4px;
+  text-align: right;
+  border-bottom: 3px solid currentColor;
+}
+.tbl th { font-size: 11px; opacity: 0.7; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; border-bottom-width: 2px; }
+.tbl td.l, .tbl th.l { text-align: left; }
+.tbl tr { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1); }
+.card.in .tbl tr.row-anim { opacity: 1; transform: none; }
+.tbl .pos { font-size: clamp(22px, 7vw, 32px); width: 1.4em; opacity: 0.9; }
+.tbl .name { font-size: clamp(18px, 5.3vw, 28px); }
+.tbl .team { font-size: 11px; opacity: 0.65; font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.tbl .pts { font-size: clamp(26px, 8vw, 40px); }
+.tbl .gold { color: var(--yellow); }
+.tbl tr.champ td { color: var(--yellow); }
+.tbl.dark tr.champ td { color: var(--yellow); }
+
+/* Race chart */
+.race-wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; align-items: stretch; justify-content: stretch; margin: 8px 0; }
+.race-svg { width: 100%; height: 100%; flex: 1; min-height: 0; display: block; }
+.race-svg .gw-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; fill: rgba(255,255,255,0.6); }
+.race-svg .pos-label { font-family: 'Anton', sans-serif; font-size: 22px; fill: rgba(255,255,255,0.45); }
+.race-svg path { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 4000; stroke-dashoffset: 4000; transition: stroke-dashoffset 1800ms cubic-bezier(.2,.7,.2,1); }
+.card.in .race-svg path { stroke-dashoffset: 0; }
+.race-svg .endpoint { opacity: 0; transition: opacity 600ms ease 1500ms; }
+.card.in .race-svg .endpoint { opacity: 1; }
+.race-svg .endpoint-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; }
+.race-svg .annot { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 700; fill: rgba(255,255,255,0.8); }
+.race-svg .annot-line { stroke: rgba(255,255,255,0.3); stroke-width: 1; stroke-dasharray: 3 3; }
+
+/* Manager card */
+.mgr-rank {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(120px, 40vw, 280px);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.mgr-name { font-family: 'Anton', sans-serif; font-size: clamp(40px, 11vw, 80px); line-height: 0.95; }
+.mgr-team { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 4vw, 18px); opacity: 0.85; letter-spacing: 0.04em; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat {
+  border: 2px solid currentColor;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex; flex-direction: column;
+  background: rgba(255,255,255,0.06);
+}
+.dark .stat { background: rgba(255,255,255,0.06); }
+.light .stat { background: rgba(0,0,0,0.06); }
+.stat .label { font-family: 'Space Grotesk', sans-serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; font-weight: 700; }
+.stat .val { font-family: 'Anton', sans-serif; font-size: clamp(22px, 7vw, 34px); line-height: 1; margin-top: 4px; }
+.stat .sub { font-family: 'Space Grotesk', sans-serif; font-size: 11px; opacity: 0.78; margin-top: 4px; font-weight: 600; }
+.verdict {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(15px, 4.3vw, 20px);
+  line-height: 1.25;
+  padding: 12px 14px;
+  border-left: 4px solid currentColor;
+  background: rgba(0,0,0,0.16);
+}
+.dark .verdict { background: rgba(255,255,255,0.10); }
+
+/* Trade card */
+.trade-box { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: stretch; }
+.trade-side {
+  border: 3px solid currentColor; padding: 12px; border-radius: 8px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.trade-arrow { font-family: 'Anton', sans-serif; font-size: 36px; align-self: center; opacity: 0.7; }
+.trade-mgr { font-family: 'Anton', sans-serif; font-size: clamp(22px, 6vw, 30px); line-height: 1; }
+.trade-player { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.1; }
+.trade-pts { font-family: 'Anton', sans-serif; font-size: clamp(20px, 6vw, 30px); line-height: 1; }
+.verdict-pill {
+  display: inline-block;
+  font-family: 'Anton', sans-serif;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--yellow); color: var(--black);
+  font-size: clamp(20px, 6vw, 28px);
+  letter-spacing: 0.02em;
+}
+
+/* Award giant text */
+.award-name {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(54px, 14vw, 110px);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.award-winner {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(36px, 9vw, 60px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.award-team {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(14px, 4vw, 18px);
+  opacity: 0.85;
+}
+.award-story {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: clamp(16px, 4.6vw, 20px);
+  line-height: 1.3;
+  max-width: 600px;
+}
+
+.giant-num {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(120px, 38vw, 280px);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+
+/* Counterfactual table */
+.cf-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(14px, 4.4vw, 18px);
+}
+.cf-tbl th, .cf-tbl td {
+  padding: 9px 4px;
+  text-align: right;
+  border-bottom: 2px solid currentColor;
+}
+.cf-tbl th { font-family: 'Space Grotesk', sans-serif; font-size: 10px; letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
+.cf-tbl td.l, .cf-tbl th.l { text-align: left; }
+.cf-tbl .name { font-size: clamp(16px, 4.7vw, 22px); }
+.cf-tbl .arrow { font-family: 'Anton', sans-serif; font-size: 18px; }
+.cf-tbl .up { color: var(--lime); }
+.cf-tbl .down { color: var(--pink); }
+.cf-tbl .same { opacity: 0.4; }
+
+/* Aggregate */
+.agg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.agg-cell {
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  background: rgba(255,255,255,0.08);
+  min-height: 110px;
+}
+.agg-cell .num { font-family: 'Anton', sans-serif; font-size: clamp(36px, 11vw, 58px); line-height: 0.95; }
+.agg-cell .lab { font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; font-weight: 700; margin-top: 4px; line-height: 1.2; }
+
+/* Progress nav dots */
+#nav { position: fixed; right: 8px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: 4px; pointer-events: none; }
+.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background .2s, height .2s; }
+.nav-dot.active { background: var(--yellow); height: 14px; border-radius: 2px; }
+
+/* Card pagination indicator (bottom-left, subtle) */
+.pgind { position: absolute; bottom: 10px; left: 12px; font-family: 'Space Grotesk', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.35; font-weight: 700; pointer-events: none; }
+.pgind-r { position: absolute; bottom: 10px; right: 12px; font-family: 'Space Grotesk', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.35; font-weight: 700; pointer-events: none; }
+
+/* Big number cards */
+.big-stack { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+
+/* Smooth scroll hint pulse on first card */
+.hint {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+  opacity: 0; animation: pulse 2.4s ease-in-out 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0; transform: translate(-50%, 10px); }
+  50%      { opacity: 0.85; transform: translate(-50%, 0); }
+}
+
+/* Champion firework dots */
+.confetti {
+  position: absolute; pointer-events: none; inset: 0; overflow: hidden;
+}
+.confetti i {
+  position: absolute; display: block; width: 8px; height: 14px; opacity: 0;
+}
+.card.in .confetti i { animation: fall 1800ms ease-out forwards; }
+@keyframes fall {
+  0% { transform: translateY(-40px) rotate(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.85; }
+}
+
+/* Race annotation pip */
+.race-pip { fill: var(--yellow); }
+
+/* Trade rows */
+.trade-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: rgba(0,0,0,0.10); border-radius: 4px; }
+.dark .trade-row { background: rgba(255,255,255,0.08); }
+.trade-row .nm { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; }
+.trade-row .pp { font-family: 'Anton', sans-serif; font-size: 18px; margin-left: auto; }
+</style>
+</head>
+<body>
+<div id="loading">LOADING THE SEASON…</div>
+<div id="nav"></div>
+<div id="scroller"></div>
+
+<script>
+// ============================================================
+// CONSTANTS
+// ============================================================
+const MAX_GW = 37;
+const MANAGERS = [
+  { le: 73835, eid: 76226, first: 'Geraint',     last: 'Hopkins',  team: '🏴󠁧󠁢󠁷󠁬󠁳󠁿',                     color: '#FFEB3B' },
+  { le: 73788, eid: 76178, first: 'Mark',        last: 'Craig',    team: 'Carrying Timber',     color: '#00BCD4' },
+  { le: 73827, eid: 76218, first: 'Steven',      last: 'McDowell', team: '✨',                  color: '#FF1493' },
+  { le: 73858, eid: 76250, first: 'christopher', last: 'craig',    team: 'The Masterplan',      color: '#C6FF00' },
+  { le: 73847, eid: 76238, first: 'Michael',     last: 'Craig',    team: 'Jota win again *20',  color: '#FF6F00' },
+  { le: 73822, eid: 76213, first: 'Peter',       last: 'Craig',    team: 'MaxPoints',           color: '#6A1B9A' },
+];
+const MGR_BY_LE  = Object.fromEntries(MANAGERS.map(m => [m.le, m]));
+const MGR_BY_EID = Object.fromEntries(MANAGERS.map(m => [m.eid, m]));
+
+// ============================================================
+// LOAD JSON
+// ============================================================
+async function loadAll() {
+  const fetchJson = (p) => fetch(p).then(r => r.json());
+  const [league, bs, draft, trans, trades, estatus, game] = await Promise.all([
+    fetchJson('./data/league_details.json'),
+    fetchJson('./data/bootstrap_static.json'),
+    fetchJson('./data/draft_choices.json'),
+    fetchJson('./data/transactions.json'),
+    fetchJson('./data/trades.json'),
+    fetchJson('./data/element_status.json'),
+    fetchJson('./data/game.json'),
+  ]);
+
+  // Player histories — only fetch ones owned at some point this season
+  // To keep it tractable, fetch all from picks files first
+  const ownedIds = new Set();
+  // Pre-collect from draft
+  draft.choices.forEach(c => ownedIds.add(c.element));
+  // From transactions
+  trans.transactions.forEach(t => { ownedIds.add(t.element_in); ownedIds.add(t.element_out); });
+  // From trades
+  trades.trades.forEach(t => t.tradeitem_set.forEach(ti => { ownedIds.add(ti.element_in); ownedIds.add(ti.element_out); }));
+
+  // Picks (6 managers x 37 GWs)
+  const picksPromises = [];
+  const picksKey = (eid, gw) => `${eid}_${gw}`;
+  const picks = {};
+  for (const m of MANAGERS) {
+    for (let gw = 1; gw <= MAX_GW; gw++) {
+      picksPromises.push(
+        fetchJson(`./data/picks/${m.eid}_gw${gw}.json`).then(d => {
+          picks[picksKey(m.eid, gw)] = d;
+          d.picks.forEach(p => ownedIds.add(p.element));
+        }).catch(() => {})
+      );
+    }
+  }
+  await Promise.all(picksPromises);
+
+  // Player histories
+  const phist = {};
+  await Promise.all([...ownedIds].map(pid =>
+    fetchJson(`./data/player_history/${pid}.json`)
+      .then(d => { phist[pid] = d; })
+      .catch(() => {})
+  ));
+
+  return { league, bs, draft, trans, trades, estatus, game, picks, phist };
+}
+
+// ============================================================
+// DERIVED STATS
+// ============================================================
+function buildState(d) {
+  const players = {};
+  d.bs.elements.forEach(e => players[e.id] = e);
+  const teams = {};
+  d.bs.teams.forEach(t => teams[t.id] = t);
+  const ptypes = {};
+  d.bs.element_types.forEach(t => ptypes[t.id] = t);
+
+  const pname = (pid) => players[pid] ? players[pid].web_name : `#${pid}`;
+  const ppos  = (pid) => players[pid] ? ptypes[players[pid].element_type].singular_name_short : '';
+  const pteam = (pid) => players[pid] ? teams[players[pid].team].short_name : '';
+
+  // Points & minutes per gw per player
+  const ptsFor = {}, minsFor = {};
+  for (const pid in d.phist) {
+    ptsFor[pid] = {}; minsFor[pid] = {};
+    d.phist[pid].history.forEach(h => {
+      ptsFor[pid][h.event] = (ptsFor[pid][h.event] || 0) + h.total_points;
+      minsFor[pid][h.event] = (minsFor[pid][h.event] || 0) + h.minutes;
+    });
+  }
+  const getPts  = (pid, gw) => ptsFor[pid]?.[gw] || 0;
+  const getMins = (pid, gw) => minsFor[pid]?.[gw] || 0;
+
+  // gw_points
+  const gwPts = {}; // gwPts[gw][le] = score
+  for (let g = 1; g <= MAX_GW; g++) gwPts[g] = {};
+  d.league.matches.forEach(m => {
+    if (!m.finished) return;
+    gwPts[m.event][m.league_entry_1] = m.league_entry_1_points;
+    gwPts[m.event][m.league_entry_2] = m.league_entry_2_points;
+  });
+
+  // Ownership per gw (from picks)
+  const ownByGw = {}; // ownByGw[pid] = {gw: le}
+  for (const m of MANAGERS) {
+    for (let g = 1; g <= MAX_GW; g++) {
+      const pk = d.picks[`${m.eid}_${g}`];
+      if (!pk) continue;
+      pk.picks.forEach(p => {
+        if (!ownByGw[p.element]) ownByGw[p.element] = {};
+        ownByGw[p.element][g] = m.le;
+      });
+    }
+  }
+
+  // Standings — use league data (37 played)
+  const standings = d.league.standings.slice().sort((a,b) => a.rank - b.rank);
+
+  // Build per-gw position
+  function rankAfter(gwLim) {
+    const wld = {};
+    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]); // W,D,L,PF,PA
+    d.league.matches.forEach(m => {
+      if (!m.finished || m.event > gwLim) return;
+      const a = m.league_entry_1, b = m.league_entry_2;
+      const ap = m.league_entry_1_points, bp = m.league_entry_2_points;
+      if (ap > bp) { wld[a][0]++; wld[b][2]++; }
+      else if (bp > ap) { wld[b][0]++; wld[a][2]++; }
+      else { wld[a][1]++; wld[b][1]++; }
+      wld[a][3] += ap; wld[a][4] += bp;
+      wld[b][3] += bp; wld[b][4] += ap;
+    });
+    const rows = MANAGERS.map(m => ({ le: m.le, pts: wld[m.le][0]*3 + wld[m.le][1], pf: wld[m.le][3], pa: wld[m.le][4] }));
+    rows.sort((a,b) => (b.pts - a.pts) || (b.pf - a.pf));
+    const pos = {};
+    rows.forEach((r, i) => pos[r.le] = i + 1);
+    return pos;
+  }
+  const posByGw = {};
+  for (let g = 1; g <= MAX_GW; g++) posByGw[g] = rankAfter(g);
+
+  // Highest/lowest GW per manager
+  const hl = {};
+  MANAGERS.forEach(m => {
+    let hi = { gw: 1, pts: -1 }, lo = { gw: 1, pts: 999 };
+    for (let g = 1; g <= MAX_GW; g++) {
+      const p = gwPts[g][m.le];
+      if (p > hi.pts) hi = { gw: g, pts: p };
+      if (p < lo.pts) lo = { gw: g, pts: p };
+    }
+    hl[m.le] = { hi, lo };
+  });
+
+  // Tenure-based transfer eval
+  const acceptedTrans = d.trans.transactions
+    .filter(t => t.result === 'a')
+    .slice()
+    .sort((a, b) => a.event - b.event || a.added.localeCompare(b.added));
+
+  function tenureWindow(pid, le) {
+    const arr = [];
+    const own = ownByGw[pid] || {};
+    for (let g = 1; g <= MAX_GW; g++) if (own[g] === le) arr.push(g);
+    return arr;
+  }
+
+  const transferEval = acceptedTrans.map(t => {
+    const le = MGR_BY_EID[t.entry].le;
+    const inP = t.element_in, outP = t.element_out;
+    const gw = t.event;
+    const inWindow = tenureWindow(inP, le).filter(g => g >= gw);
+    const inPts  = inWindow.reduce((s,g) => s + getPts(inP, g), 0);
+    const outPts = inWindow.reduce((s,g) => s + getPts(outP, g), 0);
+    return { le, gw, inP, outP, inPts, outPts, delta: inPts - outPts, windowLen: inWindow.length, kind: t.kind };
+  });
+
+  // Best/worst transfer per manager
+  const bestWorstTr = {};
+  MANAGERS.forEach(m => {
+    const mine = transferEval.filter(t => t.le === m.le && t.windowLen >= 1);
+    if (mine.length === 0) {
+      bestWorstTr[m.le] = { best: null, worst: null };
+      return;
+    }
+    const best = mine.reduce((a,b) => a.delta > b.delta ? a : b);
+    const worst = mine.reduce((a,b) => a.delta < b.delta ? a : b);
+    bestWorstTr[m.le] = { best, worst };
+  });
+
+  // Transaction counts
+  const transCount = {};
+  MANAGERS.forEach(m => transCount[m.le] = 0);
+  acceptedTrans.forEach(t => transCount[MGR_BY_EID[t.entry].le]++);
+
+  // Dormant stretch
+  const dormant = {};
+  MANAGERS.forEach(m => {
+    const mine = acceptedTrans.filter(t => MGR_BY_EID[t.entry].le === m.le).map(t => t.event).sort((a,b) => a-b);
+    const evs = [0, ...mine, MAX_GW + 1];
+    let longest = { len: 0, from: 1, to: 1 };
+    for (let i = 0; i < evs.length - 1; i++) {
+      const len = evs[i+1] - evs[i] - 1;
+      if (len > longest.len) longest = { len, from: evs[i] + 1, to: evs[i+1] - 1 };
+    }
+    dormant[m.le] = { longest, total: mine.length, lastEvent: mine.length ? mine[mine.length - 1] : 0 };
+  });
+
+  // H2H nemesis
+  const lossesTo = {}, lossGws = {};
+  MANAGERS.forEach(m => { lossesTo[m.le] = {}; lossGws[m.le] = {}; MANAGERS.forEach(n => { if (n.le !== m.le) { lossesTo[m.le][n.le] = 0; lossGws[m.le][n.le] = []; } }); });
+  d.league.matches.forEach(m => {
+    if (!m.finished) return;
+    const a = m.league_entry_1, b = m.league_entry_2;
+    const ap = m.league_entry_1_points, bp = m.league_entry_2_points;
+    if (ap > bp) { lossesTo[b][a]++; lossGws[b][a].push(m.event); }
+    else if (bp > ap) { lossesTo[a][b]++; lossGws[a][b].push(m.event); }
+  });
+  const nemesis = {};
+  MANAGERS.forEach(m => {
+    let worst = null, n = -1;
+    for (const ole in lossesTo[m.le]) {
+      if (lossesTo[m.le][ole] > n) { n = lossesTo[m.le][ole]; worst = +ole; }
+    }
+    nemesis[m.le] = { le: worst, count: n, gws: lossGws[m.le][worst] };
+  });
+
+  // === Counterfactual helpers ===
+  function optimalXi(squad, gw) {
+    const byPos = { GKP: [], DEF: [], MID: [], FWD: [] };
+    squad.forEach(pid => {
+      const pos = ppos(pid);
+      if (!byPos[pos]) return;
+      byPos[pos].push(getPts(pid, gw));
+    });
+    for (const k in byPos) byPos[k].sort((a,b) => b - a);
+    if (!byPos.GKP.length) return 0;
+    const gk = byPos.GKP[0];
+    let best = 0;
+    for (const nd of [3,4,5]) for (const nf of [1,2,3]) {
+      const nm = 10 - nd - nf;
+      if (nm < 3 || nm > 5) continue;
+      if (byPos.DEF.length < nd || byPos.MID.length < nm || byPos.FWD.length < nf) continue;
+      let t = gk;
+      for (let i = 0; i < nd; i++) t += byPos.DEF[i];
+      for (let i = 0; i < nm; i++) t += byPos.MID[i];
+      for (let i = 0; i < nf; i++) t += byPos.FWD[i];
+      if (t > best) best = t;
+    }
+    return best;
+  }
+
+  // Counterfactual: Everyone Plays Pete
+  const PETE = 73822;
+  function cfEveryonePlaysPete() {
+    const wld = {};
+    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]);
+    for (let g = 1; g <= MAX_GW; g++) {
+      const pete = gwPts[g][PETE];
+      const others = MANAGERS.filter(m => m.le !== PETE).map(m => gwPts[g][m.le]);
+      const avg = others.reduce((a,b)=>a+b,0) / others.length;
+      MANAGERS.forEach(m => {
+        const my = gwPts[g][m.le];
+        const opp = m.le === PETE ? avg : pete;
+        wld[m.le][3] += my; wld[m.le][4] += opp;
+        if (my > opp) wld[m.le][0]++;
+        else if (my < opp) wld[m.le][2]++;
+        else wld[m.le][1]++;
+      });
+    }
+    return wld;
+  }
+
+  function cfOptimalXi() {
+    const optGw = {};
+    for (let g = 1; g <= MAX_GW; g++) {
+      optGw[g] = {};
+      MANAGERS.forEach(m => {
+        const pk = d.picks[`${m.eid}_${g}`];
+        if (!pk) { optGw[g][m.le] = 0; return; }
+        optGw[g][m.le] = optimalXi(pk.picks.map(p => p.element), g);
+      });
+    }
+    const wld = {};
+    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]);
+    d.league.matches.forEach(m => {
+      if (!m.finished) return;
+      const a = m.league_entry_1, b = m.league_entry_2;
+      const ap = optGw[m.event][a], bp = optGw[m.event][b];
+      wld[a][3] += ap; wld[a][4] += bp;
+      wld[b][3] += bp; wld[b][4] += ap;
+      if (ap > bp) { wld[a][0]++; wld[b][2]++; }
+      else if (bp > ap) { wld[b][0]++; wld[a][2]++; }
+      else { wld[a][1]++; wld[b][1]++; }
+    });
+    return { wld, optGw };
+  }
+
+  function cfNoTransfers() {
+    const gw1Squad = {};
+    MANAGERS.forEach(m => {
+      const pk = d.picks[`${m.eid}_1`];
+      gw1Squad[m.le] = pk.picks.map(p => p.element);
+    });
+    const ntGw = {};
+    for (let g = 1; g <= MAX_GW; g++) {
+      ntGw[g] = {};
+      MANAGERS.forEach(m => { ntGw[g][m.le] = optimalXi(gw1Squad[m.le], g); });
+    }
+    const wld = {};
+    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]);
+    d.league.matches.forEach(m => {
+      if (!m.finished) return;
+      const a = m.league_entry_1, b = m.league_entry_2;
+      const ap = ntGw[m.event][a], bp = ntGw[m.event][b];
+      wld[a][3] += ap; wld[a][4] += bp;
+      wld[b][3] += bp; wld[b][4] += ap;
+      if (ap > bp) { wld[a][0]++; wld[b][2]++; }
+      else if (bp > ap) { wld[b][0]++; wld[a][2]++; }
+      else { wld[a][1]++; wld[b][1]++; }
+    });
+    return wld;
+  }
+
+  return {
+    d, players, teams, ptypes, pname, ppos, pteam, getPts, getMins,
+    gwPts, posByGw, ownByGw, standings, hl, transferEval, bestWorstTr, transCount, dormant, nemesis,
+    cfEveryonePlaysPete, cfOptimalXi, cfNoTransfers, optimalXi
+  };
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function el(tag, props = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const k in props) {
+    if (k === 'class') e.className = props[k];
+    else if (k === 'style') e.setAttribute('style', props[k]);
+    else if (k === 'html') e.innerHTML = props[k];
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), props[k]);
+    else e.setAttribute(k, props[k]);
+  }
+  const append = (k) => {
+    if (k == null || k === false) return;
+    if (Array.isArray(k)) { k.forEach(append); return; }
+    if (typeof k === 'string' || typeof k === 'number') e.appendChild(document.createTextNode(k));
+    else e.appendChild(k);
+  };
+  for (const k of kids) append(k);
+  return e;
+}
+const mgrShort = (le) => MGR_BY_LE[le].first;
+const mgrFull  = (le) => `${MGR_BY_LE[le].first} (${MGR_BY_LE[le].team})`;
+const pad2 = (n) => String(n).padStart(2, '0');
+
+// Build an "award card" — kicker + heading + body content, ALL vertically centered as a group
+function awardLayout(opts) {
+  const { kicker, kickerColor, name, nameColor, children } = opts;
+  return el('div', { class: 'fill', style: 'justify-content: center; gap: 14px; align-items: center; text-align: center;' },
+    el('div', { class: 'kicker fade-up' }, kicker),
+    el('div', { class: 'award-name fade-up', style: `color: ${nameColor};` }, name),
+    ...children
+  );
+}
+
+function sortedStandings(wld) {
+  // wld[le] = [W,D,L,PF,PA]
+  return MANAGERS.map(m => {
+    const [w,dr,l,pf,pa] = wld[m.le];
+    return { le: m.le, w, d: dr, l, pf, pa, pts: w*3 + dr };
+  }).sort((a,b) => (b.pts - a.pts) || (b.pf - a.pf));
+}
+
+// ============================================================
+// CARD BUILDERS
+// ============================================================
+function buildCards(S) {
+  const root = document.getElementById('scroller');
+  const TOTAL_CARDS_PLACEHOLDER = '@@';
+  const addCard = (cls, builder, opts = {}) => {
+    const card = el('section', { class: `card ${cls}` });
+    if (opts.dark === true) card.classList.add('dark');
+    if (opts.light === true) card.classList.add('light');
+    builder(card);
+    root.appendChild(card);
+    return card;
+  };
+  const pgIndicator = (n, total) => el('div', { class: 'pgind' }, `${pad2(n)} / ${pad2(total)}`);
+  const pgRight = (txt) => el('div', { class: 'pgind-r' }, txt);
+
+  // We'll defer final numbering — build all, then number
+  const cardsPlan = [];
+  const PLAN = (cls, fn, opts) => cardsPlan.push({ cls, fn, opts });
+
+  // --- 1. COLD OPEN ---
+  PLAN('bg-mesh-pink', (card) => {
+    card.appendChild(el('div', { class: 'fill center', style: 'gap: 18px;' },
+      el('div', { class: 'kicker fade-up' }, 'End of Season Review'),
+      el('div', { class: 'display fade-up', style: "font-size: clamp(64px, 18vw, 160px); line-height: 0.88; max-width: 720px; text-shadow: 0 4px 30px rgba(0,0,0,0.25);" },
+        el('div', {}, 'Craig'), el('div', {}, '/McDowell'), el('div', {}, '/Hopkins'), el('div', { style: 'color: var(--yellow);' }, 'Cup')
+      ),
+      el('div', { class: 'body fade-up', style: 'max-width: 360px; text-align: center; font-weight: 800; letter-spacing: 0.04em;' }, '2025/26'),
+    ));
+    card.appendChild(el('div', { class: 'hint' }, 'Scroll ↓'));
+  }, { dark: true });
+
+  // --- 2. FINAL TABLE ---
+  PLAN('bg-3', (card) => {
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Final Standings'));
+    card.appendChild(el('div', { class: 'h2 fade-up', style: 'margin-top: 4px; color: var(--lime);' }, 'The Table'));
+    const tbl = el('table', { class: 'tbl dark' });
+    const thead = el('thead', {},
+      el('tr', {},
+        el('th', { class: 'l', style: 'width: 8%;' }, '#'),
+        el('th', { class: 'l' }, 'Manager'),
+        el('th', {}, 'W'),
+        el('th', {}, 'D'),
+        el('th', {}, 'L'),
+        el('th', {}, 'Pts')
+      )
+    );
+    tbl.appendChild(thead);
+    const tbody = el('tbody');
+    S.standings.forEach((s, i) => {
+      const m = MGR_BY_LE[s.league_entry];
+      const tr = el('tr', { class: 'row-anim' + (i === 0 ? ' champ' : '') },
+        el('td', { class: 'l pos' }, String(s.rank)),
+        el('td', { class: 'l' },
+          el('div', { class: 'name', style: `color: ${i === 0 ? 'var(--yellow)' : 'var(--white)'};` }, m.first),
+          el('div', { class: 'team' }, m.team)
+        ),
+        el('td', {}, String(s.matches_won)),
+        el('td', {}, String(s.matches_drawn)),
+        el('td', {}, String(s.matches_lost)),
+        el('td', { class: 'pts' }, String(s.total))
+      );
+      tr.style.transitionDelay = (0.15 + i * 0.12) + 's';
+      tbody.appendChild(tr);
+    });
+    tbl.appendChild(tbody);
+    card.appendChild(el('div', { class: 'fill', style: 'justify-content: flex-start; padding-top: 16px;' }, tbl));
+    card.appendChild(el('div', { class: 'tiny fade-up', style: 'padding-top: 8px;' }, '37 gameweeks played · GW38 not contested'));
+  }, { dark: true });
+
+  // --- 3. SEASON RACE ---
+  PLAN('bg-3', (card) => {
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'The Race'));
+    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--cyan); margin-top: 2px;' }, 'League Position by GW'));
+
+    // Portrait viewBox so the chart fills the card on mobile
+    const VB_W = 400, VB_H = 620;
+    const PAD = { l: 28, r: 84, t: 24, b: 36 };
+    const innerW = VB_W - PAD.l - PAD.r, innerH = VB_H - PAD.t - PAD.b;
+    const xFor = (gw) => PAD.l + (gw - 1) / (MAX_GW - 1) * innerW;
+    const yFor = (pos) => PAD.t + (pos - 1) / 5 * innerH;
+
+    const svg = `<svg class="race-svg" viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet">
+      ${[1,2,3,4,5,6].map(p => `<text class="pos-label" x="${PAD.l - 6}" y="${yFor(p) + 7}" text-anchor="end">${p}</text>`).join('')}
+      ${[1, 10, 19, 28, 37].map(g => `<text class="gw-label" x="${xFor(g)}" y="${VB_H - 10}" text-anchor="middle">GW${g}</text>`).join('')}
+      <line class="annot-line" x1="${xFor(17)}" y1="${PAD.t}" x2="${xFor(17)}" y2="${PAD.t + innerH}" />
+      <text class="annot" x="${xFor(17) + 4}" y="${PAD.t - 4}">GW17 →</text>
+      ${MANAGERS.map(m => {
+        const pts = [];
+        for (let g = 1; g <= MAX_GW; g++) pts.push(`${xFor(g)},${yFor(S.posByGw[g][m.le])}`);
+        const d = 'M ' + pts.join(' L ');
+        const last = S.posByGw[MAX_GW][m.le];
+        return `<path d="${d}" stroke="${m.color}" stroke-width="4" />
+                <g class="endpoint" transform="translate(${xFor(MAX_GW) + 6}, ${yFor(last) + 4})">
+                  <circle cx="0" cy="-3" r="4" fill="${m.color}" />
+                  <text class="endpoint-name" x="9" y="1" fill="${m.color}" font-size="10">${m.first}</text>
+                </g>`;
+      }).join('')}
+    </svg>`;
+    const wrap = el('div', { class: 'race-wrap fade-up', html: svg });
+    card.appendChild(wrap);
+    card.appendChild(el('div', { class: 'tiny fade-up' }, 'Lead changed 6 times before GW17. Then it didn\'t.'));
+  }, { dark: true });
+
+  // --- 4. HANDS-OFF CHAMPION (Geraint) ---
+  PLAN('bg-4', (card) => {
+    card.appendChild(el('div', { class: 'fill', style: 'gap: 6px; justify-content: center; align-items: flex-start; text-align: left;' },
+      el('div', { class: 'kicker fade-up' }, 'The Champion'),
+      el('div', { class: 'display pop', style: 'font-size: clamp(110px, 34vw, 240px); color: var(--white); line-height: 0.85; margin-top: 8px;' }, String(S.transCount[73835])),
+      el('div', { class: 'body fade-up', style: 'max-width: 480px; font-weight: 800;' }, 'transactions.'),
+      el('div', { class: 'display pop', style: 'font-size: clamp(90px, 28vw, 200px); color: var(--white); line-height: 0.85; margin-top: 18px;' }, String(S.standings[0].total - S.standings[1].total) + 'pt'),
+      el('div', { class: 'body fade-up', style: 'max-width: 480px; font-weight: 800;' }, 'title margin.'),
+      el('div', { class: 'body fade-up', style: 'margin-top: 28px; font-style: italic; font-weight: 800; font-size: clamp(20px, 5.5vw, 26px); max-width: 480px;' }, 'Geraint barely looked at his team.'),
+    ));
+  });
+
+  // --- 5-7. THREE TRADES ---
+  const tradeData = [
+    {
+      gw: 4, mgrA: 73858, mgrB: 73822,
+      // christopher received Grealish from Peter, gave up Marmoush
+      items: [
+        { mgrAGets: 419, mgrBGets: 413 }  // 419 to christopher, 413 to peter
+      ],
+      verdict: 'Christopher won', vMgr: 73858, delta: '+19', story: 'Grealish landed running. Marmoush did not.',
+      bg: 'bg-5'
+    },
+    {
+      gw: 9, mgrA: 73858, mgrB: 73847,
+      items: [
+        { mgrAGets: 267, mgrBGets: 266 }, // Sarr / Eze
+        { mgrAGets: 449, mgrBGets: 235 }, // B.Fernandes / Palmer
+        { mgrAGets: 97,  mgrBGets: 666 }, // Evanilson / Ekitiké
+      ],
+      verdict: 'Michael won', vMgr: 73847, delta: '+30', story: 'Three for three. Michael shipped Bruno and still came out ahead.',
+      bg: 'bg-8'
+    },
+    {
+      gw: 18, mgrA: 73847, mgrB: 73788,
+      // Mark gave Isak (499) to Michael, Michael gave Evanilson (97) to Mark
+      // offered_entry=Michael, element_in=499 → goes to Michael (so Mark gave Isak); element_out=97 → leaves Michael (so Mark received Evanilson)
+      items: [
+        { mgrAGets: 499, mgrBGets: 97 } // mgrA=Michael got Isak, mgrB=Mark got Evanilson
+      ],
+      verdict: 'Mark won', vMgr: 73788, delta: '+47', story: 'Mark sold Isak. Isak then scored 12 the rest of the way.',
+      bg: 'bg-9'
+    }
+  ];
+
+  tradeData.forEach((tr, idx) => {
+    PLAN(tr.bg, (card) => {
+      card.appendChild(el('div', { class: 'kicker fade-up' }, `Trade ${idx + 1} of 3 · GW${tr.gw}`));
+      card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--white); margin-top: 2px;' }, `${MGR_BY_LE[tr.mgrA].first} ⇄ ${MGR_BY_LE[tr.mgrB].first}`));
+
+      const tradeBox = el('div', { class: 'trade-box fade-up', style: 'margin-top: 14px;' });
+
+      const tenureWindow = (pid, le, gw) => {
+        const own = S.ownByGw[pid] || {};
+        const arr = [];
+        for (let g = gw; g <= MAX_GW; g++) if (own[g] === le) arr.push(g);
+        return arr;
+      };
+
+      // mgrA side: shows what mgrA receives
+      const aSide = el('div', { class: 'trade-side' },
+        el('div', { class: 'trade-mgr' }, MGR_BY_LE[tr.mgrA].first),
+        el('div', { class: 'tiny', style: 'opacity: 0.7;' }, 'received'),
+      );
+      let aTotal = 0;
+      tr.items.forEach(it => {
+        const pts = tenureWindow(it.mgrAGets, tr.mgrA, tr.gw).reduce((s,g) => s + S.getPts(it.mgrAGets, g), 0);
+        aTotal += pts;
+        aSide.appendChild(el('div', { class: 'trade-row' },
+          el('div', { class: 'nm' }, S.pname(it.mgrAGets)),
+          el('div', { class: 'pp' }, String(pts))
+        ));
+      });
+      aSide.appendChild(el('div', { class: 'trade-pts', style: 'margin-top: 6px; text-align: right; color: var(--yellow);' }, `${aTotal} PTS`));
+
+      const bSide = el('div', { class: 'trade-side' },
+        el('div', { class: 'trade-mgr' }, MGR_BY_LE[tr.mgrB].first),
+        el('div', { class: 'tiny', style: 'opacity: 0.7;' }, 'received'),
+      );
+      let bTotal = 0;
+      tr.items.forEach(it => {
+        const pts = tenureWindow(it.mgrBGets, tr.mgrB, tr.gw).reduce((s,g) => s + S.getPts(it.mgrBGets, g), 0);
+        bTotal += pts;
+        bSide.appendChild(el('div', { class: 'trade-row' },
+          el('div', { class: 'nm' }, S.pname(it.mgrBGets)),
+          el('div', { class: 'pp' }, String(pts))
+        ));
+      });
+      bSide.appendChild(el('div', { class: 'trade-pts', style: 'margin-top: 6px; text-align: right; color: var(--yellow);' }, `${bTotal} PTS`));
+
+      tradeBox.appendChild(aSide);
+      tradeBox.appendChild(el('div', { class: 'trade-arrow' }, '⇄'));
+      tradeBox.appendChild(bSide);
+
+      card.appendChild(tradeBox);
+
+      card.appendChild(el('div', { class: 'fade-up', style: 'margin-top: 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px;' },
+        el('div', { class: 'verdict-pill' }, `${MGR_BY_LE[tr.vMgr].first} won by ${tr.delta}`),
+        el('div', { class: 'body', style: 'font-style: italic; font-weight: 700; max-width: 520px;' }, tr.story)
+      ));
+    });
+  });
+
+  // --- 8-13. MANAGER CARDS (reverse finishing order) ---
+  // Build verdicts hardcoded — keep light
+  const verdicts = {
+    73822: { v: 'Tapped out at GW28. The other 9 weeks were a vibe.', high: 'GW11: 60 vs Geraint. He led the league briefly. We saw you.', },
+    73847: { v: '100 transactions. Five different left-backs in November. Still 5th.', },
+    73858: { v: 'Second-most points-for. Fourth place. Football is cruel.', },
+    73827: { v: 'Bought, dropped, re-bought. Bought, dropped, re-bought.', },
+    73788: { v: 'Quiet, persistent, profitable. Almost caught the king.', },
+    73835: { v: '28 transactions. 75 points. A masterclass in doing very little.', },
+  };
+  const colors = [
+    { bg: 'bg-10', dark: true },   // Peter (6th)
+    { bg: 'bg-8',  dark: true },   // Michael
+    { bg: 'bg-11', dark: false },  // christopher
+    { bg: 'bg-5',  dark: true },   // Steven
+    { bg: 'bg-9',  dark: true },   // Mark
+    { bg: 'bg-mesh-citrus', dark: false }, // Geraint
+  ];
+  // reverse rank order: rank 6,5,4,3,2,1
+  const reversed = [...S.standings].sort((a,b) => b.rank - a.rank);
+  reversed.forEach((s, idx) => {
+    const m = MGR_BY_LE[s.league_entry];
+    const palette = colors[idx];
+    PLAN(palette.bg, (card) => {
+      card.appendChild(el('div', { class: 'mgr-rank' }, '#' + s.rank));
+      card.appendChild(el('div', { class: 'kicker fade-up' }, `Manager · ${s.rank} of 6`));
+      card.appendChild(el('div', { class: 'mgr-name fade-up', style: 'margin-top: 6px;' }, m.first));
+      card.appendChild(el('div', { class: 'mgr-team fade-up' }, m.team));
+      card.appendChild(el('div', { class: 'tiny fade-up', style: 'margin-top: 4px;' }, `${s.matches_won}W · ${s.matches_drawn}D · ${s.matches_lost}L · ${s.total} PTS · ${s.points_for} PF`));
+
+      const hl = S.hl[m.le];
+      const bw = S.bestWorstTr[m.le];
+      const nem = S.nemesis[m.le];
+
+      const grid = el('div', { class: 'stat-grid fade-up', style: 'margin-top: 14px;' });
+      grid.appendChild(el('div', { class: 'stat' },
+        el('div', { class: 'label' }, 'High Score'),
+        el('div', { class: 'val' }, String(hl.hi.pts)),
+        el('div', { class: 'sub' }, `GW${hl.hi.gw}`)
+      ));
+      grid.appendChild(el('div', { class: 'stat' },
+        el('div', { class: 'label' }, 'Low Score'),
+        el('div', { class: 'val' }, String(hl.lo.pts)),
+        el('div', { class: 'sub' }, `GW${hl.lo.gw}`)
+      ));
+      if (bw.best) {
+        grid.appendChild(el('div', { class: 'stat' },
+          el('div', { class: 'label' }, 'Best Move'),
+          el('div', { class: 'val' }, S.pname(bw.best.inP)),
+          el('div', { class: 'sub' }, `GW${bw.best.gw} · +${bw.best.delta} vs ${S.pname(bw.best.outP)}`)
+        ));
+      }
+      if (bw.worst) {
+        grid.appendChild(el('div', { class: 'stat' },
+          el('div', { class: 'label' }, 'Worst Move'),
+          el('div', { class: 'val' }, S.pname(bw.worst.inP)),
+          el('div', { class: 'sub' }, `GW${bw.worst.gw} · ${bw.worst.delta} vs ${S.pname(bw.worst.outP)}`)
+        ));
+      }
+      card.appendChild(grid);
+
+      card.appendChild(el('div', { class: 'stat fade-up', style: 'margin-top: 12px;' },
+        el('div', { class: 'label' }, 'Nemesis'),
+        el('div', { class: 'val' }, MGR_BY_LE[nem.le].first),
+        el('div', { class: 'sub' }, `Beat them ${nem.count}×: GW${nem.gws.join(', ')}`)
+      ));
+
+      card.appendChild(el('div', { class: 'verdict fade-up', style: 'margin-top: 14px;' }, verdicts[m.le].v));
+    }, { dark: palette.dark, light: !palette.dark });
+  });
+
+  // --- 14. CHAMPION (Geraint) ---
+  PLAN('bg-mesh-citrus', (card) => {
+    // confetti
+    const conf = el('div', { class: 'confetti' });
+    const cols = ['#FFEB3B','#FF1493','#00BCD4','#FF6F00','#C6FF00','#FFFFFF'];
+    for (let i = 0; i < 40; i++) {
+      const span = el('i', { style: `left: ${Math.random()*100}%; background: ${cols[i%cols.length]}; transform: rotate(${Math.random()*360}deg); animation-delay: ${Math.random()*0.8}s;` });
+      conf.appendChild(span);
+    }
+    card.appendChild(conf);
+
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Champion'));
+    card.appendChild(el('div', { class: 'fill', style: 'justify-content: center; gap: 8px;' },
+      el('div', { class: 'h1 pop', style: 'font-size: clamp(80px, 24vw, 180px); color: var(--black); line-height: 0.85;' }, 'GERAINT'),
+      el('div', { class: 'body fade-up', style: 'font-weight: 800; font-size: clamp(18px, 5vw, 24px);' }, '🏴󠁧󠁢󠁷󠁬󠁳󠁿'),
+      el('div', { class: 'giant-num pop', style: 'color: var(--purple); margin-top: 6px;' }, String(S.standings[0].total)),
+      el('div', { class: 'h3 fade-up', style: 'color: var(--purple);' }, 'POINTS · 25W · 0D · 12L'),
+      el('div', { class: 'body fade-up', style: 'margin-top: 12px; font-style: italic; font-weight: 800; max-width: 480px; text-align: center;' }, 'No draws. Bring back the goldilocks zone.'),
+    ));
+  });
+
+  // --- 15. BEST TRADE (Mark) — recap as headline award
+  PLAN('bg-9', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Headline Award', name: 'Best Trade', nameColor: 'var(--white)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Mark'),
+        el('div', { class: 'award-team fade-up' }, 'Carrying Timber'),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--white); margin-top: 10px;' }, 'ISAK → EVANILSON'),
+        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700;' }, 'GW18. Mark shipped Isak to Michael. Isak then scored 12 the rest of the way.'),
+        el('div', { class: 'fade-up' }, el('span', { class: 'verdict-pill', style: 'background: var(--lime); color: var(--black);' }, 'Net swing: +47 to Mark')),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 16. ASLEEP AT THE WHEEL (Peter) ---
+  PLAN('bg-6', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Headline Award', name: 'Asleep at the Wheel', nameColor: 'var(--cyan)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Peter'),
+        el('div', { class: 'award-team fade-up' }, 'MaxPoints'),
+        el('div', { class: 'giant-num pop', style: 'color: var(--white); font-size: clamp(140px, 38vw, 240px);' }, '9'),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--cyan);' }, 'Gameweeks Untouched'),
+        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700; font-style: italic;' }, 'Last move: GW28. From there, radio silence to the line.'),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 17. MOST INFLUENTIAL TRANSFER (christopher / Gittens) — hardcoded ---
+  PLAN('bg-1', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Headline Award', name: 'Most Influential Transfer', nameColor: 'var(--black)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--purple);' }, 'christopher'),
+        el('div', { class: 'award-team fade-up' }, 'The Masterplan'),
+        el('div', { class: 'display pop', style: 'font-size: clamp(82px, 22vw, 160px); color: var(--black); line-height: 0.85; letter-spacing: -0.02em; margin-top: 8px;' }, 'GITTENS'),
+        el('div', { class: 'fade-up', style: 'font-family: \'Space Grotesk\', sans-serif; font-style: italic; font-weight: 600; font-size: clamp(18px, 5vw, 24px); color: var(--purple);' }, '(redraft)'),
+      ]
+    }));
+  });
+
+  // --- 18. BEST LATE-ROUND DRAFT PICK (christopher / Guéhi R14) ---
+  PLAN('bg-11', (card) => {
+    let gueId = null;
+    for (const id in S.players) {
+      if (S.players[id].web_name === 'Guéhi') { gueId = +id; break; }
+    }
+    let tp = 0;
+    if (gueId) for (let g = 1; g <= MAX_GW; g++) tp += S.getPts(gueId, g);
+    card.appendChild(awardLayout({
+      kicker: 'Headline Award', name: 'Late-Round Robbery', nameColor: 'var(--black)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--purple);' }, 'christopher'),
+        el('div', { class: 'award-team fade-up' }, 'The Masterplan'),
+        el('div', { class: 'h2 fade-up', style: 'color: var(--black); margin-top: 10px;' }, 'GUÉHI'),
+        el('div', { class: 'h3 fade-up' }, 'Round 14, Pick 4'),
+        el('div', { class: 'giant-num pop', style: 'color: var(--purple); font-size: clamp(110px, 30vw, 200px);' }, String(tp || 179)),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--black);' }, 'POINTS · 82nd OVERALL'),
+      ]
+    }));
+  });
+
+  // --- 19. GOALKEEPING HOWLER (Steven) ---
+  PLAN('bg-5', (card) => {
+    let howl = 0;
+    for (let g = 1; g <= MAX_GW; g++) {
+      const pk = S.d.picks[`76218_${g}`];
+      if (!pk) continue;
+      const gks = pk.picks.filter(p => S.ppos(p.element) === 'GKP');
+      if (gks.length !== 2) continue;
+      const start = gks.find(p => p.position === 1);
+      const bench = gks.find(p => p.position !== 1);
+      if (!start || !bench) continue;
+      if (S.getPts(bench.element, g) > S.getPts(start.element, g)) howl++;
+    }
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'Goalkeeping Howler', nameColor: 'var(--yellow)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--white);' }, 'Steven'),
+        el('div', { class: 'award-team fade-up' }, '✨'),
+        el('div', { class: 'giant-num pop', style: 'color: var(--yellow); font-size: clamp(140px, 40vw, 260px);' }, String(howl)),
+        el('div', { class: 'body fade-up', style: 'font-weight: 800; font-style: italic; max-width: 460px; font-size: clamp(18px, 5vw, 22px);' }, 'Picked the wrong keeper this many times. There were only two options.'),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 20. PHANTOM XI (Steven, GW34) ---
+  PLAN('bg-3', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'Phantom XI', nameColor: 'var(--pink)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--white);' }, 'Steven'),
+        el('div', { class: 'award-team fade-up' }, '✨'),
+        el('div', { class: 'giant-num pop', style: 'color: var(--pink); font-size: clamp(110px, 30vw, 200px);' }, 'GW34'),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--cyan);' }, '5 starters · 0 minutes · 16 pts'),
+        el('div', { class: 'body fade-up', style: 'font-weight: 700; font-style: italic; max-width: 460px;' }, 'Almost half the XI never left the bus. Final score: 16.'),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 21. COIN FLIP (Peter, positive) ---
+  PLAN('bg-7', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'The Coin Flip', nameColor: 'var(--black)',
+      children: [
+        el('div', { class: 'h2 pop', style: 'color: var(--black); font-size: clamp(60px, 17vw, 110px);' }, 'PETER 33'),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--purple);' }, 'beat'),
+        el('div', { class: 'h2 pop', style: 'color: var(--purple); font-size: clamp(60px, 17vw, 110px);' }, 'MICHAEL 32'),
+        el('div', { class: 'h3 fade-up' }, 'GW23 · margin: 1'),
+        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700; font-style: italic;' }, 'Peter\'s eighth and most dramatic win of the year.'),
+      ]
+    }));
+  });
+
+  // --- 22. LOYALIST TAX (Peter, Salah) ---
+  PLAN('bg-6', (card) => {
+    let salId = null;
+    for (const id in S.players) if (S.players[id].web_name === 'M.Salah') { salId = +id; break; }
+    let pts = 0;
+    if (salId) for (let g = 1; g <= MAX_GW; g++) if (S.ownByGw[salId]?.[g] === 73822) pts += S.getPts(salId, g);
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'The Loyalist Tax', nameColor: 'var(--orange)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Peter'),
+        el('div', { class: 'h2 fade-up', style: 'color: var(--white);' }, 'SALAH'),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--orange);' }, 'Held all 37 weeks'),
+        el('div', { class: 'giant-num pop', style: 'color: var(--white); font-size: clamp(120px, 34vw, 200px);' }, String(pts || 117)),
+        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 800; font-style: italic;' }, 'Points. Loyalty is its own reward.'),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 23. RIGHT PLACE, RIGHT TIME (Michael, Schade) ---
+  PLAN('bg-8', (card) => {
+    let pid = null;
+    for (const id in S.players) if (S.players[id].web_name === 'Schade') { pid = +id; break; }
+    const before = pid ? [14,15,16].reduce((s,g) => s + S.getPts(pid, g), 0) : 2;
+    const after  = pid ? [17,18,19].reduce((s,g) => s + S.getPts(pid, g), 0) : 26;
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'Right Place, Right Time', nameColor: 'var(--white)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Michael'),
+        el('div', { class: 'h2 fade-up', style: 'color: var(--white);' }, 'SCHADE'),
+        el('div', { class: 'h3 fade-up' }, 'Picked up GW17'),
+        el('div', { class: 'fade-up', style: 'display: flex; gap: 24px; margin-top: 8px; align-items: baseline;' },
+          el('div', { class: 'col center', style: 'align-items: center;' },
+            el('div', { class: 'giant-num', style: 'font-size: clamp(80px, 22vw, 130px); color: var(--white); opacity: 0.6;' }, String(before)),
+            el('div', { class: 'tiny' }, '3 GW before'),
+          ),
+          el('div', { class: 'display', style: 'font-size: 40px; color: var(--yellow);' }, '→'),
+          el('div', { class: 'col center', style: 'align-items: center;' },
+            el('div', { class: 'giant-num', style: 'font-size: clamp(80px, 22vw, 130px); color: var(--yellow);' }, String(after)),
+            el('div', { class: 'tiny' }, '3 GW after'),
+          ),
+        ),
+        el('div', { class: 'body fade-up', style: 'max-width: 440px; font-weight: 700; font-style: italic; margin-top: 6px;' }, 'Caught lightning. Just the once.'),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 24. THE HYPERACTIVE (Michael) ---
+  PLAN('bg-mesh-pink', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'The Tinkerer', nameColor: 'var(--yellow)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--white);' }, 'Michael'),
+        el('div', { class: 'award-team fade-up' }, 'Jota win again *20'),
+        el('div', { class: 'fade-up', style: 'display: flex; gap: 24px; margin-top: 14px; align-items: baseline; justify-content: center;' },
+          el('div', { class: 'col center', style: 'align-items: center;' },
+            el('div', { class: 'giant-num', style: 'font-size: clamp(110px, 30vw, 180px); color: var(--yellow);' }, String(S.transCount[73847])),
+            el('div', { class: 'tiny' }, 'Michael\'s moves'),
+          ),
+          el('div', { class: 'col center', style: 'align-items: center;' },
+            el('div', { class: 'giant-num', style: 'font-size: clamp(110px, 30vw, 180px); color: var(--white);' }, String(S.transCount[73835])),
+            el('div', { class: 'tiny' }, 'Geraint\'s moves'),
+          ),
+        ),
+        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 800; font-style: italic; margin-top: 8px;' }, 'They finished 5th and 1st. Draw your own conclusions.'),
+      ]
+    }));
+  }, { dark: true });
+
+  // --- 25. THREE STRIKES (Mark, Amad) ---
+  PLAN('bg-2', (card) => {
+    card.appendChild(awardLayout({
+      kicker: 'Micro-Story Award', name: 'Three Strikes', nameColor: 'var(--purple)',
+      children: [
+        el('div', { class: 'award-winner pop', style: 'color: var(--black);' }, 'Mark'),
+        el('div', { class: 'award-team fade-up' }, 'Carrying Timber'),
+        el('div', { class: 'h2 fade-up', style: 'color: var(--purple); margin-top: 10px;' }, 'AMAD'),
+        el('div', { class: 'h3 fade-up', style: 'color: var(--black);' }, 'Signed three separate times'),
+        el('div', { class: 'fade-up', style: 'display: flex; gap: 14px; margin-top: 8px; justify-content: center; flex-wrap: wrap;' },
+          ['GW24','GW32','GW34'].map(g => el('div', { class: 'h2', style: 'font-size: clamp(24px, 7vw, 36px); color: var(--purple); border: 3px solid var(--purple); padding: 6px 12px; border-radius: 8px;' }, g))
+        ),
+        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700; font-style: italic; margin-top: 12px;' }, 'Some people just can\'t quit.'),
+      ]
+    }));
+  });
+
+  // --- 26. COUNTERFACTUAL 1: EVERYONE PLAYS PETE ---
+  PLAN('bg-6', (card) => {
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Counterfactual'));
+    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--yellow); margin-top: 2px; font-size: clamp(38px, 11vw, 70px);' }, 'Everyone Plays Pete'));
+    card.appendChild(el('div', { class: 'body fade-up', style: 'opacity: 0.85; margin-top: 4px; font-weight: 600;' }, 'If your H2H opponent was always Peter\'s lineup. (Peter played the league average.)'));
+
+    const wld = S.cfEveryonePlaysPete();
+    const rows = sortedStandings(wld);
+    const realPos = {};
+    S.standings.forEach(s => realPos[s.league_entry] = s.rank);
+
+    const tbl = el('table', { class: 'cf-tbl fade-up', style: 'margin-top: 14px;' });
+    tbl.appendChild(el('thead', {},
+      el('tr', {},
+        el('th', { class: 'l', style: 'width: 7%;' }, '#'),
+        el('th', { class: 'l' }, 'Manager'),
+        el('th', {}, 'W-D-L'),
+        el('th', {}, 'Pts'),
+        el('th', {}, 'Δ')
+      )
+    ));
+    const tb = el('tbody');
+    rows.forEach((r, i) => {
+      const delta = realPos[r.le] - (i + 1);
+      const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
+      const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
+      tb.appendChild(el('tr', {},
+        el('td', { class: 'l' }, String(i + 1)),
+        el('td', { class: 'l name' }, MGR_BY_LE[r.le].first),
+        el('td', {}, `${r.w}-${r.d}-${r.l}`),
+        el('td', {}, String(r.pts)),
+        el('td', { class: 'arrow ' + cls }, arr)
+      ));
+    });
+    tbl.appendChild(tb);
+    card.appendChild(tbl);
+    card.appendChild(el('div', { class: 'body fade-up', style: 'margin-top: 14px; font-weight: 700; font-style: italic; color: var(--cyan);' }, 'christopher jumps to 2nd. Peter stays last, even against himself.'));
+  }, { dark: true });
+
+  // --- 27. COUNTERFACTUAL 2: OPTIMAL XI ---
+  PLAN('bg-9', (card) => {
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Counterfactual'));
+    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--yellow); margin-top: 2px; font-size: clamp(38px, 11vw, 70px);' }, 'Optimal XI'));
+    card.appendChild(el('div', { class: 'body fade-up', style: 'opacity: 0.85; margin-top: 4px; font-weight: 600;' }, 'If every manager fielded their best possible eleven every week.'));
+
+    const { wld, optGw } = S.cfOptimalXi();
+    const rows = sortedStandings(wld);
+    const realPos = {};
+    S.standings.forEach(s => realPos[s.league_entry] = s.rank);
+
+    const tbl = el('table', { class: 'cf-tbl fade-up', style: 'margin-top: 14px;' });
+    tbl.appendChild(el('thead', {},
+      el('tr', {},
+        el('th', { class: 'l', style: 'width: 7%;' }, '#'),
+        el('th', { class: 'l' }, 'Manager'),
+        el('th', {}, 'PF'),
+        el('th', {}, 'Pts'),
+        el('th', {}, 'Δ')
+      )
+    ));
+    const tb = el('tbody');
+    rows.forEach((r, i) => {
+      const delta = realPos[r.le] - (i + 1);
+      const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
+      const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
+      tb.appendChild(el('tr', {},
+        el('td', { class: 'l' }, String(i + 1)),
+        el('td', { class: 'l name' }, MGR_BY_LE[r.le].first),
+        el('td', {}, String(r.pf)),
+        el('td', {}, String(r.pts)),
+        el('td', { class: 'arrow ' + cls }, arr)
+      ));
+    });
+    tbl.appendChild(tb);
+    card.appendChild(tbl);
+
+    // Biggest leaver-on-bench
+    let bench = MANAGERS.map(m => {
+      let opt = 0, act = 0;
+      for (let g = 1; g <= MAX_GW; g++) {
+        opt += optGw[g][m.le];
+        act += S.gwPts[g][m.le];
+      }
+      return { le: m.le, diff: opt - act };
+    });
+    bench.sort((a,b) => b.diff - a.diff);
+    card.appendChild(el('div', { class: 'body fade-up', style: 'margin-top: 14px; font-weight: 700; font-style: italic; color: var(--yellow);' }, `${MGR_BY_LE[bench[0].le].first} left ${bench[0].diff} pts on the bench. The most in the league.`));
+  }, { dark: true });
+
+  // --- 28. COUNTERFACTUAL 3: NO TRANSFERS EVER ---
+  PLAN('bg-mesh-pink', (card) => {
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Counterfactual'));
+    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--yellow); margin-top: 2px; font-size: clamp(38px, 11vw, 70px);' }, 'No Transfers Ever'));
+    card.appendChild(el('div', { class: 'body fade-up', style: 'opacity: 0.85; margin-top: 4px; font-weight: 600;' }, 'Everyone\'s GW1 draft squad plays every week, forever.'));
+
+    const wld = S.cfNoTransfers();
+    const rows = sortedStandings(wld);
+    const realPos = {};
+    S.standings.forEach(s => realPos[s.league_entry] = s.rank);
+
+    const tbl = el('table', { class: 'cf-tbl fade-up', style: 'margin-top: 14px;' });
+    tbl.appendChild(el('thead', {},
+      el('tr', {},
+        el('th', { class: 'l', style: 'width: 7%;' }, '#'),
+        el('th', { class: 'l' }, 'Manager'),
+        el('th', {}, 'W-D-L'),
+        el('th', {}, 'Pts'),
+        el('th', {}, 'Δ')
+      )
+    ));
+    const tb = el('tbody');
+    rows.forEach((r, i) => {
+      const delta = realPos[r.le] - (i + 1);
+      const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
+      const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
+      tb.appendChild(el('tr', {},
+        el('td', { class: 'l' }, String(i + 1)),
+        el('td', { class: 'l name' }, MGR_BY_LE[r.le].first),
+        el('td', {}, `${r.w}-${r.d}-${r.l}`),
+        el('td', {}, String(r.pts)),
+        el('td', { class: 'arrow ' + cls }, arr)
+      ));
+    });
+    tbl.appendChild(tb);
+    card.appendChild(tbl);
+    card.appendChild(el('div', { class: 'body fade-up', style: 'margin-top: 14px; font-weight: 700; font-style: italic; color: var(--yellow);' }, 'Mark drafts a title. Geraint drops to 5th. The waiver wire actually mattered.'));
+  }, { dark: true });
+
+  // --- 29. AGGREGATE STATS ---
+  PLAN('bg-2', (card) => {
+    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Season in Numbers'));
+    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--purple); margin-top: 2px;' }, 'By the Numbers'));
+
+    const totalAccepted = S.transferEval.length;
+    const totalTrades = S.d.trades.trades.length;
+    const totalWaivers = S.d.trans.transactions.filter(t => t.kind === 'w').length;
+    const totalFA = S.d.trans.transactions.filter(t => t.kind === 'f').length;
+    // Hot Potato: player owned by most managers
+    const ownerSets = {};
+    for (const pid in S.ownByGw) {
+      ownerSets[pid] = new Set(Object.values(S.ownByGw[pid]));
+    }
+    let hot = { pid: null, n: 0 };
+    for (const pid in ownerSets) {
+      if (ownerSets[pid].size > hot.n) hot = { pid: +pid, n: ownerSets[pid].size };
+    }
+
+    // Highest single GW
+    let highScore = { pts: 0, gw: 0, le: 0 };
+    for (let g = 1; g <= MAX_GW; g++) for (const m of MANAGERS) {
+      if (S.gwPts[g][m.le] > highScore.pts) highScore = { pts: S.gwPts[g][m.le], gw: g, le: m.le };
+    }
+
+    const grid = el('div', { class: 'agg-grid fade-up', style: 'margin-top: 16px;' });
+    grid.appendChild(el('div', { class: 'agg-cell' },
+      el('div', { class: 'num' }, String(totalAccepted)),
+      el('div', { class: 'lab' }, 'Accepted Transfers')
+    ));
+    grid.appendChild(el('div', { class: 'agg-cell' },
+      el('div', { class: 'num' }, String(totalWaivers)),
+      el('div', { class: 'lab' }, 'Waiver Claims (incl. denied)')
+    ));
+    grid.appendChild(el('div', { class: 'agg-cell' },
+      el('div', { class: 'num' }, String(totalTrades)),
+      el('div', { class: 'lab' }, 'Trades Completed')
+    ));
+    grid.appendChild(el('div', { class: 'agg-cell' },
+      el('div', { class: 'num' }, String(totalFA)),
+      el('div', { class: 'lab' }, 'Free-Agent Pickups')
+    ));
+    grid.appendChild(el('div', { class: 'agg-cell' },
+      el('div', { class: 'num', style: 'font-size: clamp(24px, 7vw, 36px);' }, hot.pid ? S.pname(hot.pid) : '—'),
+      el('div', { class: 'lab' }, `Owned by ${hot.n} different managers`)
+    ));
+    grid.appendChild(el('div', { class: 'agg-cell' },
+      el('div', { class: 'num' }, String(highScore.pts)),
+      el('div', { class: 'lab' }, `Highest GW · ${MGR_BY_LE[highScore.le].first} GW${highScore.gw}`)
+    ));
+    card.appendChild(grid);
+  });
+
+  // --- 30. CLOSING ---
+  PLAN('bg-mesh-pink', (card) => {
+    card.appendChild(el('div', { class: 'fill center', style: 'gap: 18px;' },
+      el('div', { class: 'kicker fade-up' }, 'And that\'s a wrap'),
+      el('div', { class: 'display pop', style: 'font-size: clamp(70px, 20vw, 160px); line-height: 0.88; max-width: 720px;' },
+        el('div', {}, 'See you'),
+        el('div', { style: 'color: var(--yellow);' }, 'next season,'),
+        el('div', {}, 'lads.'),
+      ),
+      el('div', { class: 'body fade-up', style: 'max-width: 360px; text-align: center; font-weight: 800; opacity: 0.85;' }, 'GW38 never happened. Neither did half the trades we approved. Brilliant year, everyone.'),
+    ));
+  }, { dark: true });
+
+  // Now render planned cards with numbering
+  cardsPlan.forEach((c, idx) => {
+    const cls = c.cls;
+    const opts = c.opts || {};
+    const card = addCard(cls, c.fn, opts);
+    card.appendChild(pgIndicator(idx + 1, cardsPlan.length));
+  });
+
+  // Build nav dots
+  const nav = document.getElementById('nav');
+  cardsPlan.forEach((_, i) => nav.appendChild(el('div', { class: 'nav-dot' + (i === 0 ? ' active' : '') })));
+}
+
+// ============================================================
+// SCROLL OBSERVER
+// ============================================================
+function setupObserver() {
+  const cards = document.querySelectorAll('.card');
+  const dots = document.querySelectorAll('.nav-dot');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      const i = Array.from(cards).indexOf(en.target);
+      if (en.isIntersecting && en.intersectionRatio > 0.5) {
+        en.target.classList.add('in');
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+        // also activate row-anim staggered
+        const rows = en.target.querySelectorAll('.tbl tbody tr.row-anim');
+        // already handled via .card.in .tbl tr.row-anim styles
+      } else if (!en.isIntersecting) {
+        // keep card animated once shown — Wrapped style: don't undo
+      }
+    });
+  }, { threshold: [0, 0.3, 0.6, 0.9, 1.0] });
+  cards.forEach(c => io.observe(c));
+  // Initial card
+  if (cards[0]) cards[0].classList.add('in');
+}
+
+// Keyboard scroll-snap navigation
+function setupKeyboard() {
+  const scroller = document.getElementById('scroller');
+  let scrolling = false;
+  document.addEventListener('keydown', (e) => {
+    if (scrolling) return;
+    const ch = window.innerHeight;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      scrolling = true;
+      scroller.scrollBy({ top: ch, behavior: 'smooth' });
+      e.preventDefault();
+      setTimeout(() => scrolling = false, 600);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      scrolling = true;
+      scroller.scrollBy({ top: -ch, behavior: 'smooth' });
+      e.preventDefault();
+      setTimeout(() => scrolling = false, 600);
+    }
+  });
+}
+
+// ============================================================
+// MAIN
+// ============================================================
+(async () => {
+  try {
+    const data = await loadAll();
+    const state = buildState(data);
+    buildCards(state);
+    setupObserver();
+    setupKeyboard();
+    document.getElementById('loading').classList.add('gone');
+    setTimeout(() => document.getElementById('loading').remove(), 500);
+  } catch (err) {
+    console.error(err);
+    document.getElementById('loading').textContent = 'Failed to load. Check console.';
+  }
+})();
+</script>
+</body>
+</html>

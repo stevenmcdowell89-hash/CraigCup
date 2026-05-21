@@ -807,14 +807,38 @@ for e in managers:
     gw1_picks = picks_by_eg.get((e, 1), {}).get('picks', [])
     gw1_squad_pids = [p['element'] for p in gw1_picks]
     # Starting XI = positions 1-11 from gw1
+    # "No transfers ever" — manager's GW1 starting XI plays every week.
+    # FPL auto-sub mechanism: a starter who played 0 minutes is replaced by
+    # the first bench player of any position who played, then by a positional
+    # bench player. We apply a minimal auto-sub: scan bench in order, swap in
+    # any player who played for any non-playing starter, respecting formation
+    # mins (3 DEF, 2 MID, 1 FWD).
     starting_pids = [p['element'] for p in gw1_picks if p['position'] <= 11]
     bench_pids = [p['element'] for p in gw1_picks if p['position'] > 11]
-    # Sum starting points each week (no auto sub since we are pretending no transfers)
-    # Realistic: just sum starting XI points
     total = 0
     by_gw = {}
     for gw in range(1, last_gw+1):
-        gw_pts = sum(player_points(pid, gw) for pid in starting_pids)
+        xi = list(starting_pids)
+        bench = list(bench_pids)
+        # Auto-sub: for each non-playing starter, find a bench player who played
+        for i, pid in enumerate(xi):
+            if player_mins(pid, gw) > 0: continue
+            # Find a sub from bench that maintains valid formation
+            starter_type = players.get(pid,{}).get('element_type')
+            # Count current types in XI
+            for j, bp in enumerate(bench):
+                if player_mins(bp, gw) == 0: continue
+                bench_type = players.get(bp,{}).get('element_type')
+                # Determine new XI types if we swap
+                new_xi = xi[:i] + [bp] + xi[i+1:]
+                counts = Counter(players.get(p,{}).get('element_type') for p in new_xi)
+                # Must satisfy 1 GK, 3-5 DEF, 2-5 MID, 1-3 FWD
+                if (counts.get(1,0) == 1 and 3 <= counts.get(2,0) <= 5
+                    and 2 <= counts.get(3,0) <= 5 and 1 <= counts.get(4,0) <= 3):
+                    xi[i] = bp
+                    bench[j] = pid
+                    break
+        gw_pts = sum(player_points(pid, gw) for pid in xi)
         total += gw_pts
         by_gw[gw] = gw_pts
     counterfactual_notrans[e] = {'total': total, 'by_gw': by_gw}
@@ -856,17 +880,16 @@ for e in managers:
     for gw in range(1, last_gw+1):
         squad = get_full_squad(e, gw)
         if not squad: continue
-        # Need 1 GK, 3-5 DEF, 3-5 MID, 1-3 FWD, total 11
-        # Same formation rules as FPL: 1 GK, 3-5 DEF, 3-5 MID, 1-3 FWD
+        # Need 1 GK, 3-5 DEF, 2-5 MID, 1-3 FWD, total 11 (FPL settings)
         gks = sorted([p for p in squad if players.get(p,{}).get('element_type')==1], key=lambda p: -player_points(p, gw))
         defs = sorted([p for p in squad if players.get(p,{}).get('element_type')==2], key=lambda p: -player_points(p, gw))
         mids = sorted([p for p in squad if players.get(p,{}).get('element_type')==3], key=lambda p: -player_points(p, gw))
         fwds = sorted([p for p in squad if players.get(p,{}).get('element_type')==4], key=lambda p: -player_points(p, gw))
         if not gks: continue
         best = 0
-        # Try all valid formations
+        # Try all valid formations: 3-5 DEF, 2-5 MID, 1-3 FWD, sum=10
         for nd in range(3, 6):
-            for nm in range(3, 6):
+            for nm in range(2, 6):
                 for nf in range(1, 4):
                     if nd + nm + nf != 10: continue
                     if len(defs) < nd or len(mids) < nm or len(fwds) < nf: continue

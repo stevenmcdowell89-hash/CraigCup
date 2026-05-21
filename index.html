@@ -922,45 +922,55 @@ function buildRace(){
     await delay(160);
     reveal(c.querySelector('.race-wrap'));
     await delay(400);
-    // sequential line drawing
+
+    // Prep: compute lengths, hide every line via dashoffset = length
+    const lineEls = lines.map(l => c.querySelector(`.race-line[data-eid="${l.eid}"]`));
+    const labelEls = lines.map(l => c.querySelector(`.race-label[data-eid="${l.eid}"]`));
+    const lengths = lineEls.map(el => el.getTotalLength());
+    lineEls.forEach((el, i) => {
+      el.style.transition = 'none';
+      el.style.strokeDasharray = lengths[i] + ' ' + lengths[i];
+      el.style.strokeDashoffset = lengths[i];
+      el.style.opacity = '1';
+    });
+    // Force layout so the hidden state commits before we re-enable transitions
+    void c.querySelector('svg').getBoundingClientRect();
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+    // Sequential draw
+    const DRAW_MS = 750;
     for (let i = 0; i < lines.length; i++){
-      const eid = lines[i].eid;
-      const line = c.querySelector(`.race-line[data-eid="${eid}"]`);
-      const label = c.querySelector(`.race-label[data-eid="${eid}"]`);
-      const len = line.getTotalLength();
-      line.style.strokeDasharray = len;
-      line.style.strokeDashoffset = len;
-      line.style.transition = `stroke-dashoffset 600ms cubic-bezier(.4,.2,.2,1)`;
-      line.style.opacity = '1';
-      line.setAttribute('stroke-width', '5');
-      // fade previous to muted
-      lines.forEach(l2 => {
-        if (l2.eid !== eid){
-          const ln = c.querySelector(`.race-line[data-eid="${l2.eid}"]`);
-          if (ln.style.opacity === '1' || ln.style.opacity === ''){
-            // only adjust drawn lines
-          }
-        }
-      });
-      // trigger draw
+      const line = lineEls[i];
+      const label = labelEls[i];
+
+      // Emphasis: bring up stroke width + draw the line
+      line.style.transition = `stroke-dashoffset ${DRAW_MS}ms cubic-bezier(.4,.2,.2,1), stroke-width 200ms ease, opacity 200ms ease`;
+      line.setAttribute('stroke-width', '6');
+      // trigger reflow before changing offset
       void line.getBoundingClientRect();
       line.style.strokeDashoffset = '0';
-      await delay(640);
-      // settle this line
-      line.setAttribute('stroke-width', '3');
-      line.style.opacity = '.4';
-      // show label
-      label.style.transition = 'opacity 300ms';
+
+      await delay(DRAW_MS - 100);
+
+      // Settle this line (fade behind)
+      line.style.transition = 'stroke-width 350ms ease, opacity 350ms ease';
+      line.setAttribute('stroke-width', '2.5');
+      line.style.opacity = '.35';
+
+      // Reveal label
+      label.style.transition = 'opacity 300ms ease';
       label.style.opacity = '1';
+
+      await delay(120);
     }
-    // settle: bring all to uniform 4px, 70%
-    lines.forEach(l => {
-      const line = c.querySelector(`.race-line[data-eid="${l.eid}"]`);
-      line.style.transition = 'opacity 400ms, stroke-width 400ms';
-      line.setAttribute('stroke-width', '4');
-      line.style.opacity = '.85';
+
+    // Final settle — every line back to uniform contrast
+    lineEls.forEach(el => {
+      el.style.transition = 'opacity 500ms ease, stroke-width 500ms ease';
+      el.setAttribute('stroke-width', '3.5');
+      el.style.opacity = '.92';
     });
-    await delay(400);
+    await delay(600);
     reveal(c.querySelector('[data-cap]'));
   };
   return c;

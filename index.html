@@ -30,8 +30,8 @@ body{scroll-snap-type:y mandatory;overflow-y:auto;-webkit-overflow-scrolling:tou
 #deck{width:100%}
 .card{
   position:relative;
-  min-height:100vh;
-  min-height:100svh;
+  height:100vh;
+  height:100svh;
   width:100%;
   scroll-snap-align:start;
   scroll-snap-stop:always;
@@ -233,11 +233,8 @@ body{scroll-snap-type:y mandatory;overflow-y:auto;-webkit-overflow-scrolling:tou
   position:absolute;
   top:50%;
   transform:translate(-50%,-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  width:160px;
-  text-align:center;
+  width:22px;
+  height:22px;
 }
 .tl-dot{
   width:22px;
@@ -261,10 +258,16 @@ body{scroll-snap-type:y mandatory;overflow-y:auto;-webkit-overflow-scrolling:tou
   opacity:0;
   transition:opacity 400ms;
   line-height:1.25;
+  text-align:center;
+  left:50%;
+  margin-left:-80px;
 }
 .tl-event.in .tl-label{opacity:1}
 .tl-event.above .tl-label{bottom:calc(50% + 24px)}
 .tl-event.below .tl-label{top:calc(50% + 24px)}
+/* Edge-aware anchor: right side labels extend leftward; left side extend rightward */
+.tl-event.tl-right .tl-label{left:auto;right:0;margin-left:0;margin-right:-11px;text-align:right;width:180px}
+.tl-event.tl-left .tl-label{left:0;margin-left:-11px;text-align:left;width:180px}
 .tl-gw{
   font-family:var(--display);
   font-size:clamp(15px,1.9vw,20px);
@@ -453,9 +456,12 @@ body{scroll-snap-type:y mandatory;overflow-y:auto;-webkit-overflow-scrolling:tou
   display:grid;
   grid-template-columns:1.3fr 1fr;
   gap:clamp(24px,4vw,56px);
-  align-items:start;
+  align-items:center;
   margin-top:clamp(16px,2vh,28px);
 }
+.story-grid.story-stack{grid-template-columns:1fr}
+.story-visual{width:100%}
+.story-visual svg{display:block;margin:0 auto}
 @media (max-width:720px){.story-grid{grid-template-columns:1fr}}
 .story-title{
   font-family:var(--display);
@@ -989,8 +995,12 @@ function buildTimeline(label, events, opts={}){
   const eventHTML = events.map((e,i) => {
     const x = ((e.gw - minGW) / (maxGW - minGW)) * 100;
     const pos = i % 2 === 0 ? 'above' : 'below';
+    // Edge-aware label anchor: left-anchor on right edge, right-anchor on left edge
+    let anchor = 'mid';
+    if (x > 80) anchor = 'right';
+    else if (x < 20) anchor = 'left';
     return `
-      <div class="tl-event r-s ${pos}" data-i="${i}" style="left:${x}%">
+      <div class="tl-event r-s ${pos} tl-${anchor}" data-i="${i}" style="left:${x}%">
         <div class="tl-dot" style="background:${opts.accent||'#FF1493'}"></div>
         <div class="tl-label">
           <span class="tl-gw" style="color:${opts.accent||'#FF1493'}">GW${e.gw}</span>
@@ -1928,6 +1938,40 @@ function buildSenesi(){
 }
 
 // ---------- COUNTERFACTUALS ----------
+// Build a closing line summarising biggest movers in a counterfactual.
+function cfClosingLine(cf, real, kicker){
+  const realPos = eid => real.indexOf(String(eid)) + 1;
+  const movers = cf.map((row, i) => ({
+    eid: String(row.entry),
+    name: mgrShort(row.entry),
+    real: realPos(row.entry),
+    cfP: i + 1,
+    delta: realPos(row.entry) - (i + 1)
+  }));
+  const winner = movers[0];
+  const realWinner = real[0];
+  let lead;
+  if (winner.eid === String(realWinner)){
+    lead = `Even with ${kicker}, ${winner.name} still wins.`;
+  } else {
+    lead = `With ${kicker}, ${winner.name} takes the title from ${mgrShort(realWinner)}.`;
+  }
+  const ups = movers.filter(m => m.delta > 0).sort((a,b) => b.delta - a.delta);
+  const downs = movers.filter(m => m.delta < 0).sort((a,b) => a.delta - b.delta);
+  const parts = [];
+  if (ups.length){
+    const u = ups[0];
+    parts.push(`${u.name} climbs ${u.delta} place${u.delta>1?'s':''} to ${u.cfP}${ordSuf(u.cfP)}`);
+  }
+  if (downs.length){
+    const d = downs[0];
+    parts.push(`${d.name} drops ${Math.abs(d.delta)} to ${d.cfP}${ordSuf(d.cfP)}`);
+  }
+  const tail = parts.length ? parts.join('; ') + '.' : 'Nothing else moves.';
+  return `${lead} ${tail}`;
+}
+function ordSuf(n){ return n===1?'st':n===2?'nd':n===3?'rd':'th'; }
+
 function buildEveryonePlaysPete(){
   const c = el('section', 'card');
   c.style.background = '#0A0A0A';
@@ -2006,7 +2050,7 @@ function buildCfNoTransfers(){
     <div class="card-inner">
       <div class="award-tag r">COUNTERFACTUAL</div>
       <h2 class="award-name r">NO TRANSFERS, EVER.</h2>
-      <p class="award-explain r">If every manager fielded their original GW1 XI for all 37 weeks.</p>
+      <p class="award-explain r">If no waivers or trades. GW1 starting XI plus standard auto-subs, every week.</p>
       <div class="cf-grid">
         <div>
           <div class="cf-tbl-head">REAL</div>
@@ -2037,7 +2081,7 @@ function buildCfNoTransfers(){
           }).join('')}
         </div>
       </div>
-      <p class="closer r" data-c>If nobody touched their squad, Michael wins the league. Mark second. Geraint third. The waivers mattered.</p>
+      <p class="closer r" data-c>${cfClosingLine(cf, real, 'no waivers or trades')}</p>
     </div>`;
   c._animate = async () => {
     await delay(80);
@@ -2101,7 +2145,7 @@ function buildCfOptimal(){
           }).join('')}
         </div>
       </div>
-      <p class="closer r" data-c>Even with hindsight, Geraint still wins. Steven moves up one place. Everyone else stays.</p>
+      <p class="closer r" data-c>${cfClosingLine(cf, real, 'perfect hindsight on lineup selection')}</p>
     </div>`;
   c._animate = async () => {
     await delay(80);
@@ -2128,15 +2172,17 @@ function buildStory(opts){
   c.style.background = opts.bg || 'var(--offwhite)';
   c.style.color = opts.fg || 'var(--black)';
   const hasVisual = !!opts.visual;
+  // wide=true puts the visual below the prose (full width) — for wide timelines
+  const wide = opts.wide;
   c.innerHTML = `
     <div class="card-inner">
       <div class="story-tag r" style="color:${opts.accent||'inherit'}">${opts.tag}</div>
       <h2 class="story-title r">${opts.title}</h2>
-      <div class="story-grid">
+      <div class="story-grid${wide ? ' story-stack' : ''}">
         <div class="story-prose">
           ${opts.prose.map(p => `<p class="r">${p}</p>`).join('')}
         </div>
-        ${hasVisual ? `<div class="r" data-vis>${opts.visual}</div>` : ''}
+        ${hasVisual ? `<div class="r story-visual" data-vis>${opts.visual}</div>` : ''}
       </div>
     </div>`;
   c._animate = async () => {
@@ -2208,7 +2254,7 @@ function wlSparkline(eid, highlights){
 // Player points line chart
 function pointsLine(pid, signGWs){
   const pts = DATA.player_pts_by_gw[String(pid)] || {};
-  const W = 420, H = 160, PAD = 24;
+  const W = 720, H = 220, PAD = 32;
   const gws = DATA.last_gw;
   const maxV = Math.max(15, ...Object.values(pts));
   const xs = i => PAD + (i/(gws-1)) * (W - PAD*2);
@@ -2218,12 +2264,15 @@ function pointsLine(pid, signGWs){
     const v = pts[String(i)] || 0;
     pathPts.push(`${xs(i-1)},${ys(v)}`);
   }
-  let signLines = (signGWs||[]).map(g => `<line x1="${xs(g-1)}" y1="${PAD/2}" x2="${xs(g-1)}" y2="${H-PAD}" stroke="#FF1493" stroke-width="2" stroke-dasharray="3,3" opacity=".7"/><text x="${xs(g-1)}" y="${PAD/2-2}" font-family="var(--body)" font-weight="700" font-size="10" fill="#FF1493" text-anchor="middle">GW${g}</text>`).join('');
+  let signLines = (signGWs||[]).map(g => `<line x1="${xs(g-1)}" y1="${PAD/2}" x2="${xs(g-1)}" y2="${H-PAD}" stroke="#FF1493" stroke-width="2" stroke-dasharray="4,4" opacity=".8"/><text x="${xs(g-1)}" y="${PAD/2-4}" font-family="var(--body)" font-weight="800" font-size="12" fill="#FF1493" text-anchor="middle" letter-spacing=".5">SIGNED GW${g}</text>`).join('');
+  // colour adapts to bg via currentColor
   return `
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:500px">
-      <line x1="${PAD}" y1="${H-PAD}" x2="${W-PAD}" y2="${H-PAD}" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:720px">
+      <line x1="${PAD}" y1="${H-PAD}" x2="${W-PAD}" y2="${H-PAD}" stroke="currentColor" stroke-width="1" opacity=".25"/>
+      <text x="${PAD}" y="${H-PAD+18}" font-family="var(--body)" font-weight="700" font-size="11" fill="currentColor" opacity=".5">GW1</text>
+      <text x="${W-PAD}" y="${H-PAD+18}" font-family="var(--body)" font-weight="700" font-size="11" fill="currentColor" opacity=".5" text-anchor="end">GW${gws}</text>
       ${signLines}
-      <path class="story-line" d="M ${pathPts.join(' L ')}" stroke="#0A0A0A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="story-line" d="M ${pathPts.join(' L ')}" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   `;
 }
@@ -2231,23 +2280,51 @@ function pointsLine(pid, signGWs){
 // Lacroix/Mukiele timeline
 function signingTimeline(history){
   const gws = DATA.last_gw;
-  const W = 480, H = 110;
-  let evs = '';
+  const W = 760, H = 260, PAD = 36;
+  const trackY = H/2;
+  const xFor = gw => PAD + ((gw - 1)/(gws-1)) * (W - PAD*2);
+
+  // Assign each event to a slot (1, 2, 3 ...) above or below the track to
+  // avoid horizontal overlap. Same-GW events get stacked; close events get
+  // pushed further out.
+  const slots = []; // {x, y, slot}
   history.forEach((h, i) => {
-    const x = ((h.gw - 1)/(gws-1)) * (W - 40) + 20;
+    const x = xFor(h.gw);
+    const isPos = h.kind === 'sign' || h.kind === 'draft' || h.kind === 'trade-in';
+    let slot = 0;
+    while (true){
+      const dy = (isPos ? -1 : 1) * (44 + slot * 44);
+      // Check collision with previous slots
+      const collision = slots.some(s => Math.abs(s.x - x) < 26 && s.dy === dy);
+      if (!collision){
+        slots.push({x, dy, isPos, h, slot});
+        break;
+      }
+      slot++;
+      if (slot > 4) { slots.push({x, dy: (isPos?-1:1)*(44+slot*44), isPos, h, slot}); break; }
+    }
+  });
+
+  let evs = '';
+  slots.forEach(s => {
+    const h = s.h;
+    const x = s.x;
+    const y = trackY + s.dy;
     const eid = h.to || h.from;
     const col = MANAGER_HEX[String(eid)] || '#0A0A0A';
-    const sym = h.kind === 'sign' || h.kind === 'draft' || h.kind === 'trade-in' ? '+' : '–';
-    const isPos = sym === '+';
-    const y = isPos ? 40 : 80;
-    evs += `<line x1="${x}" y1="${y}" x2="${x}" y2="55" stroke="${col}" stroke-width="2" opacity=".4"/>`;
-    evs += `<circle cx="${x}" cy="${y}" r="11" fill="${col}"/>`;
-    evs += `<text x="${x}" y="${y+4}" font-family="var(--display)" font-size="13" fill="#0A0A0A" text-anchor="middle">${sym}</text>`;
-    evs += `<text x="${x}" y="${y + (isPos?-16:24)}" font-family="var(--body)" font-weight="700" font-size="9" fill="${col}" text-anchor="middle">GW${h.gw}</text>`;
+    const sym = s.isPos ? '+' : '−';
+    evs += `<line x1="${x}" y1="${trackY}" x2="${x}" y2="${y}" stroke="${col}" stroke-width="2" opacity=".5"/>`;
+    evs += `<circle cx="${x}" cy="${y}" r="15" fill="${col}"/>`;
+    evs += `<text x="${x}" y="${y+6}" font-family="var(--display)" font-size="20" fill="#0A0A0A" text-anchor="middle">${sym}</text>`;
+    const labelY = s.isPos ? y - 22 : y + 28;
+    evs += `<text x="${x}" y="${labelY}" font-family="var(--body)" font-weight="800" font-size="11" fill="${col}" text-anchor="middle" letter-spacing=".5">GW${h.gw}</text>`;
   });
+
   return `
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:520px">
-      <line x1="20" y1="55" x2="${W-20}" y2="55" stroke="rgba(0,0,0,.25)" stroke-width="2"/>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:720px">
+      <line x1="${PAD}" y1="${trackY}" x2="${W-PAD}" y2="${trackY}" stroke="rgba(0,0,0,.32)" stroke-width="2"/>
+      <text x="${PAD}" y="${trackY+5}" font-family="var(--body)" font-weight="700" font-size="11" fill="rgba(0,0,0,.45)" text-anchor="end" dx="-6">GW1</text>
+      <text x="${W-PAD}" y="${trackY+5}" font-family="var(--body)" font-weight="700" font-size="11" fill="rgba(0,0,0,.45)" text-anchor="start" dx="6">GW${gws}</text>
       ${evs}
     </svg>
   `;
@@ -2256,19 +2333,28 @@ function signingTimeline(history){
 // Bar chart of squad changes per gw (Michael)
 function barChart(data, accent){
   const gws = DATA.last_gw;
-  const W = 460, H = 160;
-  const xStep = (W - 40) / gws;
+  const W = 720, H = 220, PAD = 32;
+  const xStep = (W - PAD*2) / gws;
   const maxV = Math.max(...Object.values(data), 1);
   let bars = '';
   for (let g = 1; g <= gws; g++){
     const v = data[String(g)] || 0;
-    const h = (v/maxV) * (H - 40);
-    bars += `<rect x="${20 + (g-1)*xStep}" y="${H - 20 - h}" width="${xStep-2}" height="${h}" fill="${accent||'#0A0A0A'}"/>`;
+    const h = (v/maxV) * (H - PAD*2);
+    bars += `<rect x="${PAD + (g-1)*xStep}" y="${H - PAD - h}" width="${xStep-2}" height="${h}" fill="${accent||'currentColor'}"/>`;
+    if (v > 0){
+      bars += `<text x="${PAD + (g-1)*xStep + (xStep-2)/2}" y="${H - PAD - h - 4}" font-family="var(--body)" font-weight="700" font-size="10" fill="${accent||'currentColor'}" text-anchor="middle">${v}</text>`;
+    }
+  }
+  // gw labels every 5
+  let gwLabels = '';
+  for (let g = 1; g <= gws; g += 5){
+    gwLabels += `<text x="${PAD + (g-1)*xStep + (xStep-2)/2}" y="${H-10}" font-family="var(--body)" font-weight="700" font-size="11" fill="currentColor" opacity=".5" text-anchor="middle">${g}</text>`;
   }
   return `
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:520px">
-      <line x1="20" y1="${H-20}" x2="${W-20}" y2="${H-20}" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:720px">
+      <line x1="${PAD}" y1="${H-PAD}" x2="${W-PAD}" y2="${H-PAD}" stroke="currentColor" stroke-width="1" opacity=".25"/>
       ${bars}
+      ${gwLabels}
     </svg>
   `;
 }
@@ -2276,19 +2362,25 @@ function barChart(data, accent){
 // Position #1 stacked bar
 function weeksAtOneChart(){
   const data = DATA.weeks_at_one;
-  const W = 460, H = 140;
-  const entries = Object.keys(data).sort((a,b) => data[b] - data[a]);
+  // Add managers that never led with 0
+  const allEids = ['76226','76178','76218','76250','76238','76213'];
+  allEids.forEach(e => { if (!(e in data)) data[e] = 0; });
+  const W = 720, H = 360;
+  const entries = allEids.slice().sort((a,b) => (data[b]||0) - (data[a]||0));
   const maxV = Math.max(...Object.values(data));
-  const barH = 28;
+  const barH = 40;
+  const rowH = 54;
+  const labelW = 150;
   let bars = '';
   entries.forEach((eid, i) => {
-    const w = (data[eid]/maxV) * (W - 130);
-    bars += `<rect x="120" y="${i*36+10}" width="${w}" height="${barH}" fill="${MANAGER_HEX[eid]}"/>`;
-    bars += `<text x="115" y="${i*36+10+barH-8}" font-family="var(--bebas)" font-size="15" fill="#0A0A0A" text-anchor="end">${mgrShort(eid).toUpperCase()}</text>`;
-    bars += `<text x="${130+w}" y="${i*36+10+barH-8}" font-family="var(--display)" font-size="18" fill="#0A0A0A">${data[eid]}</text>`;
+    const v = data[eid] || 0;
+    const w = maxV > 0 ? (v/maxV) * (W - labelW - 80) : 0;
+    bars += `<text x="${labelW-10}" y="${i*rowH + 28}" font-family="var(--bebas)" font-size="22" fill="currentColor" text-anchor="end">${mgrShort(eid).toUpperCase()}</text>`;
+    bars += `<rect x="${labelW}" y="${i*rowH + 8}" width="${w}" height="${barH}" fill="${MANAGER_HEX[eid]}" rx="3"/>`;
+    bars += `<text x="${labelW + w + 12}" y="${i*rowH + 36}" font-family="var(--display)" font-size="28" fill="currentColor">${v}</text>`;
   });
   return `
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:500px">
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;max-width:720px">
       ${bars}
     </svg>
   `;
@@ -2299,11 +2391,11 @@ function wdlGrid(eid, label){
   const m = mgr(eid);
   const cells = m.h2h.map(h => {
     const col = h.result === 'W' ? '#00C853' : (h.result === 'L' ? '#FF1493' : '#FFEB3B');
-    return `<div style="width:14px;height:14px;background:${col};border-radius:2px" title="GW${h.gw} ${h.result}"></div>`;
+    return `<div style="width:18px;height:18px;background:${col};border-radius:3px" title="GW${h.gw} ${h.result}"></div>`;
   }).join('');
   return `
-    <div style="font-family:var(--body);font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;opacity:.7">${label}</div>
-    <div style="display:grid;grid-template-columns:repeat(13,14px);gap:4px;max-width:250px">${cells}</div>
+    <div style="font-family:var(--body);font-weight:800;font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;opacity:.85">${label}</div>
+    <div style="display:grid;grid-template-columns:repeat(13,18px);gap:5px">${cells}</div>
   `;
 }
 
@@ -2353,7 +2445,9 @@ function buildClosing(){
   c.style.background = 'linear-gradient(180deg, #0A0A0A 0%, #1a0a1a 100%)';
   c.style.color = '#F4F1EA';
   // Dry fact: 348 transactions for a season with 3 trades.
-  const factText = `Across 114 H2H matches this season, ${DATA.close_matches} were decided by five points or fewer.`;
+  // Compute number of finished matches
+  const totalMatches = Object.values(DATA.managers).reduce((s, m) => s + (m.h2h ? m.h2h.length : 0), 0) / 2;
+  const factText = `Across ${totalMatches} H2H matches this season, ${DATA.close_matches} were decided by five points or fewer.`;
   const words = factText.split(' ');
   c.innerHTML = `
     <div class="card-inner">
@@ -2393,12 +2487,12 @@ function buildDeck(){
 
   // 6a. Our Season Timeline
   const ourEvents = [
-    {gw: 2, label: 'Mark briefly tops table'},
-    {gw: 4, label: 'Trade #1: Grealish↔Marmoush'},
-    {gw: 9, label: 'Trade #2: Bruno/Sarr ↔ Palmer/Eze/Ekitiké'},
-    {gw: 15, label: 'Highest single GW: Chris 93'},
-    {gw: 18, label: 'Trade #3: Isak ↔ Evanilson'},
-    {gw: 29, label: 'Peter\'s last transaction'},
+    {gw: 2, label: 'Mark tops table'},
+    {gw: 4, label: 'Trade #1'},
+    {gw: 9, label: 'Trade #2'},
+    {gw: 15, label: 'Chris hits 93'},
+    {gw: 18, label: 'Trade #3'},
+    {gw: 29, label: 'Peter goes quiet'},
   ];
   list.push(buildTimeline('OUR SEASON', ourEvents, {
     bg: 'var(--offwhite)', fg: 'var(--black)', accent: '#FF1493',
@@ -2513,6 +2607,7 @@ function buildDeck(){
       'He never went all-in on a single club again.',
     ],
     visual: barChart(DATA.squad_changes['76238'] || {}, '#0A0A0A'),
+    wide: true,
   }));
 
   // Story 4: Lacroix
@@ -2526,6 +2621,7 @@ function buildDeck(){
       'Nobody held him for long. Nobody let him go for long.',
     ],
     visual: signingTimeline(DATA.lacroix_history),
+    wide: true,
   }));
 
   // Story 5: The Cliff (Dewsbury-Hall)
@@ -2539,6 +2635,7 @@ function buildDeck(){
       'Worst-timed signing of the season. The chart is the joke.',
     ],
     visual: pointsLine(DATA.dewsbury_pid, [16]),
+    wide: true,
   }));
 
   // Story 6: Late Panic (Geraint)
@@ -2552,6 +2649,7 @@ function buildDeck(){
       'The man hadn\'t blinked all year. Then he couldn\'t stop fiddling.',
     ],
     visual: barChart(mgr('76226').tx_by_gw, '#0A0A0A'),
+    wide: true,
   }));
 
   // Story 7: Senesi Loop
@@ -2564,6 +2662,7 @@ function buildDeck(){
       'A relationship defined by mutual inability to part ways.',
     ],
     visual: signingTimeline(DATA.senesi_history),
+    wide: true,
   }));
 
   // Story 8: Decided in October
@@ -2576,6 +2675,7 @@ function buildDeck(){
       'After GW16, the leadership was set. The rest of the season for everyone else was a fight for second.',
     ],
     visual: weeksAtOneChart(),
+    wide: true,
   }));
 
   // Story 9: Twenty Wins, Two Draws
@@ -2587,10 +2687,11 @@ function buildDeck(){
       'Mark and Steven won exactly the same number of H2H matches — 20 each. Identical W column.',
       'The only difference: Mark drew twice, Steven drew zero times. That\'s the entire gap between 2nd and 3rd place. Two draws across a 38-week season.',
     ],
-    visual: `<div style="display:grid;grid-template-columns:1fr;gap:24px;max-width:280px">
+    visual: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:620px;margin:0 auto">
       <div>${wdlGrid('76178', 'Mark — 20W · 2D · 15L')}</div>
       <div>${wdlGrid('76218', 'Steven — 20W · 0D · 17L')}</div>
     </div>`,
+    wide: true,
   }));
 
   // Story 10: Mukiele Migration
@@ -2603,6 +2704,7 @@ function buildDeck(){
       'Less of a hot potato than Lacroix, more of a regifted Christmas present. Four signings, four theories about Sunderland\'s defence.',
     ],
     visual: signingTimeline(DATA.mukiele_history),
+    wide: true,
   }));
 
   // 47.

@@ -6,29 +6,27 @@
 <title>Craig/McDowell/Hopkins Cup — End of Season 2025/26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green: #00C853;
-  --white: #FFFFFF;
-  --black: #0A0A0A;
+  --green:  #00C853;
   --yellow: #FFEB3B;
-  --pink: #FF1493;
+  --pink:   #FF1493;
   --purple: #6A1B9A;
   --orange: #FF6F00;
-  --cyan: #00BCD4;
-  --lime: #C6FF00;
+  --cyan:   #00BCD4;
+  --lime:   #C6FF00;
+  --paper:  #F4F1EA;
+  --ink:    #0A0A0A;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; width: 100%; overflow: hidden; background: #000; color: var(--white); font-family: 'Inter', system-ui, sans-serif; }
-body { font-size: 16px; line-height: 1.3; }
+html, body { height: 100%; width: 100%; overflow: hidden; background: var(--ink); color: var(--paper); font-family: 'Inter', system-ui, sans-serif; }
+body { font-size: 16px; line-height: 1.3; -webkit-font-smoothing: antialiased; }
 
 #scroller {
-  height: 100vh;
-  height: 100dvh;
+  height: 100vh; height: 100dvh;
   width: 100vw;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-y: scroll; overflow-x: hidden;
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
 }
@@ -36,8 +34,7 @@ body { font-size: 16px; line-height: 1.3; }
 #scroller { scrollbar-width: none; }
 
 .card {
-  height: 100vh;
-  height: 100dvh;
+  height: 100vh; height: 100dvh;
   width: 100vw;
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -45,305 +42,595 @@ body { font-size: 16px; line-height: 1.3; }
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: clamp(20px, 5vw, 36px);
-  color: var(--black);
 }
+.card > div { flex: 1; min-height: 0; width: 100%; }
 
-.card.dark { color: var(--white); }
-.display, .h1, .h2 { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif; letter-spacing: -0.01em; line-height: 0.92; text-transform: uppercase; font-weight: 400; }
-.h1 { font-size: clamp(56px, 18vw, 140px); }
-.h2 { font-size: clamp(44px, 12vw, 96px); }
-.h3 { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif; font-size: clamp(28px, 7vw, 56px); text-transform: uppercase; line-height: 1; letter-spacing: 0; }
-.kicker { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; font-size: 11px; opacity: 0.85; }
-.body { font-family: 'Inter', sans-serif; font-size: clamp(16px, 4.6vw, 20px); font-weight: 600; line-height: 1.25; }
-.tiny { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; opacity: 0.8; }
-
-.pad { padding-left: clamp(16px, 5vw, 32px); padding-right: clamp(16px, 5vw, 32px); }
-
-/* Animation utilities — applied when .in is added */
-.fade-up    { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
-.card.in .fade-up { opacity: 1; transform: none; }
-.slide-l    { opacity: 0; transform: translateX(-80px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
-.card.in .slide-l { opacity: 1; transform: none; }
-.slide-r    { opacity: 0; transform: translateX(80px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
-.card.in .slide-r { opacity: 1; transform: none; }
-.pop        { opacity: 0; transform: scale(0.6); transition: opacity .6s ease, transform .7s cubic-bezier(.2,1.3,.4,1); }
-.card.in .pop { opacity: 1; transform: scale(1); }
-
-/* Stagger helper */
-.stagger > * { transition-delay: 0s; }
-.card.in .stagger > *:nth-child(1)  { transition-delay: .05s; }
-.card.in .stagger > *:nth-child(2)  { transition-delay: .15s; }
-.card.in .stagger > *:nth-child(3)  { transition-delay: .25s; }
-.card.in .stagger > *:nth-child(4)  { transition-delay: .35s; }
-.card.in .stagger > *:nth-child(5)  { transition-delay: .45s; }
-.card.in .stagger > *:nth-child(6)  { transition-delay: .55s; }
-.card.in .stagger > *:nth-child(7)  { transition-delay: .65s; }
-.card.in .stagger > *:nth-child(8)  { transition-delay: .75s; }
-
-/* Backgrounds */
-.bg-1 { background: radial-gradient(120% 80% at 100% 0%, var(--yellow) 0%, var(--orange) 45%, var(--pink) 90%); color: var(--black); }
-.bg-2 { background: linear-gradient(160deg, var(--cyan) 0%, var(--green) 100%); color: var(--black); }
-.bg-3 { background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%); color: var(--white); }
-.bg-4 { background: radial-gradient(80% 100% at 50% 0%, var(--lime) 0%, var(--green) 50%, #006B33 100%); color: var(--black); }
-.bg-5 { background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%); color: var(--white); }
-.bg-6 { background: linear-gradient(135deg, var(--purple) 0%, #100016 100%); color: var(--white); }
-.bg-7 { background: radial-gradient(circle at 20% 20%, var(--yellow), var(--lime) 60%, var(--green) 100%); color: var(--black); }
-.bg-8 { background: linear-gradient(170deg, var(--orange), var(--pink)); color: var(--white); }
-.bg-9 { background: linear-gradient(180deg, var(--cyan), #0066B3); color: var(--white); }
-.bg-10 { background: radial-gradient(circle at 80% 90%, var(--pink), var(--purple) 60%, #1a001a 100%); color: var(--white); }
-.bg-11 { background: linear-gradient(135deg, var(--lime), var(--cyan)); color: var(--black); }
-.bg-12 { background: radial-gradient(circle at 50% 50%, var(--yellow), var(--orange) 60%, #4d2200 100%); color: var(--black); }
-.bg-mesh-pink { background:
-  radial-gradient(circle at 20% 20%, var(--pink) 0%, transparent 50%),
-  radial-gradient(circle at 80% 30%, var(--orange) 0%, transparent 55%),
-  radial-gradient(circle at 30% 90%, var(--purple) 0%, transparent 50%),
-  linear-gradient(135deg, #ff2e63, #6a1b9a);
-  color: var(--white);
-}
-.bg-mesh-citrus {
-  background:
-    radial-gradient(circle at 80% 10%, var(--yellow) 0%, transparent 50%),
-    radial-gradient(circle at 10% 80%, var(--cyan) 0%, transparent 55%),
-    linear-gradient(135deg, var(--lime), var(--green));
-  color: var(--black);
-}
-
-/* Specific helpers */
-.fill { flex: 1; display: flex; flex-direction: column; }
-.center { align-items: center; justify-content: center; text-align: center; }
-
-.row { display: flex; }
-.col { display: flex; flex-direction: column; }
-.between { justify-content: space-between; }
-.gap-s { gap: 6px; }
-.gap-m { gap: 14px; }
-.gap-l { gap: 28px; }
+/* Typography */
+.display { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif; letter-spacing: -0.005em; line-height: 0.9; text-transform: uppercase; font-weight: 400; }
+.mono { font-family: 'JetBrains Mono', 'Courier New', monospace; font-weight: 800; letter-spacing: -0.02em; }
+.body-txt { font-family: 'Inter', sans-serif; font-weight: 600; line-height: 1.3; }
+.caption { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(10px, 1.4vw, 13px); }
+.label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(10px, 1.2vw, 12px); opacity: 0.75; }
 
 /* Loading */
 #loading {
-  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, var(--pink), var(--purple)); color: var(--white);
-  z-index: 9999; font-family: 'Anton', sans-serif; font-size: 36px; letter-spacing: 0.04em;
+  position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--ink); color: var(--paper); z-index: 9999;
   transition: opacity 400ms ease;
 }
 #loading.gone { opacity: 0; pointer-events: none; }
+#loading .lt { font-family: 'Anton', sans-serif; font-size: clamp(32px, 6vw, 48px); letter-spacing: 0.02em; }
+#loading .ls { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.2em; font-size: 11px; opacity: 0.6; margin-top: 12px; text-transform: uppercase; }
+#loading .lb { width: 180px; height: 3px; background: rgba(255,255,255,0.1); margin-top: 24px; overflow: hidden; }
+#loading .lb i { display: block; width: 30%; height: 100%; background: var(--lime); animation: lb 1.4s ease-in-out infinite; }
+@keyframes lb { 0% { transform: translateX(-100%); } 100% { transform: translateX(400%); } }
 
-/* Table */
-.tbl {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(15px, 4.6vw, 22px);
-  line-height: 1;
-  letter-spacing: 0.01em;
-}
-.tbl th, .tbl td {
-  padding: clamp(14px, 2.5vh, 28px) 4px;
-  text-align: right;
-  border-bottom: 3px solid currentColor;
-}
-.tbl th { font-size: 11px; opacity: 0.7; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; border-bottom-width: 2px; }
-.tbl td.l, .tbl th.l { text-align: left; }
-.tbl tr { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1); }
-.card.in .tbl tr.row-anim { opacity: 1; transform: none; }
-.tbl .pos { font-size: clamp(22px, 7vw, 32px); width: 1.4em; opacity: 0.9; }
-.tbl .name { font-size: clamp(18px, 5.3vw, 28px); }
-.tbl .team { font-size: 11px; opacity: 0.65; font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
-.tbl .pts { font-size: clamp(26px, 8vw, 40px); }
-.tbl .gold { color: var(--yellow); }
-.tbl tr.champ td { color: var(--yellow); }
-.tbl.dark tr.champ td { color: var(--yellow); }
+/* Animation primitives — gated by .in on the card */
+.anim { opacity: 0; transition-timing-function: cubic-bezier(.2,.7,.2,1); }
+.fade { transition: opacity 600ms ease; }
+.up   { transform: translateY(28px); transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
+.left { transform: translateX(-40px); transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
+.right{ transform: translateX(40px);  transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
+.scale{ transform: scale(0.78); transition: opacity 500ms ease, transform 600ms cubic-bezier(.34,1.4,.5,1); }
+.card.in .anim { opacity: 1; transform: translate(0,0) scale(1); }
 
-/* Race chart */
-.race-wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; align-items: stretch; justify-content: stretch; margin: 8px 0; }
-.race-svg { width: 100%; height: 100%; flex: 1; min-height: 0; display: block; }
-.race-svg .gw-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; fill: rgba(255,255,255,0.6); }
-.race-svg .pos-label { font-family: 'Anton', sans-serif; font-size: 22px; fill: rgba(255,255,255,0.45); }
-.race-svg path { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 4000; stroke-dashoffset: 4000; transition: stroke-dashoffset 1800ms cubic-bezier(.2,.7,.2,1); }
-.card.in .race-svg path { stroke-dashoffset: 0; }
-.race-svg .endpoint { opacity: 0; transition: opacity 600ms ease 1500ms; }
-.card.in .race-svg .endpoint { opacity: 1; }
-.race-svg .endpoint-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; }
-.race-svg .annot { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 700; fill: rgba(255,255,255,0.8); }
-.race-svg .annot-line { stroke: rgba(255,255,255,0.3); stroke-width: 1; stroke-dasharray: 3 3; }
-
-/* Manager card */
-.mgr-rank {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(120px, 40vw, 280px);
-  line-height: 0.8;
-  letter-spacing: -0.03em;
-  position: absolute;
-  right: -10px;
-  top: -10px;
-  opacity: 0.18;
-  pointer-events: none;
-}
-.mgr-name { font-family: 'Anton', sans-serif; font-size: clamp(40px, 11vw, 80px); line-height: 0.95; }
-.mgr-team { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 4vw, 18px); opacity: 0.85; letter-spacing: 0.04em; }
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.stat {
-  border: 2px solid currentColor;
-  border-radius: 6px;
-  padding: 10px 12px;
-  display: flex; flex-direction: column;
-  background: rgba(255,255,255,0.06);
-}
-.dark .stat { background: rgba(255,255,255,0.06); }
-.light .stat { background: rgba(0,0,0,0.06); }
-.stat .label { font-family: 'Space Grotesk', sans-serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; font-weight: 700; }
-.stat .val { font-family: 'Anton', sans-serif; font-size: clamp(22px, 7vw, 34px); line-height: 1; margin-top: 4px; }
-.stat .sub { font-family: 'Space Grotesk', sans-serif; font-size: 11px; opacity: 0.78; margin-top: 4px; font-weight: 600; }
-.verdict {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: clamp(15px, 4.3vw, 20px);
-  line-height: 1.25;
-  padding: 12px 14px;
-  border-left: 4px solid currentColor;
-  background: rgba(0,0,0,0.16);
-}
-.dark .verdict { background: rgba(255,255,255,0.10); }
-
-/* Trade card */
-.trade-box { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: stretch; }
-.trade-side {
-  border: 3px solid currentColor; padding: 12px; border-radius: 8px;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.trade-arrow { font-family: 'Anton', sans-serif; font-size: 36px; align-self: center; opacity: 0.7; }
-.trade-mgr { font-family: 'Anton', sans-serif; font-size: clamp(22px, 6vw, 30px); line-height: 1; }
-.trade-player { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.1; }
-.trade-pts { font-family: 'Anton', sans-serif; font-size: clamp(20px, 6vw, 30px); line-height: 1; }
-.verdict-pill {
-  display: inline-block;
-  font-family: 'Anton', sans-serif;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--yellow); color: var(--black);
-  font-size: clamp(20px, 6vw, 28px);
-  letter-spacing: 0.02em;
-}
-
-/* Award giant text */
-.award-name {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(54px, 14vw, 110px);
-  line-height: 0.9;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-.award-winner {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(36px, 9vw, 60px);
-  line-height: 1;
-  text-transform: uppercase;
-}
-.award-team {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: clamp(14px, 4vw, 18px);
-  opacity: 0.85;
-}
-.award-story {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
-  font-size: clamp(16px, 4.6vw, 20px);
-  line-height: 1.3;
-  max-width: 600px;
-}
-
-.giant-num {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(120px, 38vw, 280px);
-  line-height: 0.85;
-  letter-spacing: -0.03em;
-}
-
-/* Counterfactual table */
-.cf-tbl {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(14px, 4.4vw, 18px);
-}
-.cf-tbl th, .cf-tbl td {
-  padding: 9px 4px;
-  text-align: right;
-  border-bottom: 2px solid currentColor;
-}
-.cf-tbl th { font-family: 'Space Grotesk', sans-serif; font-size: 10px; letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
-.cf-tbl td.l, .cf-tbl th.l { text-align: left; }
-.cf-tbl .name { font-size: clamp(16px, 4.7vw, 22px); }
-.cf-tbl .arrow { font-family: 'Anton', sans-serif; font-size: 18px; }
-.cf-tbl .up { color: var(--lime); }
-.cf-tbl .down { color: var(--pink); }
-.cf-tbl .same { opacity: 0.4; }
-
-/* Aggregate */
-.agg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.agg-cell {
-  border: 2px solid currentColor;
-  border-radius: 8px;
-  padding: 14px;
-  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  background: rgba(255,255,255,0.08);
-  min-height: 110px;
-}
-.agg-cell .num { font-family: 'Anton', sans-serif; font-size: clamp(36px, 11vw, 58px); line-height: 0.95; }
-.agg-cell .lab { font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; font-weight: 700; margin-top: 4px; line-height: 1.2; }
-
-/* Progress nav dots */
-#nav { position: fixed; right: 8px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: 4px; pointer-events: none; }
-.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background .2s, height .2s; }
+/* Side-scroll nav progress */
+#nav { position: fixed; right: 6px; top: 50%; transform: translateY(-50%); z-index: 30; display: flex; flex-direction: column; gap: 3px; pointer-events: none; }
+.nav-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: background .2s, height .2s; }
+.nav-dot.dark { background: rgba(0,0,0,0.2); }
 .nav-dot.active { background: var(--yellow); height: 14px; border-radius: 2px; }
 
-/* Card pagination indicator (bottom-left, subtle) */
-.pgind { position: absolute; bottom: 10px; left: 12px; font-family: 'Space Grotesk', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.35; font-weight: 700; pointer-events: none; }
-.pgind-r { position: absolute; bottom: 10px; right: 12px; font-family: 'Space Grotesk', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.35; font-weight: 700; pointer-events: none; }
-
-/* Big number cards */
-.big-stack { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-
-/* Smooth scroll hint pulse on first card */
-.hint {
-  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-  font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
-  opacity: 0; animation: pulse 2.4s ease-in-out 1.5s infinite;
+/* ============================================================
+   CARD 1: COLD OPEN
+   ============================================================ */
+.c-open {
+  background: linear-gradient(160deg, #FF1493 0%, #FF6F00 100%);
+  color: var(--paper);
+  padding: clamp(24px, 5vw, 56px);
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 0; transform: translate(-50%, 10px); }
-  50%      { opacity: 0.85; transform: translate(-50%, 0); }
+.c-open .marker { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.3em; font-size: 11px; opacity: 0.9; text-transform: uppercase; }
+.c-open .stack {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.c-open .stack .line {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(72px, 18vw, 200px);
+  line-height: 0.88;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+}
+.c-open .stack .line .slash { color: rgba(0,0,0,0.55); margin-right: 6px; }
+.c-open .stack .line.l3 { color: var(--ink); }
+.c-open .sub { display: flex; align-items: baseline; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
+.c-open .sub .right-block { text-align: right; }
+.c-open .sub .right-block b { font-family: 'Anton', sans-serif; font-size: clamp(24px, 4vw, 38px); display: block; letter-spacing: 0.01em; line-height: 1; }
+.c-open .sub .right-block s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; }
+/* per-line entry */
+.c-open .stack .line { opacity: 0; transform: translateY(40px); transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+.card.in .c-open .stack .line { opacity: 1; transform: none; }
+.card.in .c-open .stack .l1 { transition-delay: 200ms; }
+.card.in .c-open .stack .l2 { transition-delay: 500ms; }
+.card.in .c-open .stack .l3 { transition-delay: 800ms; }
+
+/* ============================================================
+   INTERSTITIAL
+   ============================================================ */
+.c-intro {
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(20px, 5vw, 48px);
+  text-align: center;
+}
+.c-intro .text {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(48px, 11vw, 130px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  max-width: 920px;
+}
+.c-intro .tag { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.2em; font-size: 11px; text-transform: uppercase; margin-bottom: 18px; opacity: 0.75; }
+
+/* ============================================================
+   CARD 3: FINAL TABLE (scoreboard)
+   ============================================================ */
+.c-table {
+  background: var(--ink);
+  color: var(--paper);
+  display: flex; flex-direction: column;
+  padding: clamp(20px, 5vw, 56px);
+}
+.c-table .topline { display: flex; align-items: baseline; justify-content: space-between; }
+.c-table .topline h2 { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 90px); line-height: 1; }
+.scoreboard {
+  flex: 1; margin-top: clamp(16px, 3vh, 30px);
+  display: flex; flex-direction: column;
+  border-top: 4px solid var(--green);
+  border-bottom: 4px solid var(--green);
+}
+.scoreboard .hdr {
+  display: grid;
+  grid-template-columns: 70px 1fr 56px 56px 56px 96px;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--green);
+  color: var(--ink);
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.16em; font-size: clamp(10px, 1.3vw, 13px); text-transform: uppercase;
+}
+.scoreboard .hdr .l { text-align: left; }
+.scoreboard .hdr .r { text-align: right; }
+.scoreboard .row {
+  display: grid;
+  grid-template-columns: 70px 1fr 56px 56px 56px 96px;
+  align-items: center;
+  padding: clamp(10px, 2.4vh, 22px) 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1);
+}
+.scoreboard .row:last-child { border-bottom: 0; }
+.card.in .scoreboard .row { opacity: 1; transform: none; }
+.card.in .scoreboard .row:nth-child(2) { transition-delay: 100ms; }
+.card.in .scoreboard .row:nth-child(3) { transition-delay: 250ms; }
+.card.in .scoreboard .row:nth-child(4) { transition-delay: 400ms; }
+.card.in .scoreboard .row:nth-child(5) { transition-delay: 550ms; }
+.card.in .scoreboard .row:nth-child(6) { transition-delay: 700ms; }
+.card.in .scoreboard .row:nth-child(7) { transition-delay: 850ms; }
+.scoreboard .pos { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(36px, 7vw, 64px); letter-spacing: -0.04em; line-height: 1; color: var(--paper); }
+.scoreboard .row.champ .pos, .scoreboard .row.champ .total { color: var(--yellow); }
+.scoreboard .mgr { display: flex; flex-direction: column; }
+.scoreboard .mgr .nm { font-family: 'Anton', sans-serif; font-size: clamp(20px, 4.4vw, 32px); line-height: 1; }
+.scoreboard .mgr .tm { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(10px, 1.5vw, 13px); opacity: 0.6; margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+.scoreboard .wdl { font-family: 'Anton', sans-serif; font-size: clamp(18px, 3.6vw, 28px); text-align: right; opacity: 0.85; }
+.scoreboard .total { font-family: 'Anton', sans-serif; font-size: clamp(30px, 6vw, 52px); text-align: right; line-height: 1; }
+.c-table .foot { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; }
+.c-table .foot .left, .c-table .foot .right { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.5; }
+
+/* ============================================================
+   CARD 5: RACE CHART
+   ============================================================ */
+.c-race { background: var(--ink); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-race h2 { font-family: 'Anton', sans-serif; font-size: clamp(34px, 7vw, 64px); line-height: 1; margin-top: 6px; }
+.c-race .race-wrap { flex: 1; margin: 14px 0; display: flex; min-height: 0; }
+.race-svg { width: 100%; height: 100%; display: block; }
+.race-svg .gw-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; fill: rgba(255,255,255,0.45); }
+.race-svg .pos-label { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 22px; fill: rgba(255,255,255,0.32); }
+.race-svg path.race-line { fill: none; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 4500; stroke-dashoffset: 4500; }
+.card.in .race-svg path.race-line { animation: draw 600ms ease-out forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.race-svg .endpoint { opacity: 0; transition: opacity 400ms ease; }
+.race-svg .endpoint.in { opacity: 1; }
+.race-svg .annot-line { stroke: rgba(255,255,255,0.25); stroke-width: 1; stroke-dasharray: 3 4; }
+.race-svg .annot { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; fill: rgba(255,255,255,0.85); }
+.c-race .race-caption { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(13px, 1.8vw, 16px); opacity: 0.85; }
+
+/* ============================================================
+   CARD 6: TIMELINE
+   ============================================================ */
+.c-timeline { background: var(--paper); color: var(--ink); padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; }
+.c-timeline h2 { font-family: 'Anton', sans-serif; font-size: clamp(36px, 7vw, 72px); line-height: 1; margin-top: 4px; }
+.c-timeline .tl-wrap { flex: 1; margin-top: 16px; position: relative; overflow: hidden; min-height: 0; display: flex; }
+.tl-svg { width: 100%; height: 100%; display: block; flex: 1; }
+.tl-svg .axis { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+.card.in .tl-svg .axis { animation: draw 1500ms ease-out forwards; animation-delay: 200ms; }
+.tl-svg .gw-mark { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12px; fill: var(--ink); opacity: 0.55; }
+.tl-svg .ev { opacity: 0; transition: opacity 350ms ease; }
+.tl-svg .ev.in { opacity: 1; }
+.tl-svg .ev-dot { stroke-width: 2; }
+.tl-svg .ev-line { stroke: rgba(0,0,0,0.18); stroke-width: 1; stroke-dasharray: 2 3; }
+.tl-svg .ev-label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 10px; fill: var(--ink); }
+.tl-svg .ev-label.pl { fill: var(--purple); }
+.tl-svg .track-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--ink); }
+
+/* ============================================================
+   CARD 8: HANDS-OFF (3 giant numbers)
+   ============================================================ */
+.c-handsoff { background: var(--green); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-handsoff .ho-stack {
+  flex: 1; display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: clamp(8px, 1.6vh, 18px);
+  margin-top: 14px;
+}
+.c-handsoff .ho-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,0.3); }
+.c-handsoff .ho-row:last-child { border-bottom: 0; }
+.c-handsoff .ho-num { font-family: 'Anton', sans-serif; font-size: clamp(110px, 24vw, 260px); line-height: 0.82; letter-spacing: -0.02em; }
+.c-handsoff .ho-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.12em; font-size: clamp(12px, 1.6vw, 16px); text-transform: uppercase; max-width: 180px; text-align: right; }
+.c-handsoff .ho-cap { font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.5vw, 38px); line-height: 1.05; max-width: 720px; }
+
+/* ============================================================
+   TRADE CARDS
+   ============================================================ */
+.c-trade { padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; color: var(--ink); }
+.c-trade .topline { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+.c-trade .topline h2 { font-family: 'Anton', sans-serif; font-size: clamp(32px, 6.5vw, 56px); line-height: 1; }
+.c-trade .swap {
+  flex: 1; margin-top: 18px; min-height: 0;
+  display: grid; grid-template-columns: 1fr 56px 1fr; gap: 12px; align-items: stretch;
+}
+.c-trade .col-side { display: flex; flex-direction: column; gap: 10px; padding: 14px; background: rgba(0,0,0,0.07); border-radius: 14px; }
+.c-trade.dark .col-side { background: rgba(255,255,255,0.10); }
+.c-trade .col-mgr { font-family: 'Anton', sans-serif; font-size: clamp(20px, 4.4vw, 30px); line-height: 1; }
+.c-trade .col-tag { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; opacity: 0.7; text-transform: uppercase; }
+.c-trade .player { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: rgba(255,255,255,0.55); border-radius: 8px; }
+.c-trade.dark .player { background: rgba(0,0,0,0.30); }
+.c-trade .player .pname { font-family: 'Anton', sans-serif; font-size: clamp(18px, 3.5vw, 24px); line-height: 1; }
+.c-trade .player .pteam { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 10px; opacity: 0.6; letter-spacing: 0.06em; }
+.c-trade .player .ppts { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(18px, 3.8vw, 26px); }
+.c-trade .arrow { display: flex; align-items: center; justify-content: center; }
+.c-trade .arrow svg { width: 100%; max-width: 56px; height: auto; opacity: 0; transition: opacity 600ms ease; }
+.card.in .c-trade .arrow svg { opacity: 1; transition-delay: 700ms; }
+.c-trade .col-total { margin-top: auto; font-family: 'Anton', sans-serif; font-size: clamp(22px, 5.2vw, 36px); text-align: right; }
+.c-trade .verdict {
+  margin-top: 16px;
+  display: flex; justify-content: flex-end; align-items: center; gap: 14px;
+}
+.c-trade .stamp {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(28px, 6.2vw, 42px);
+  padding: 6px 14px;
+  border: 4px solid currentColor;
+  letter-spacing: 0.08em;
+  transform: rotate(-6deg) scale(0.6);
+  opacity: 0;
+  transition: opacity 400ms ease, transform 500ms cubic-bezier(.34, 1.6, .4, 1);
+}
+.card.in .c-trade .stamp { opacity: 1; transform: rotate(-6deg) scale(1); transition-delay: 1500ms; }
+.c-trade .verdict-line { font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700; font-size: clamp(13px, 1.8vw, 17px); max-width: 360px; text-align: right; }
+.c-trade .col-side.left  { opacity: 0; transform: translateX(-20px); transition: opacity 600ms ease, transform 700ms cubic-bezier(.2,.7,.2,1); }
+.c-trade .col-side.right { opacity: 0; transform: translateX(20px);  transition: opacity 600ms ease, transform 700ms cubic-bezier(.2,.7,.2,1); }
+.card.in .c-trade .col-side.left  { opacity: 1; transform: none; transition-delay: 200ms; }
+.card.in .c-trade .col-side.right { opacity: 1; transform: none; transition-delay: 1000ms; }
+
+/* ============================================================
+   MANAGER CARDS
+   ============================================================ */
+.c-mgr { padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.c-mgr .watermark {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  right: -6vw;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(260px, 56vw, 700px);
+  line-height: 0.78;
+  opacity: 0.10;
+  pointer-events: none;
+  letter-spacing: -0.06em;
+}
+.c-mgr.light .watermark { color: rgba(0,0,0,0.16); }
+.c-mgr.dark .watermark { color: rgba(255,255,255,0.18); }
+.c-mgr .head { position: relative; z-index: 2; }
+.c-mgr .head .role { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.16em; font-size: 11px; text-transform: uppercase; opacity: 0.75; }
+.c-mgr .head .first { font-family: 'Anton', sans-serif; font-size: clamp(60px, 12vw, 120px); line-height: 0.95; letter-spacing: -0.01em; margin-top: 4px; }
+.c-mgr .head .team { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 2vw, 20px); margin-top: 6px; letter-spacing: 0.04em; }
+.c-mgr .head .record { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(14px, 1.8vw, 18px); margin-top: 10px; opacity: 0.85; }
+.c-mgr .stats { position: relative; z-index: 2; margin-top: clamp(14px, 3vh, 28px); display: flex; flex-direction: column; gap: clamp(6px, 1.4vh, 14px); }
+.c-mgr .srow { display: grid; grid-template-columns: 110px 1fr auto; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid currentColor; border-bottom-color: rgba(0,0,0,0.18); }
+.c-mgr.dark .srow { border-bottom-color: rgba(255,255,255,0.18); }
+.c-mgr .srow .l { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+.c-mgr .srow .v { font-family: 'Anton', sans-serif; font-size: clamp(20px, 3.6vw, 28px); line-height: 1; }
+.c-mgr .srow .sub { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; opacity: 0.65; text-align: right; }
+.c-mgr .verdict {
+  position: relative; z-index: 2; margin-top: auto; padding-top: 14px;
+  font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700;
+  font-size: clamp(16px, 2.2vw, 21px); line-height: 1.3;
+  max-width: 720px;
+}
+/* stagger */
+.c-mgr .head, .c-mgr .srow, .c-mgr .verdict { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
+.card.in .c-mgr .head { opacity: 1; transform: none; transition-delay: 100ms; }
+.card.in .c-mgr .verdict { opacity: 1; transform: none; transition-delay: 1500ms; }
+.card.in .c-mgr .srow:nth-child(1) { opacity: 1; transform: none; transition-delay: 400ms; }
+.card.in .c-mgr .srow:nth-child(2) { opacity: 1; transform: none; transition-delay: 520ms; }
+.card.in .c-mgr .srow:nth-child(3) { opacity: 1; transform: none; transition-delay: 640ms; }
+.card.in .c-mgr .srow:nth-child(4) { opacity: 1; transform: none; transition-delay: 760ms; }
+.card.in .c-mgr .srow:nth-child(5) { opacity: 1; transform: none; transition-delay: 880ms; }
+.card.in .c-mgr .srow:nth-child(6) { opacity: 1; transform: none; transition-delay: 1000ms; }
+.card.in .c-mgr .srow:nth-child(7) { opacity: 1; transform: none; transition-delay: 1120ms; }
+
+/* ============================================================
+   CHAMPION CARD — victory lap
+   ============================================================ */
+.c-champ { background: linear-gradient(180deg, #FFEB3B 0%, #FFC400 100%); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-champ .crown-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.c-champ .crown { width: clamp(80px, 12vw, 130px); height: auto; opacity: 0; transform: translateY(-20px); transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
+.card.in .c-champ .crown { opacity: 1; transform: none; transition-delay: 200ms; }
+.c-champ .gname { font-family: 'Anton', sans-serif; font-size: clamp(90px, 22vw, 260px); line-height: 0.88; letter-spacing: -0.02em; }
+.c-champ .gflag { font-size: clamp(40px, 8vw, 70px); line-height: 1; margin-top: -8px; }
+.c-champ .stat-row { display: flex; flex-wrap: wrap; gap: clamp(16px, 4vw, 36px); margin-top: clamp(16px, 3vh, 32px); align-items: baseline; }
+.c-champ .stat-row .pts { font-family: 'Anton', sans-serif; font-size: clamp(80px, 18vw, 200px); line-height: 0.85; color: var(--ink); }
+.c-champ .stat-row .pts small { font-family: 'Space Grotesk', sans-serif; font-size: clamp(14px, 1.8vw, 17px); font-weight: 700; letter-spacing: 0.16em; display: block; opacity: 0.7; line-height: 1; margin-top: 6px; text-transform: uppercase; }
+
+/* ============================================================
+   BEST TRADE award (recap)
+   ============================================================ */
+.c-besttrade { background: var(--cyan); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+
+/* ============================================================
+   BEST DRAFT PICK
+   ============================================================ */
+.c-draft { background: var(--lime); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-draft .pickno { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(80px, 22vw, 240px); letter-spacing: -0.05em; line-height: 0.88; }
+.c-draft .pickno small { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 1.6vw, 18px); display: block; letter-spacing: 0.2em; opacity: 0.7; line-height: 1; margin-bottom: 6px; text-transform: uppercase; }
+.c-draft .pname { font-family: 'Anton', sans-serif; font-size: clamp(64px, 16vw, 180px); line-height: 0.9; letter-spacing: -0.01em; margin-top: clamp(8px, 1.4vh, 18px); }
+.c-draft .meta { display: flex; gap: clamp(14px, 3vw, 32px); margin-top: clamp(12px, 2vh, 20px); flex-wrap: wrap; }
+.c-draft .meta b { font-family: 'Anton', sans-serif; font-size: clamp(28px, 6vw, 48px); line-height: 1; display: block; }
+.c-draft .meta s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; opacity: 0.7; letter-spacing: 0.16em; text-transform: uppercase; }
+.c-draft .who { margin-top: auto; padding-top: 14px; }
+.c-draft .who b { font-family: 'Anton', sans-serif; font-size: clamp(28px, 5vw, 40px); }
+.c-draft .who s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.65; }
+
+/* ============================================================
+   GITTENS — Most Influential (theatrical)
+   ============================================================ */
+.c-gittens {
+  background: linear-gradient(165deg, #FF1493 0%, #FF6F00 100%);
+  color: var(--paper);
+  padding: clamp(20px, 5vw, 56px);
+  display: flex; flex-direction: column; position: relative; overflow: hidden;
+}
+.c-gittens .tag { opacity: 0; transition: opacity 400ms ease; }
+.card.in .c-gittens .tag { opacity: 1; transition-delay: 300ms; }
+.c-gittens .head { font-family: 'Anton', sans-serif; font-size: clamp(48px, 9vw, 96px); line-height: 1; letter-spacing: -0.005em; margin-top: 8px; text-transform: uppercase; }
+.c-gittens .head .w { display: inline-block; opacity: 0; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms ease; margin-right: 0.15em; }
+.card.in .c-gittens .head .w { opacity: 1; transform: none; }
+.card.in .c-gittens .head .w:nth-child(1) { transition-delay: 700ms; }
+.card.in .c-gittens .head .w:nth-child(2) { transition-delay: 950ms; }
+.card.in .c-gittens .head .w:nth-child(3) { transition-delay: 1200ms; }
+.c-gittens .reveal { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; }
+.c-gittens .who { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(16px, 2.4vw, 22px); letter-spacing: 0.08em; text-transform: uppercase; opacity: 0; transition: opacity 500ms ease; }
+.card.in .c-gittens .who { opacity: 1; transition-delay: 2900ms; }
+.c-gittens .gittens {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(110px, 26vw, 320px);
+  line-height: 0.88; letter-spacing: -0.02em;
+  opacity: 0; transform: scale(0.86);
+  transition: opacity 500ms ease, transform 600ms cubic-bezier(.34,1.6,.4,1);
+  position: relative;
+}
+.card.in .c-gittens .gittens { opacity: 1; transform: scale(1); transition-delay: 2400ms; }
+.c-gittens .redraft {
+  font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700;
+  font-size: clamp(22px, 4.5vw, 36px);
+  opacity: 0; transition: opacity 600ms ease;
+}
+.card.in .c-gittens .redraft { opacity: 1; transition-delay: 4400ms; }
+.c-gittens .stamp {
+  position: absolute;
+  display: inline-block;
+  font-family: 'Anton', sans-serif;
+  background: var(--paper); color: var(--ink);
+  font-size: clamp(14px, 2.2vw, 20px);
+  padding: 6px 10px;
+  border: 3px solid var(--ink);
+  letter-spacing: 0.12em;
+  transform: translate(-50%, -60%) rotate(-12deg) scale(0.6);
+  opacity: 0;
+  transition: opacity 400ms ease, transform 500ms cubic-bezier(.34,1.6,.4,1);
+  top: 22%; left: 75%;
+  pointer-events: none;
+}
+.card.in .c-gittens .stamp { opacity: 1; transform: translate(-50%, -60%) rotate(-12deg) scale(1); transition-delay: 3000ms; }
+
+/* ============================================================
+   ASLEEP AT THE WHEEL — calendar of inactivity
+   ============================================================ */
+.c-asleep { background: var(--purple); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-asleep .name { font-family: 'Anton', sans-serif; font-size: clamp(48px, 11vw, 110px); line-height: 0.95; }
+.c-asleep .who { font-family: 'Anton', sans-serif; color: var(--yellow); font-size: clamp(32px, 6vw, 60px); line-height: 1; margin-top: 10px; }
+.c-asleep .who s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; display: block; line-height: 1; margin-top: 4px; }
+.c-asleep .cal { flex: 1; margin-top: clamp(18px, 4vh, 36px); display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+.c-asleep .cal .strip { display: grid; grid-template-columns: repeat(37, 1fr); gap: 3px; }
+.c-asleep .cal .gw {
+  height: clamp(20px, 4vh, 36px);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.12);
+  position: relative;
+  opacity: 0; transform: scaleY(0);
+  transform-origin: bottom;
+  transition: opacity 240ms ease, transform 320ms ease, background-color 240ms ease;
+}
+.card.in .c-asleep .cal .gw { opacity: 1; transform: scaleY(1); }
+.c-asleep .cal .gw.dormant { background: var(--orange); }
+.c-asleep .cal .gw.last-tx { background: var(--yellow); }
+.c-asleep .cal .x-axis { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 10px; opacity: 0.6; padding: 0 2px; }
+.c-asleep .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
+.c-asleep .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.c-asleep .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+.c-asleep .verdict { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(28px, 5.2vw, 44px); line-height: 1.05; }
+
+/* ============================================================
+   MICRO: GOALKEEPING HOWLER
+   ============================================================ */
+.c-howler { background: var(--ink); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-howler .head { font-family: 'Anton', sans-serif; color: var(--cyan); font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
+.c-howler .who { font-family: 'Anton', sans-serif; color: var(--paper); font-size: clamp(28px, 6vw, 50px); line-height: 1; margin-top: 12px; }
+.c-howler .body { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; margin-top: clamp(14px, 3vh, 28px); min-height: 0; }
+.c-howler .keepers { display: flex; flex-direction: column; gap: 18px; align-items: center; }
+.c-howler .gk { display: flex; align-items: center; gap: 14px; }
+.c-howler .gk-ico { width: clamp(60px, 12vw, 92px); height: clamp(60px, 12vw, 92px); border-radius: 50%; border: 4px solid currentColor; display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: clamp(32px, 7vw, 50px); }
+.c-howler .gk.right .gk-ico { border-color: var(--green); color: var(--green); }
+.c-howler .gk.wrong .gk-ico { border-color: var(--pink); color: var(--pink); }
+.c-howler .gk-label { font-family: 'Anton', sans-serif; font-size: clamp(20px, 4vw, 30px); line-height: 1.05; }
+.c-howler .gk-label small { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.12em; opacity: 0.65; font-weight: 700; text-transform: uppercase; }
+.c-howler .count { font-family: 'Anton', sans-serif; font-size: clamp(140px, 30vw, 280px); line-height: 0.85; color: var(--yellow); text-align: center; }
+.c-howler .count span { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 0.16em; opacity: 0.7; font-weight: 700; line-height: 1; margin-top: 4px; text-transform: uppercase; color: var(--paper); }
+.c-howler .punch { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 700px; }
+
+/* ============================================================
+   MICRO: PHANTOM XI (pitch diagram)
+   ============================================================ */
+.c-phantom { background: var(--green); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-phantom .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
+.c-phantom .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
+.c-phantom .pitch-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; margin: 18px 0; }
+.c-phantom .pitch { width: 100%; max-width: 480px; aspect-ratio: 3/4; background: rgba(0,0,0,0.10); border: 3px solid rgba(0,0,0,0.6); border-radius: 8px; position: relative; }
+.c-phantom .pitch::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 3px; background: rgba(0,0,0,0.6); }
+.c-phantom .pitch::after  { content: ''; position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; border: 3px solid rgba(0,0,0,0.6); border-radius: 50%; transform: translate(-50%, -50%); }
+.c-phantom .player {
+  position: absolute; transform: translate(-50%, -50%);
+  width: clamp(40px, 9vw, 60px); height: clamp(40px, 9vw, 60px);
+  border-radius: 50%;
+  background: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Anton', sans-serif; font-size: clamp(13px, 2.5vw, 18px);
+  border: 3px solid var(--ink);
+  text-align: center;
+  transition: opacity 600ms ease, transform 600ms ease;
+  opacity: 0;
+}
+.card.in .c-phantom .player { opacity: 1; }
+.c-phantom .player.ghost { opacity: 0.18; }
+.card.in .c-phantom .player.ghost { opacity: 0.18; }
+.c-phantom .player.ghost::after { content: '✗'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--pink); font-size: clamp(40px, 9vw, 60px); }
+.c-phantom .stat-row { display: flex; gap: clamp(14px, 3vw, 28px); margin-top: auto; align-items: baseline; flex-wrap: wrap; }
+.c-phantom .stat-row b { font-family: 'Anton', sans-serif; font-size: clamp(38px, 8vw, 64px); line-height: 1; }
+.c-phantom .stat-row s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; opacity: 0.7; letter-spacing: 0.14em; display: block; text-transform: uppercase; line-height: 1; margin-top: 4px; }
+.c-phantom .punch { margin-top: 12px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
+
+/* ============================================================
+   MICRO: THREE STRIKES
+   ============================================================ */
+.c-strikes { background: var(--orange); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-strikes .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
+.c-strikes .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
+.c-strikes .triple { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 2vh, 22px); }
+.c-strikes .strike-row { display: flex; align-items: baseline; gap: 14px; opacity: 0; transform: translateX(-30px); transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
+.card.in .c-strikes .strike-row { opacity: 1; transform: none; }
+.card.in .c-strikes .strike-row:nth-child(1) { transition-delay: 200ms; }
+.card.in .c-strikes .strike-row:nth-child(2) { transition-delay: 800ms; }
+.card.in .c-strikes .strike-row:nth-child(3) { transition-delay: 1400ms; }
+.c-strikes .strike-row .x { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 72px); line-height: 0.8; color: var(--ink); }
+.c-strikes .strike-row .nm { font-family: 'Anton', sans-serif; font-size: clamp(56px, 12vw, 110px); line-height: 0.9; letter-spacing: -0.01em; }
+.c-strikes .strike-row .gw { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(20px, 3.8vw, 30px); margin-left: auto; opacity: 0.85; }
+.c-strikes .punch { margin-top: 18px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
+
+/* ============================================================
+   MICRO: WELCOME AND GOODBYE
+   ============================================================ */
+.c-welcome { background: var(--paper); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-welcome .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; color: var(--pink); }
+.c-welcome .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
+.c-welcome .reel { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+.c-welcome .arrived, .c-welcome .left { display: flex; align-items: center; gap: 16px; }
+.c-welcome .tg { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 2vw, 18px); letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 12px; background: var(--ink); color: var(--paper); }
+.c-welcome .tg.bad { background: var(--pink); }
+.c-welcome .gwn { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(36px, 7vw, 60px); letter-spacing: -0.03em; }
+.c-welcome .pname { font-family: 'Anton', sans-serif; font-size: clamp(64px, 14vw, 150px); line-height: 0.9; letter-spacing: -0.01em; }
+.c-welcome .joiner { font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700; font-size: clamp(14px, 2vw, 18px); }
+.c-welcome .punch { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
+
+/* ============================================================
+   MICRO: RIGHT PLACE RIGHT TIME (line chart)
+   ============================================================ */
+.c-rprt { background: var(--yellow); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-rprt .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
+.c-rprt .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
+.c-rprt .player-name { font-family: 'Anton', sans-serif; font-size: clamp(38px, 8vw, 70px); line-height: 1; margin-top: 10px; color: var(--ink); }
+.c-rprt .chart-wrap { flex: 1; margin: 18px 0; display: flex; align-items: center; min-height: 0; }
+.c-rprt .chart-wrap svg { width: 100%; height: 100%; display: block; }
+.c-rprt .punch { margin-top: 12px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
+
+/* ============================================================
+   MICRO: LOYALIST TAX
+   ============================================================ */
+.c-loyal { background: linear-gradient(170deg, var(--ink) 0%, #2a0f0f 100%); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-loyal .head { font-family: 'Anton', sans-serif; font-size: clamp(48px, 11vw, 110px); line-height: 1; margin-top: 6px; color: var(--orange); }
+.c-loyal .who { font-family: 'Anton', sans-serif; font-size: clamp(28px, 6vw, 50px); line-height: 1; margin-top: 8px; }
+.c-loyal .stack { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: clamp(16px, 4vh, 36px); padding: 20px 0; }
+.c-loyal .player-name { font-family: 'Anton', sans-serif; font-size: clamp(86px, 22vw, 240px); line-height: 0.85; letter-spacing: -0.02em; }
+.c-loyal .figures { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 3vw, 30px); }
+.c-loyal .figures .fig { display: flex; flex-direction: column; }
+.c-loyal .figures b { font-family: 'Anton', sans-serif; font-size: clamp(64px, 14vw, 130px); line-height: 0.9; color: var(--paper); }
+.c-loyal .figures s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em; opacity: 0.7; line-height: 1; text-transform: uppercase; margin-top: 4px; }
+.c-loyal .punch { font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; color: var(--paper); }
+
+/* ============================================================
+   COUNTERFACTUAL TABLES
+   ============================================================ */
+.c-cf { padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-cf .head { font-family: 'Anton', sans-serif; font-size: clamp(36px, 7vw, 70px); line-height: 1; margin-top: 6px; }
+.c-cf .desc { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(13px, 1.8vw, 17px); margin-top: 8px; max-width: 740px; }
+.cf-tbl { flex: 1; margin-top: 18px; display: flex; flex-direction: column; min-height: 0; }
+.cf-row { display: grid; grid-template-columns: 40px 1fr 80px 80px 60px; gap: 10px; align-items: center; padding: clamp(8px, 1.6vh, 16px) 6px; border-bottom: 2px solid currentColor; border-bottom-color: rgba(0,0,0,0.15); opacity: 0; transform: translateX(-20px); transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
+.c-cf.dark .cf-row { border-bottom-color: rgba(255,255,255,0.15); }
+.cf-row.hdr { padding: 6px; opacity: 1 !important; transform: none !important; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; }
+.card.in .cf-row { opacity: 1; transform: none; }
+.card.in .cf-row:nth-child(2) { transition-delay: 200ms; }
+.card.in .cf-row:nth-child(3) { transition-delay: 320ms; }
+.card.in .cf-row:nth-child(4) { transition-delay: 440ms; }
+.card.in .cf-row:nth-child(5) { transition-delay: 560ms; }
+.card.in .cf-row:nth-child(6) { transition-delay: 680ms; }
+.card.in .cf-row:nth-child(7) { transition-delay: 800ms; }
+.cf-row .pos { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(20px, 3.8vw, 28px); }
+.cf-row .nm { font-family: 'Anton', sans-serif; font-size: clamp(20px, 3.8vw, 28px); }
+.cf-row .v { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(15px, 2.5vw, 19px); text-align: right; }
+.cf-row .pts { font-family: 'Anton', sans-serif; font-size: clamp(22px, 4vw, 30px); text-align: right; }
+.cf-row .delta { font-family: 'Anton', sans-serif; font-size: clamp(16px, 2.6vw, 22px); text-align: right; }
+.cf-row .delta.up { color: var(--green); }
+.cf-row .delta.down { color: var(--pink); }
+.cf-row .delta.same { opacity: 0.35; }
+.c-cf .takeaway { margin-top: 14px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4vw, 32px); line-height: 1.1; max-width: 760px; }
+
+/* ============================================================
+   AGGREGATE STATS
+   ============================================================ */
+.c-agg { background: var(--paper); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-agg .head { font-family: 'Anton', sans-serif; font-size: clamp(36px, 7vw, 72px); line-height: 1; margin-top: 6px; }
+.c-agg .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; min-height: 0; }
+.c-agg .cell { display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; border-radius: 12px; }
+.c-agg .cell.c1 { background: var(--lime); }
+.c-agg .cell.c2 { background: var(--cyan); color: var(--ink); }
+.c-agg .cell.c3 { background: var(--pink); color: var(--paper); }
+.c-agg .cell.c4 { background: var(--ink); color: var(--paper); }
+.c-agg .cell.c5 { background: var(--orange); color: var(--ink); }
+.c-agg .cell.c6 { background: var(--yellow); color: var(--ink); }
+.c-agg .cell b { font-family: 'Anton', sans-serif; font-size: clamp(48px, 11vw, 96px); line-height: 0.9; letter-spacing: -0.01em; }
+.c-agg .cell s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; line-height: 1.2; margin-top: 6px; text-transform: uppercase; }
+
+/* ============================================================
+   CLOSING
+   ============================================================ */
+.c-close { background: linear-gradient(160deg, #6A1B9A 0%, #FF1493 100%); color: var(--paper); padding: clamp(24px, 5vw, 56px); display: flex; flex-direction: column; }
+.c-close .top { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.22em; font-size: 11px; text-transform: uppercase; opacity: 0.9; }
+.c-close .stack { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+.c-close .stack .line { font-family: 'Anton', sans-serif; font-size: clamp(78px, 18vw, 200px); line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; opacity: 0; transform: translateY(40px); transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+.card.in .c-close .stack .line { opacity: 1; transform: none; }
+.card.in .c-close .stack .l1 { transition-delay: 400ms; }
+.card.in .c-close .stack .l2 { transition-delay: 1000ms; }
+.card.in .c-close .stack .l3 { transition-delay: 1600ms; }
+.c-close .sub { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(13px, 1.8vw, 17px); max-width: 720px; opacity: 0; transition: opacity 600ms ease; }
+.card.in .c-close .sub { opacity: 1; transition-delay: 2400ms; }
+
+/* === Body utility text on dark bg === */
+.text-paper { color: var(--paper); }
+
+/* === Mobile adjustments === */
+@media (max-width: 540px) {
+  .scoreboard .hdr, .scoreboard .row { grid-template-columns: 48px 1fr 36px 36px 36px 70px; gap: 4px; }
+  .scoreboard .hdr .h-wdl { display: none; }
+  .c-mgr .watermark { font-size: 110vw; right: -20vw; }
+  .c-mgr .srow { grid-template-columns: 90px 1fr auto; }
+  .c-trade .swap { grid-template-columns: 1fr 36px 1fr; gap: 8px; }
+  .cf-row { grid-template-columns: 26px 1fr 60px 50px 36px; gap: 6px; }
+  .c-agg .grid { grid-template-columns: 1fr; }
+  .c-agg .cell b { font-size: clamp(40px, 14vw, 80px); }
+  .c-handsoff .ho-row { gap: 12px; }
+  .c-handsoff .ho-lbl { max-width: 110px; font-size: 11px; }
 }
 
-/* Champion firework dots */
-.confetti {
-  position: absolute; pointer-events: none; inset: 0; overflow: hidden;
-}
-.confetti i {
-  position: absolute; display: block; width: 8px; height: 14px; opacity: 0;
-}
-.card.in .confetti i { animation: fall 1800ms ease-out forwards; }
-@keyframes fall {
-  0% { transform: translateY(-40px) rotate(0); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.85; }
-}
-
-/* Race annotation pip */
-.race-pip { fill: var(--yellow); }
-
-/* Trade rows */
-.trade-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: rgba(0,0,0,0.10); border-radius: 4px; }
-.dark .trade-row { background: rgba(255,255,255,0.08); }
-.trade-row .nm { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; }
-.trade-row .pp { font-family: 'Anton', sans-serif; font-size: 18px; margin-left: auto; }
+/* Crown svg colours */
+svg.crown path { fill: var(--ink); }
 </style>
 </head>
 <body>
-<div id="loading">LOADING THE SEASON…</div>
+<div id="loading">
+  <div class="lt">CRAIG / McDOWELL / HOPKINS</div>
+  <div class="ls">Counting the trophies</div>
+  <div class="lb"><i></i></div>
+</div>
 <div id="nav"></div>
 <div id="scroller"></div>
 
@@ -353,97 +640,96 @@ body { font-size: 16px; line-height: 1.3; }
 // ============================================================
 const MAX_GW = 37;
 const MANAGERS = [
-  { le: 73835, eid: 76226, first: 'Geraint',     last: 'Hopkins',  team: '🏴󠁧󠁢󠁷󠁬󠁳󠁿',                     color: '#FFEB3B' },
-  { le: 73788, eid: 76178, first: 'Mark',        last: 'Craig',    team: 'Carrying Timber',     color: '#00BCD4' },
-  { le: 73827, eid: 76218, first: 'Steven',      last: 'McDowell', team: '✨',                  color: '#FF1493' },
-  { le: 73858, eid: 76250, first: 'christopher', last: 'craig',    team: 'The Masterplan',      color: '#C6FF00' },
-  { le: 73847, eid: 76238, first: 'Michael',     last: 'Craig',    team: 'Jota win again *20',  color: '#FF6F00' },
-  { le: 73822, eid: 76213, first: 'Peter',       last: 'Craig',    team: 'MaxPoints',           color: '#6A1B9A' },
+  { le: 73835, eid: 76226, first: 'Geraint',     last: 'Hopkins',  team: '🏴󠁧󠁢󠁷󠁬󠁳󠁿',                color: '#FFEB3B', short: 'GH' },
+  { le: 73788, eid: 76178, first: 'Mark',        last: 'Craig',    team: 'Carrying Timber',     color: '#00BCD4', short: 'MC' },
+  { le: 73827, eid: 76218, first: 'Steven',      last: 'McDowell', team: '✨',                  color: '#FF1493', short: 'SM' },
+  { le: 73858, eid: 76250, first: 'christopher', last: 'craig',    team: 'The Masterplan',      color: '#C6FF00', short: 'CC' },
+  { le: 73847, eid: 76238, first: 'Michael',     last: 'Craig',    team: 'Jota win again *20',  color: '#FF6F00', short: 'MI' },
+  { le: 73822, eid: 76213, first: 'Peter',       last: 'Craig',    team: 'MaxPoints',           color: '#6A1B9A', short: 'PC' },
 ];
 const MGR_BY_LE  = Object.fromEntries(MANAGERS.map(m => [m.le, m]));
 const MGR_BY_EID = Object.fromEntries(MANAGERS.map(m => [m.eid, m]));
 
+// Premier League events researched from the 2025-26 season (for the timeline card)
+const PL_EVENTS = [
+  { gw: 4,  date: 'Sep 8',  text: 'Nuno sacked at Forest' },
+  { gw: 6,  date: 'Sep 27', text: 'Potter sacked at West Ham' },
+  { gw: 8,  date: 'Oct 18', text: 'Postecoglou out at Forest' },
+  { gw: 10, date: 'Nov 2',  text: 'Pereira out at Wolves' },
+  { gw: 20, date: 'Jan 5',  text: 'Amorim sacked at Utd' },
+  { gw: 26, date: 'Feb 11', text: 'Frank sacked at Spurs' },
+  { gw: 33, date: 'Apr 22', text: 'Rosenior out at Chelsea' },
+];
+
 // ============================================================
-// LOAD JSON
+// LOAD
 // ============================================================
 async function loadAll() {
-  const fetchJson = (p) => fetch(p).then(r => r.json());
+  const j = (p) => fetch(p).then(r => r.json());
   const [league, bs, draft, trans, trades, estatus, game] = await Promise.all([
-    fetchJson('./data/league_details.json'),
-    fetchJson('./data/bootstrap_static.json'),
-    fetchJson('./data/draft_choices.json'),
-    fetchJson('./data/transactions.json'),
-    fetchJson('./data/trades.json'),
-    fetchJson('./data/element_status.json'),
-    fetchJson('./data/game.json'),
+    j('./data/league_details.json'),
+    j('./data/bootstrap_static.json'),
+    j('./data/draft_choices.json'),
+    j('./data/transactions.json'),
+    j('./data/trades.json'),
+    j('./data/element_status.json'),
+    j('./data/game.json'),
   ]);
+  const owned = new Set();
+  draft.choices.forEach(c => owned.add(c.element));
+  trans.transactions.forEach(t => { owned.add(t.element_in); owned.add(t.element_out); });
+  trades.trades.forEach(t => t.tradeitem_set.forEach(ti => { owned.add(ti.element_in); owned.add(ti.element_out); }));
 
-  // Player histories — only fetch ones owned at some point this season
-  // To keep it tractable, fetch all from picks files first
-  const ownedIds = new Set();
-  // Pre-collect from draft
-  draft.choices.forEach(c => ownedIds.add(c.element));
-  // From transactions
-  trans.transactions.forEach(t => { ownedIds.add(t.element_in); ownedIds.add(t.element_out); });
-  // From trades
-  trades.trades.forEach(t => t.tradeitem_set.forEach(ti => { ownedIds.add(ti.element_in); ownedIds.add(ti.element_out); }));
-
-  // Picks (6 managers x 37 GWs)
-  const picksPromises = [];
-  const picksKey = (eid, gw) => `${eid}_${gw}`;
   const picks = {};
-  for (const m of MANAGERS) {
-    for (let gw = 1; gw <= MAX_GW; gw++) {
-      picksPromises.push(
-        fetchJson(`./data/picks/${m.eid}_gw${gw}.json`).then(d => {
-          picks[picksKey(m.eid, gw)] = d;
-          d.picks.forEach(p => ownedIds.add(p.element));
-        }).catch(() => {})
-      );
-    }
-  }
-  await Promise.all(picksPromises);
-
-  // Player histories
-  const phist = {};
-  await Promise.all([...ownedIds].map(pid =>
-    fetchJson(`./data/player_history/${pid}.json`)
-      .then(d => { phist[pid] = d; })
-      .catch(() => {})
+  await Promise.all(MANAGERS.flatMap(m =>
+    Array.from({length: MAX_GW}, (_, i) => i + 1).map(gw =>
+      j(`./data/picks/${m.eid}_gw${gw}.json`).then(d => {
+        picks[`${m.eid}_${gw}`] = d;
+        d.picks.forEach(p => owned.add(p.element));
+      }).catch(() => {})
+    )
   ));
-
+  const phist = {};
+  await Promise.all([...owned].map(pid =>
+    j(`./data/player_history/${pid}.json`).then(d => { phist[pid] = d; }).catch(() => {})
+  ));
   return { league, bs, draft, trans, trades, estatus, game, picks, phist };
 }
 
 // ============================================================
-// DERIVED STATS
+// STATE
 // ============================================================
-function buildState(d) {
-  const players = {};
+function compute(d) {
+  const players = {}, teams = {}, ptypes = {};
   d.bs.elements.forEach(e => players[e.id] = e);
-  const teams = {};
   d.bs.teams.forEach(t => teams[t.id] = t);
-  const ptypes = {};
   d.bs.element_types.forEach(t => ptypes[t.id] = t);
 
-  const pname = (pid) => players[pid] ? players[pid].web_name : `#${pid}`;
-  const ppos  = (pid) => players[pid] ? ptypes[players[pid].element_type].singular_name_short : '';
-  const pteam = (pid) => players[pid] ? teams[players[pid].team].short_name : '';
+  const pname = pid => players[pid] ? players[pid].web_name : `#${pid}`;
+  const ppos  = pid => players[pid] ? ptypes[players[pid].element_type].singular_name_short : '';
+  const pteam = pid => players[pid] ? teams[players[pid].team].short_name : '';
 
-  // Points & minutes per gw per player
-  const ptsFor = {}, minsFor = {};
+  const pidByName = (n, requireTeam) => {
+    for (const id in players) {
+      if (players[id].web_name === n && (!requireTeam || teams[players[id].team].short_name === requireTeam)) return +id;
+    }
+    return null;
+  };
+
+  // per-gw points
+  const pts = {}, mins = {};
   for (const pid in d.phist) {
-    ptsFor[pid] = {}; minsFor[pid] = {};
+    pts[pid] = {}; mins[pid] = {};
     d.phist[pid].history.forEach(h => {
-      ptsFor[pid][h.event] = (ptsFor[pid][h.event] || 0) + h.total_points;
-      minsFor[pid][h.event] = (minsFor[pid][h.event] || 0) + h.minutes;
+      pts[pid][h.event] = (pts[pid][h.event] || 0) + h.total_points;
+      mins[pid][h.event] = (mins[pid][h.event] || 0) + h.minutes;
     });
   }
-  const getPts  = (pid, gw) => ptsFor[pid]?.[gw] || 0;
-  const getMins = (pid, gw) => minsFor[pid]?.[gw] || 0;
+  const getPts = (pid, gw) => pts[pid]?.[gw] || 0;
+  const getMins = (pid, gw) => mins[pid]?.[gw] || 0;
 
-  // gw_points
-  const gwPts = {}; // gwPts[gw][le] = score
+  // gw scores
+  const gwPts = {};
   for (let g = 1; g <= MAX_GW; g++) gwPts[g] = {};
   d.league.matches.forEach(m => {
     if (!m.finished) return;
@@ -451,46 +737,52 @@ function buildState(d) {
     gwPts[m.event][m.league_entry_2] = m.league_entry_2_points;
   });
 
-  // Ownership per gw (from picks)
-  const ownByGw = {}; // ownByGw[pid] = {gw: le}
+  // ownership per gw (from picks files = state at start of GW)
+  const ownByGw = {};
   for (const m of MANAGERS) {
     for (let g = 1; g <= MAX_GW; g++) {
       const pk = d.picks[`${m.eid}_${g}`];
       if (!pk) continue;
       pk.picks.forEach(p => {
-        if (!ownByGw[p.element]) ownByGw[p.element] = {};
+        ownByGw[p.element] = ownByGw[p.element] || {};
         ownByGw[p.element][g] = m.le;
       });
     }
   }
+  const tenureWindow = (pid, le, fromGw = 1) => {
+    const own = ownByGw[pid] || {};
+    const arr = [];
+    for (let g = fromGw; g <= MAX_GW; g++) if (own[g] === le) arr.push(g);
+    return arr;
+  };
+  const tenurePts = (pid, le, fromGw = 1) =>
+    tenureWindow(pid, le, fromGw).reduce((s, g) => s + getPts(pid, g), 0);
 
-  // Standings — use league data (37 played)
-  const standings = d.league.standings.slice().sort((a,b) => a.rank - b.rank);
+  // standings
+  const standings = d.league.standings.slice().sort((a, b) => a.rank - b.rank);
 
-  // Build per-gw position
+  // rank by GW
   function rankAfter(gwLim) {
-    const wld = {};
-    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]); // W,D,L,PF,PA
+    const w = {};
+    MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
     d.league.matches.forEach(m => {
       if (!m.finished || m.event > gwLim) return;
       const a = m.league_entry_1, b = m.league_entry_2;
       const ap = m.league_entry_1_points, bp = m.league_entry_2_points;
-      if (ap > bp) { wld[a][0]++; wld[b][2]++; }
-      else if (bp > ap) { wld[b][0]++; wld[a][2]++; }
-      else { wld[a][1]++; wld[b][1]++; }
-      wld[a][3] += ap; wld[a][4] += bp;
-      wld[b][3] += bp; wld[b][4] += ap;
+      if (ap > bp) { w[a][0]++; w[b][2]++; }
+      else if (bp > ap) { w[b][0]++; w[a][2]++; }
+      else { w[a][1]++; w[b][1]++; }
+      w[a][3] += ap; w[a][4] += bp;
+      w[b][3] += bp; w[b][4] += ap;
     });
-    const rows = MANAGERS.map(m => ({ le: m.le, pts: wld[m.le][0]*3 + wld[m.le][1], pf: wld[m.le][3], pa: wld[m.le][4] }));
-    rows.sort((a,b) => (b.pts - a.pts) || (b.pf - a.pf));
-    const pos = {};
-    rows.forEach((r, i) => pos[r.le] = i + 1);
-    return pos;
+    const rows = MANAGERS.map(m => ({ le: m.le, pts: w[m.le][0] * 3 + w[m.le][1], pf: w[m.le][3] }));
+    rows.sort((x, y) => (y.pts - x.pts) || (y.pf - x.pf));
+    const out = {}; rows.forEach((r, i) => out[r.le] = i + 1); return out;
   }
   const posByGw = {};
   for (let g = 1; g <= MAX_GW; g++) posByGw[g] = rankAfter(g);
 
-  // Highest/lowest GW per manager
+  // high/low GW
   const hl = {};
   MANAGERS.forEach(m => {
     let hi = { gw: 1, pts: -1 }, lo = { gw: 1, pts: 999 };
@@ -502,180 +794,148 @@ function buildState(d) {
     hl[m.le] = { hi, lo };
   });
 
-  // Tenure-based transfer eval
-  const acceptedTrans = d.trans.transactions
-    .filter(t => t.result === 'a')
-    .slice()
-    .sort((a, b) => a.event - b.event || a.added.localeCompare(b.added));
+  // accepted transactions
+  const accepted = d.trans.transactions.filter(t => t.result === 'a')
+    .slice().sort((a, b) => a.event - b.event || a.added.localeCompare(b.added));
 
-  function tenureWindow(pid, le) {
-    const arr = [];
-    const own = ownByGw[pid] || {};
-    for (let g = 1; g <= MAX_GW; g++) if (own[g] === le) arr.push(g);
-    return arr;
-  }
-
-  const transferEval = acceptedTrans.map(t => {
+  // transfer eval
+  const transferEval = accepted.map(t => {
     const le = MGR_BY_EID[t.entry].le;
-    const inP = t.element_in, outP = t.element_out;
-    const gw = t.event;
-    const inWindow = tenureWindow(inP, le).filter(g => g >= gw);
-    const inPts  = inWindow.reduce((s,g) => s + getPts(inP, g), 0);
-    const outPts = inWindow.reduce((s,g) => s + getPts(outP, g), 0);
-    return { le, gw, inP, outP, inPts, outPts, delta: inPts - outPts, windowLen: inWindow.length, kind: t.kind };
+    const inP = t.element_in, outP = t.element_out, gw = t.event;
+    const win = tenureWindow(inP, le, gw);
+    const inPts = win.reduce((s, g) => s + getPts(inP, g), 0);
+    const outPts = win.reduce((s, g) => s + getPts(outP, g), 0);
+    return { le, gw, inP, outP, inPts, outPts, delta: inPts - outPts, winLen: win.length };
   });
 
-  // Best/worst transfer per manager
-  const bestWorstTr = {};
+  const bwTr = {};
   MANAGERS.forEach(m => {
-    const mine = transferEval.filter(t => t.le === m.le && t.windowLen >= 1);
-    if (mine.length === 0) {
-      bestWorstTr[m.le] = { best: null, worst: null };
-      return;
-    }
-    const best = mine.reduce((a,b) => a.delta > b.delta ? a : b);
-    const worst = mine.reduce((a,b) => a.delta < b.delta ? a : b);
-    bestWorstTr[m.le] = { best, worst };
+    const mine = transferEval.filter(t => t.le === m.le && t.winLen >= 1);
+    if (!mine.length) { bwTr[m.le] = { best: null, worst: null }; return; }
+    bwTr[m.le] = {
+      best: mine.reduce((a, b) => a.delta > b.delta ? a : b),
+      worst: mine.reduce((a, b) => a.delta < b.delta ? a : b),
+    };
   });
 
-  // Transaction counts
+  // transaction counts
   const transCount = {};
   MANAGERS.forEach(m => transCount[m.le] = 0);
-  acceptedTrans.forEach(t => transCount[MGR_BY_EID[t.entry].le]++);
+  accepted.forEach(t => transCount[MGR_BY_EID[t.entry].le]++);
 
-  // Dormant stretch
+  // dormant
   const dormant = {};
   MANAGERS.forEach(m => {
-    const mine = acceptedTrans.filter(t => MGR_BY_EID[t.entry].le === m.le).map(t => t.event).sort((a,b) => a-b);
-    const evs = [0, ...mine, MAX_GW + 1];
+    const evs = accepted.filter(t => MGR_BY_EID[t.entry].le === m.le).map(t => t.event).sort((a, b) => a - b);
+    const padded = [0, ...evs, MAX_GW + 1];
     let longest = { len: 0, from: 1, to: 1 };
-    for (let i = 0; i < evs.length - 1; i++) {
-      const len = evs[i+1] - evs[i] - 1;
-      if (len > longest.len) longest = { len, from: evs[i] + 1, to: evs[i+1] - 1 };
+    for (let i = 0; i < padded.length - 1; i++) {
+      const len = padded[i + 1] - padded[i] - 1;
+      if (len > longest.len) longest = { len, from: padded[i] + 1, to: padded[i + 1] - 1 };
     }
-    dormant[m.le] = { longest, total: mine.length, lastEvent: mine.length ? mine[mine.length - 1] : 0 };
+    dormant[m.le] = { longest, total: evs.length, lastEvent: evs.length ? evs[evs.length - 1] : 0, allEvents: evs };
   });
 
-  // H2H nemesis
+  // nemesis
   const lossesTo = {}, lossGws = {};
   MANAGERS.forEach(m => { lossesTo[m.le] = {}; lossGws[m.le] = {}; MANAGERS.forEach(n => { if (n.le !== m.le) { lossesTo[m.le][n.le] = 0; lossGws[m.le][n.le] = []; } }); });
   d.league.matches.forEach(m => {
     if (!m.finished) return;
-    const a = m.league_entry_1, b = m.league_entry_2;
-    const ap = m.league_entry_1_points, bp = m.league_entry_2_points;
+    const a = m.league_entry_1, b = m.league_entry_2, ap = m.league_entry_1_points, bp = m.league_entry_2_points;
     if (ap > bp) { lossesTo[b][a]++; lossGws[b][a].push(m.event); }
     else if (bp > ap) { lossesTo[a][b]++; lossGws[a][b].push(m.event); }
   });
   const nemesis = {};
   MANAGERS.forEach(m => {
-    let worst = null, n = -1;
-    for (const ole in lossesTo[m.le]) {
-      if (lossesTo[m.le][ole] > n) { n = lossesTo[m.le][ole]; worst = +ole; }
-    }
-    nemesis[m.le] = { le: worst, count: n, gws: lossGws[m.le][worst] };
+    let max = -1, who = null;
+    for (const ole in lossesTo[m.le]) if (lossesTo[m.le][ole] > max) { max = lossesTo[m.le][ole]; who = +ole; }
+    nemesis[m.le] = { le: who, count: max, gws: lossGws[m.le][who] };
   });
 
-  // === Counterfactual helpers ===
+  // optimal XI
   function optimalXi(squad, gw) {
-    const byPos = { GKP: [], DEF: [], MID: [], FWD: [] };
+    const by = { GKP: [], DEF: [], MID: [], FWD: [] };
     squad.forEach(pid => {
-      const pos = ppos(pid);
-      if (!byPos[pos]) return;
-      byPos[pos].push(getPts(pid, gw));
+      const pos = ppos(pid); if (!by[pos]) return; by[pos].push(getPts(pid, gw));
     });
-    for (const k in byPos) byPos[k].sort((a,b) => b - a);
-    if (!byPos.GKP.length) return 0;
-    const gk = byPos.GKP[0];
-    let best = 0;
-    for (const nd of [3,4,5]) for (const nf of [1,2,3]) {
-      const nm = 10 - nd - nf;
-      if (nm < 3 || nm > 5) continue;
-      if (byPos.DEF.length < nd || byPos.MID.length < nm || byPos.FWD.length < nf) continue;
+    for (const k in by) by[k].sort((a, b) => b - a);
+    if (!by.GKP.length) return 0;
+    const gk = by.GKP[0]; let best = 0;
+    for (const nd of [3, 4, 5]) for (const nf of [1, 2, 3]) {
+      const nm = 10 - nd - nf; if (nm < 3 || nm > 5) continue;
+      if (by.DEF.length < nd || by.MID.length < nm || by.FWD.length < nf) continue;
       let t = gk;
-      for (let i = 0; i < nd; i++) t += byPos.DEF[i];
-      for (let i = 0; i < nm; i++) t += byPos.MID[i];
-      for (let i = 0; i < nf; i++) t += byPos.FWD[i];
+      for (let i = 0; i < nd; i++) t += by.DEF[i];
+      for (let i = 0; i < nm; i++) t += by.MID[i];
+      for (let i = 0; i < nf; i++) t += by.FWD[i];
       if (t > best) best = t;
     }
     return best;
   }
 
-  // Counterfactual: Everyone Plays Pete
+  // counterfactual: everyone plays Pete
   const PETE = 73822;
-  function cfEveryonePlaysPete() {
-    const wld = {};
-    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]);
+  function cfPete() {
+    const w = {}; MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
     for (let g = 1; g <= MAX_GW; g++) {
       const pete = gwPts[g][PETE];
       const others = MANAGERS.filter(m => m.le !== PETE).map(m => gwPts[g][m.le]);
-      const avg = others.reduce((a,b)=>a+b,0) / others.length;
+      const avg = others.reduce((a, b) => a + b, 0) / others.length;
       MANAGERS.forEach(m => {
-        const my = gwPts[g][m.le];
-        const opp = m.le === PETE ? avg : pete;
-        wld[m.le][3] += my; wld[m.le][4] += opp;
-        if (my > opp) wld[m.le][0]++;
-        else if (my < opp) wld[m.le][2]++;
-        else wld[m.le][1]++;
+        const my = gwPts[g][m.le], opp = m.le === PETE ? avg : pete;
+        w[m.le][3] += my; w[m.le][4] += opp;
+        if (my > opp) w[m.le][0]++; else if (my < opp) w[m.le][2]++; else w[m.le][1]++;
       });
     }
-    return wld;
+    return w;
   }
-
-  function cfOptimalXi() {
+  function cfOptimal() {
     const optGw = {};
     for (let g = 1; g <= MAX_GW; g++) {
       optGw[g] = {};
       MANAGERS.forEach(m => {
         const pk = d.picks[`${m.eid}_${g}`];
-        if (!pk) { optGw[g][m.le] = 0; return; }
-        optGw[g][m.le] = optimalXi(pk.picks.map(p => p.element), g);
+        optGw[g][m.le] = pk ? optimalXi(pk.picks.map(p => p.element), g) : 0;
       });
     }
-    const wld = {};
-    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]);
+    const w = {}; MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
     d.league.matches.forEach(m => {
       if (!m.finished) return;
       const a = m.league_entry_1, b = m.league_entry_2;
       const ap = optGw[m.event][a], bp = optGw[m.event][b];
-      wld[a][3] += ap; wld[a][4] += bp;
-      wld[b][3] += bp; wld[b][4] += ap;
-      if (ap > bp) { wld[a][0]++; wld[b][2]++; }
-      else if (bp > ap) { wld[b][0]++; wld[a][2]++; }
-      else { wld[a][1]++; wld[b][1]++; }
+      w[a][3] += ap; w[a][4] += bp; w[b][3] += bp; w[b][4] += ap;
+      if (ap > bp) { w[a][0]++; w[b][2]++; }
+      else if (bp > ap) { w[b][0]++; w[a][2]++; }
+      else { w[a][1]++; w[b][1]++; }
     });
-    return { wld, optGw };
+    return { w, optGw };
   }
-
-  function cfNoTransfers() {
-    const gw1Squad = {};
-    MANAGERS.forEach(m => {
-      const pk = d.picks[`${m.eid}_1`];
-      gw1Squad[m.le] = pk.picks.map(p => p.element);
-    });
-    const ntGw = {};
+  function cfNoTransfer() {
+    const sq = {};
+    MANAGERS.forEach(m => { sq[m.le] = d.picks[`${m.eid}_1`].picks.map(p => p.element); });
+    const ng = {};
     for (let g = 1; g <= MAX_GW; g++) {
-      ntGw[g] = {};
-      MANAGERS.forEach(m => { ntGw[g][m.le] = optimalXi(gw1Squad[m.le], g); });
+      ng[g] = {};
+      MANAGERS.forEach(m => { ng[g][m.le] = optimalXi(sq[m.le], g); });
     }
-    const wld = {};
-    MANAGERS.forEach(m => wld[m.le] = [0,0,0,0,0]);
+    const w = {}; MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
     d.league.matches.forEach(m => {
       if (!m.finished) return;
       const a = m.league_entry_1, b = m.league_entry_2;
-      const ap = ntGw[m.event][a], bp = ntGw[m.event][b];
-      wld[a][3] += ap; wld[a][4] += bp;
-      wld[b][3] += bp; wld[b][4] += ap;
-      if (ap > bp) { wld[a][0]++; wld[b][2]++; }
-      else if (bp > ap) { wld[b][0]++; wld[a][2]++; }
-      else { wld[a][1]++; wld[b][1]++; }
+      const ap = ng[m.event][a], bp = ng[m.event][b];
+      w[a][3] += ap; w[a][4] += bp; w[b][3] += bp; w[b][4] += ap;
+      if (ap > bp) { w[a][0]++; w[b][2]++; }
+      else if (bp > ap) { w[b][0]++; w[a][2]++; }
+      else { w[a][1]++; w[b][1]++; }
     });
-    return wld;
+    return w;
   }
 
   return {
-    d, players, teams, ptypes, pname, ppos, pteam, getPts, getMins,
-    gwPts, posByGw, ownByGw, standings, hl, transferEval, bestWorstTr, transCount, dormant, nemesis,
-    cfEveryonePlaysPete, cfOptimalXi, cfNoTransfers, optimalXi
+    d, players, teams, ptypes, pname, ppos, pteam, pidByName,
+    getPts, getMins, gwPts, ownByGw, tenureWindow, tenurePts,
+    standings, posByGw, hl, accepted, transferEval, bwTr,
+    transCount, dormant, nemesis, optimalXi, cfPete, cfOptimal, cfNoTransfer
   };
 }
 
@@ -686,410 +946,584 @@ function el(tag, props = {}, ...kids) {
   const e = document.createElement(tag);
   for (const k in props) {
     if (k === 'class') e.className = props[k];
-    else if (k === 'style') e.setAttribute('style', props[k]);
     else if (k === 'html') e.innerHTML = props[k];
+    else if (k === 'style') e.setAttribute('style', props[k]);
     else if (k.startsWith('on')) e.addEventListener(k.slice(2), props[k]);
-    else e.setAttribute(k, props[k]);
+    else if (props[k] != null) e.setAttribute(k, props[k]);
   }
-  const append = (k) => {
+  const add = k => {
     if (k == null || k === false) return;
-    if (Array.isArray(k)) { k.forEach(append); return; }
+    if (Array.isArray(k)) { k.forEach(add); return; }
     if (typeof k === 'string' || typeof k === 'number') e.appendChild(document.createTextNode(k));
     else e.appendChild(k);
   };
-  for (const k of kids) append(k);
+  for (const k of kids) add(k);
   return e;
 }
-const mgrShort = (le) => MGR_BY_LE[le].first;
-const mgrFull  = (le) => `${MGR_BY_LE[le].first} (${MGR_BY_LE[le].team})`;
-const pad2 = (n) => String(n).padStart(2, '0');
 
-// Build an "award card" — kicker + heading + body content, ALL vertically centered as a group
-function awardLayout(opts) {
-  const { kicker, kickerColor, name, nameColor, children } = opts;
-  return el('div', { class: 'fill', style: 'justify-content: center; gap: 14px; align-items: center; text-align: center;' },
-    el('div', { class: 'kicker fade-up' }, kicker),
-    el('div', { class: 'award-name fade-up', style: `color: ${nameColor};` }, name),
-    ...children
-  );
-}
-
-function sortedStandings(wld) {
-  // wld[le] = [W,D,L,PF,PA]
+function sortedFromWld(w) {
   return MANAGERS.map(m => {
-    const [w,dr,l,pf,pa] = wld[m.le];
-    return { le: m.le, w, d: dr, l, pf, pa, pts: w*3 + dr };
-  }).sort((a,b) => (b.pts - a.pts) || (b.pf - a.pf));
+    const [W, D, L, PF, PA] = w[m.le];
+    return { le: m.le, w: W, d: D, l: L, pf: PF, pa: PA, pts: W * 3 + D };
+  }).sort((a, b) => (b.pts - a.pts) || (b.pf - a.pf));
 }
 
 // ============================================================
-// CARD BUILDERS
+// CARD BUILDERS — one per card, each producing a unique hero
 // ============================================================
-function buildCards(S) {
+function buildAll(S) {
   const root = document.getElementById('scroller');
-  const TOTAL_CARDS_PLACEHOLDER = '@@';
-  const addCard = (cls, builder, opts = {}) => {
-    const card = el('section', { class: `card ${cls}` });
-    if (opts.dark === true) card.classList.add('dark');
-    if (opts.light === true) card.classList.add('light');
-    builder(card);
-    root.appendChild(card);
-    return card;
+  const cards = [];
+  const add = (cls, attrs, builder, isDark = false) => {
+    const c = el('section', { class: 'card', 'data-cls': cls });
+    if (isDark) c.classList.add('dark'); else c.classList.add('light');
+    const inner = el('div', { class: cls, ...attrs });
+    builder(inner);
+    c.appendChild(inner);
+    cards.push({ el: c, isDark });
+    root.appendChild(c);
+    return c;
   };
-  const pgIndicator = (n, total) => el('div', { class: 'pgind' }, `${pad2(n)} / ${pad2(total)}`);
-  const pgRight = (txt) => el('div', { class: 'pgind-r' }, txt);
+  const intro = (text, bg, fg = 'var(--paper)', tag = null) => {
+    add('c-intro', { style: `background: ${bg}; color: ${fg};` }, (n) => {
+      if (tag) n.appendChild(el('div', { class: 'tag anim up' }, tag));
+      n.appendChild(el('div', { class: 'text anim up' }, text));
+    }, fg === 'var(--paper)');
+  };
 
-  // We'll defer final numbering — build all, then number
-  const cardsPlan = [];
-  const PLAN = (cls, fn, opts) => cardsPlan.push({ cls, fn, opts });
-
-  // --- 1. COLD OPEN ---
-  PLAN('bg-mesh-pink', (card) => {
-    card.appendChild(el('div', { class: 'fill center', style: 'gap: 18px;' },
-      el('div', { class: 'kicker fade-up' }, 'End of Season Review'),
-      el('div', { class: 'display fade-up', style: "font-size: clamp(64px, 18vw, 160px); line-height: 0.88; max-width: 720px; text-shadow: 0 4px 30px rgba(0,0,0,0.25);" },
-        el('div', {}, 'Craig'), el('div', {}, '/McDowell'), el('div', {}, '/Hopkins'), el('div', { style: 'color: var(--yellow);' }, 'Cup')
-      ),
-      el('div', { class: 'body fade-up', style: 'max-width: 360px; text-align: center; font-weight: 800; letter-spacing: 0.04em;' }, '2025/26'),
+  // -------- 1. COLD OPEN --------
+  add('c-open', {}, (n) => {
+    n.appendChild(el('div', { class: 'marker' }, 'Craig/McDowell/Hopkins Cup'));
+    n.appendChild(el('div', { class: 'stack' },
+      el('div', { class: 'line l1' }, el('span', { class: 'slash' }, '/'), 'Craig'),
+      el('div', { class: 'line l2' }, el('span', { class: 'slash' }, '/'), 'McDowell'),
+      el('div', { class: 'line l3' }, el('span', { class: 'slash' }, '/'), 'Hopkins'),
     ));
-    card.appendChild(el('div', { class: 'hint' }, 'Scroll ↓'));
-  }, { dark: true });
-
-  // --- 2. FINAL TABLE ---
-  PLAN('bg-3', (card) => {
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Final Standings'));
-    card.appendChild(el('div', { class: 'h2 fade-up', style: 'margin-top: 4px; color: var(--lime);' }, 'The Table'));
-    const tbl = el('table', { class: 'tbl dark' });
-    const thead = el('thead', {},
-      el('tr', {},
-        el('th', { class: 'l', style: 'width: 8%;' }, '#'),
-        el('th', { class: 'l' }, 'Manager'),
-        el('th', {}, 'W'),
-        el('th', {}, 'D'),
-        el('th', {}, 'L'),
-        el('th', {}, 'Pts')
+    n.appendChild(el('div', { class: 'sub' },
+      el('div', { class: 'right-block' },
+        el('s', {}, 'Season'),
+        el('b', {}, '2025/26')
+      ),
+      el('div', { class: 'right-block', style: 'text-align: left;' },
+        el('s', {}, 'End of season review'),
+        el('b', {}, 'Card 1 of 39')
       )
-    );
-    tbl.appendChild(thead);
-    const tbody = el('tbody');
+    ));
+  }, true);
+
+  // -------- 2. INTERSTITIAL --------
+  intro('Right. The final table.', 'var(--paper)', 'var(--ink)');
+
+  // -------- 3. FINAL TABLE --------
+  add('c-table', {}, (n) => {
+    n.appendChild(el('div', { class: 'topline' },
+      el('div', {},
+        el('div', { class: 'caption anim fade' }, 'Final standings · 37 GW'),
+        el('h2', { class: 'anim up' }, 'The Table'),
+      ),
+      el('div', { class: 'caption anim fade', style: 'text-align: right;' }, '6 managers · 114 matches · GW38 not contested')
+    ));
+    const sb = el('div', { class: 'scoreboard' });
+    sb.appendChild(el('div', { class: 'hdr' },
+      el('div', { class: 'l' }, '#'),
+      el('div', { class: 'l' }, 'Manager'),
+      el('div', { class: 'r h-wdl' }, 'W'),
+      el('div', { class: 'r h-wdl' }, 'D'),
+      el('div', { class: 'r h-wdl' }, 'L'),
+      el('div', { class: 'r' }, 'Pts')
+    ));
     S.standings.forEach((s, i) => {
       const m = MGR_BY_LE[s.league_entry];
-      const tr = el('tr', { class: 'row-anim' + (i === 0 ? ' champ' : '') },
-        el('td', { class: 'l pos' }, String(s.rank)),
-        el('td', { class: 'l' },
-          el('div', { class: 'name', style: `color: ${i === 0 ? 'var(--yellow)' : 'var(--white)'};` }, m.first),
-          el('div', { class: 'team' }, m.team)
+      const tr = el('div', { class: 'row' + (i === 0 ? ' champ' : '') },
+        el('div', { class: 'pos' }, String(s.rank)),
+        el('div', { class: 'mgr' },
+          el('div', { class: 'nm' }, m.first),
+          el('div', { class: 'tm' }, m.team)
         ),
-        el('td', {}, String(s.matches_won)),
-        el('td', {}, String(s.matches_drawn)),
-        el('td', {}, String(s.matches_lost)),
-        el('td', { class: 'pts' }, String(s.total))
+        el('div', { class: 'wdl' }, String(s.matches_won)),
+        el('div', { class: 'wdl' }, String(s.matches_drawn)),
+        el('div', { class: 'wdl' }, String(s.matches_lost)),
+        el('div', { class: 'total' }, String(s.total))
       );
-      tr.style.transitionDelay = (0.15 + i * 0.12) + 's';
-      tbody.appendChild(tr);
+      sb.appendChild(tr);
     });
-    tbl.appendChild(tbody);
-    card.appendChild(el('div', { class: 'fill', style: 'justify-content: flex-start; padding-top: 16px;' }, tbl));
-    card.appendChild(el('div', { class: 'tiny fade-up', style: 'padding-top: 8px;' }, '37 gameweeks played · GW38 not contested'));
-  }, { dark: true });
+    n.appendChild(sb);
+    n.appendChild(el('div', { class: 'foot' },
+      el('div', { class: 'left' }, 'Geraint by 13'),
+      el('div', { class: 'right' }, 'Peter by, well, a lot')
+    ));
+  }, true);
 
-  // --- 3. SEASON RACE ---
-  PLAN('bg-3', (card) => {
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'The Race'));
-    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--cyan); margin-top: 2px;' }, 'League Position by GW'));
+  // -------- 4. INTERSTITIAL --------
+  intro('How we got here.', '#0A0A0A', 'var(--paper)');
 
-    // Portrait viewBox so the chart fills the card on mobile
-    const VB_W = 400, VB_H = 620;
-    const PAD = { l: 28, r: 84, t: 24, b: 36 };
+  // -------- 5. RACE CHART --------
+  add('c-race', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'The Race'));
+    n.appendChild(el('h2', { class: 'anim up' }, 'League position by gameweek'));
+    const VB_W = 800, VB_H = 540;
+    const PAD = { l: 36, r: 110, t: 30, b: 40 };
     const innerW = VB_W - PAD.l - PAD.r, innerH = VB_H - PAD.t - PAD.b;
-    const xFor = (gw) => PAD.l + (gw - 1) / (MAX_GW - 1) * innerW;
-    const yFor = (pos) => PAD.t + (pos - 1) / 5 * innerH;
-
+    const xFor = gw => PAD.l + (gw - 1) / (MAX_GW - 1) * innerW;
+    const yFor = pos => PAD.t + (pos - 1) / 5 * innerH;
+    const orderedByFinish = [...MANAGERS].sort((a, b) => {
+      const ra = S.standings.find(s => s.league_entry === a.le).rank;
+      const rb = S.standings.find(s => s.league_entry === b.le).rank;
+      return ra - rb;
+    });
+    const lines = orderedByFinish.map((m, idx) => {
+      const pts = [];
+      for (let g = 1; g <= MAX_GW; g++) pts.push(`${xFor(g)},${yFor(S.posByGw[g][m.le])}`);
+      const dPath = 'M ' + pts.join(' L ');
+      const last = S.posByGw[MAX_GW][m.le];
+      const delay = idx * 400; // champion first
+      return `
+        <path class="race-line" d="${dPath}" stroke="${m.color}" style="animation-delay: ${delay}ms;" />
+        <g class="endpoint" id="ep-${m.le}" transform="translate(${xFor(MAX_GW) + 8}, ${yFor(last) + 4})">
+          <circle cx="0" cy="-3" r="5" fill="${m.color}" />
+          <text x="10" y="1" font-family="Space Grotesk" font-weight="700" font-size="13" fill="${m.color}">${m.first}</text>
+        </g>`;
+    }).join('');
     const svg = `<svg class="race-svg" viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet">
       ${[1,2,3,4,5,6].map(p => `<text class="pos-label" x="${PAD.l - 6}" y="${yFor(p) + 7}" text-anchor="end">${p}</text>`).join('')}
-      ${[1, 10, 19, 28, 37].map(g => `<text class="gw-label" x="${xFor(g)}" y="${VB_H - 10}" text-anchor="middle">GW${g}</text>`).join('')}
+      ${[1, 10, 19, 28, 37].map(g => `<text class="gw-label" x="${xFor(g)}" y="${VB_H - 8}" text-anchor="middle">GW${g}</text>`).join('')}
       <line class="annot-line" x1="${xFor(17)}" y1="${PAD.t}" x2="${xFor(17)}" y2="${PAD.t + innerH}" />
-      <text class="annot" x="${xFor(17) + 4}" y="${PAD.t - 4}">GW17 →</text>
-      ${MANAGERS.map(m => {
-        const pts = [];
-        for (let g = 1; g <= MAX_GW; g++) pts.push(`${xFor(g)},${yFor(S.posByGw[g][m.le])}`);
-        const d = 'M ' + pts.join(' L ');
-        const last = S.posByGw[MAX_GW][m.le];
-        return `<path d="${d}" stroke="${m.color}" stroke-width="4" />
-                <g class="endpoint" transform="translate(${xFor(MAX_GW) + 6}, ${yFor(last) + 4})">
-                  <circle cx="0" cy="-3" r="4" fill="${m.color}" />
-                  <text class="endpoint-name" x="9" y="1" fill="${m.color}" font-size="10">${m.first}</text>
-                </g>`;
-      }).join('')}
+      <text class="annot" x="${xFor(17) + 6}" y="${PAD.t + 14}">GW17 — lead locks</text>
+      ${lines}
     </svg>`;
-    const wrap = el('div', { class: 'race-wrap fade-up', html: svg });
-    card.appendChild(wrap);
-    card.appendChild(el('div', { class: 'tiny fade-up' }, 'Lead changed 6 times before GW17. Then it didn\'t.'));
-  }, { dark: true });
+    n.appendChild(el('div', { class: 'race-wrap anim fade', html: svg }));
+    n.appendChild(el('div', { class: 'race-caption anim up' }, 'Lead changed six times before GW17. Then it didn\'t.'));
+  }, true);
 
-  // --- 4. HANDS-OFF CHAMPION (Geraint) ---
-  PLAN('bg-4', (card) => {
-    card.appendChild(el('div', { class: 'fill', style: 'gap: 6px; justify-content: center; align-items: flex-start; text-align: left;' },
-      el('div', { class: 'kicker fade-up' }, 'The Champion'),
-      el('div', { class: 'display pop', style: 'font-size: clamp(110px, 34vw, 240px); color: var(--white); line-height: 0.85; margin-top: 8px;' }, String(S.transCount[73835])),
-      el('div', { class: 'body fade-up', style: 'max-width: 480px; font-weight: 800;' }, 'transactions.'),
-      el('div', { class: 'display pop', style: 'font-size: clamp(90px, 28vw, 200px); color: var(--white); line-height: 0.85; margin-top: 18px;' }, String(S.standings[0].total - S.standings[1].total) + 'pt'),
-      el('div', { class: 'body fade-up', style: 'max-width: 480px; font-weight: 800;' }, 'title margin.'),
-      el('div', { class: 'body fade-up', style: 'margin-top: 28px; font-style: italic; font-weight: 800; font-size: clamp(20px, 5.5vw, 26px); max-width: 480px;' }, 'Geraint barely looked at his team.'),
-    ));
+  // -------- 6. TIMELINE --------
+  add('c-timeline', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Two seasons running side by side'));
+    n.appendChild(el('h2', { class: 'anim up' }, 'The Timeline'));
+
+    // League events: leader changes, trades, key extremes
+    const leagueEvents = [
+      { gw: 1,  text: 'Geraint takes early lead' },
+      { gw: 4,  text: 'Trade 1: Grealish for Marmoush' },
+      { gw: 9,  text: 'Trade 2: Bruno for Palmer & co.' },
+      { gw: 15, text: 'christopher\'s 93-point week' },
+      { gw: 17, text: 'Geraint takes lead permanently' },
+      { gw: 18, text: 'Trade 3: Mark gets Evanilson' },
+      { gw: 28, text: 'Peter signs off (last move)' },
+      { gw: 33, text: 'christopher 83-81 Geraint' },
+      { gw: 34, text: 'Steven\'s 16-point disaster' },
+    ];
+    const VB_W = 900, VB_H = 600;
+    const PAD_X = 36, AXIS_Y = VB_H * 0.50;
+    const xFor = gw => PAD_X + (gw - 1) / (MAX_GW - 1) * (VB_W - PAD_X * 2);
+    const items = [];
+    items.push(`<text class="track-lbl" x="${PAD_X}" y="40">League</text>`);
+    items.push(`<text class="track-lbl" x="${PAD_X}" y="${VB_H - 14}">Premier League</text>`);
+    // axis
+    items.push(`<line class="axis" x1="${PAD_X}" y1="${AXIS_Y}" x2="${VB_W - PAD_X}" y2="${AXIS_Y}" />`);
+    [1, 10, 19, 28, 37].forEach(g => {
+      items.push(`<text class="gw-mark" x="${xFor(g)}" y="${AXIS_Y + 22}" text-anchor="middle">GW${g}</text>`);
+    });
+    // Stack events without overlap: each event gets its own y row (no modulo)
+    const LEAGUE_TOP = 60, LEAGUE_GAP = 24;
+    leagueEvents.forEach((ev, idx) => {
+      const x = xFor(ev.gw);
+      const y = LEAGUE_TOP + idx * LEAGUE_GAP;
+      items.push(`<g class="ev ev-league" data-gw="${ev.gw}" data-idx="${idx}">
+        <line class="ev-line" x1="${x}" y1="${AXIS_Y - 4}" x2="${x}" y2="${y + 4}" />
+        <circle class="ev-dot" cx="${x}" cy="${y + 4}" r="5" fill="#00C853" stroke="#0A0A0A" />
+        <text class="ev-label" x="${x + 8}" y="${y + 8}">${ev.text}</text>
+      </g>`);
+    });
+    const PL_TOP = AXIS_Y + 40, PL_GAP = 28;
+    PL_EVENTS.forEach((ev, idx) => {
+      const x = xFor(ev.gw);
+      const y = PL_TOP + idx * PL_GAP;
+      items.push(`<g class="ev ev-pl" data-gw="${ev.gw}" data-idx="${idx}">
+        <line class="ev-line" x1="${x}" y1="${AXIS_Y + 4}" x2="${x}" y2="${y - 4}" />
+        <circle class="ev-dot" cx="${x}" cy="${y - 4}" r="5" fill="#6A1B9A" stroke="#0A0A0A" />
+        <text class="ev-label pl" x="${x + 8}" y="${y + 1}">${ev.text}</text>
+      </g>`);
+    });
+    const svg = `<svg class="tl-svg" viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet">${items.join('')}</svg>`;
+    n.appendChild(el('div', { class: 'tl-wrap', html: svg }));
+
+    // Pop events in after axis draws
+    setTimeout(() => {
+      const card = n.closest('.card');
+      if (!card || !card.classList.contains('in')) return;
+      const evs = n.querySelectorAll('.tl-svg .ev');
+      evs.forEach((e, i) => setTimeout(() => e.classList.add('in'), i * 110));
+    }, 2000);
+    // Also expose a small caption
+    n.appendChild(el('div', { class: 'caption anim fade', style: 'margin-top: 8px;' }, 'Six manager sackings happened during this season. Geraint made 28 moves.'));
   });
 
-  // --- 5-7. THREE TRADES ---
-  const tradeData = [
-    {
-      gw: 4, mgrA: 73858, mgrB: 73822,
-      // christopher received Grealish from Peter, gave up Marmoush
-      items: [
-        { mgrAGets: 419, mgrBGets: 413 }  // 419 to christopher, 413 to peter
-      ],
-      verdict: 'Christopher won', vMgr: 73858, delta: '+19', story: 'Grealish landed running. Marmoush did not.',
-      bg: 'bg-5'
-    },
-    {
-      gw: 9, mgrA: 73858, mgrB: 73847,
-      items: [
-        { mgrAGets: 267, mgrBGets: 266 }, // Sarr / Eze
-        { mgrAGets: 449, mgrBGets: 235 }, // B.Fernandes / Palmer
-        { mgrAGets: 97,  mgrBGets: 666 }, // Evanilson / Ekitiké
-      ],
-      verdict: 'Michael won', vMgr: 73847, delta: '+30', story: 'Three for three. Michael shipped Bruno and still came out ahead.',
-      bg: 'bg-8'
-    },
-    {
-      gw: 18, mgrA: 73847, mgrB: 73788,
-      // Mark gave Isak (499) to Michael, Michael gave Evanilson (97) to Mark
-      // offered_entry=Michael, element_in=499 → goes to Michael (so Mark gave Isak); element_out=97 → leaves Michael (so Mark received Evanilson)
-      items: [
-        { mgrAGets: 499, mgrBGets: 97 } // mgrA=Michael got Isak, mgrB=Mark got Evanilson
-      ],
-      verdict: 'Mark won', vMgr: 73788, delta: '+47', story: 'Mark sold Isak. Isak then scored 12 the rest of the way.',
-      bg: 'bg-9'
-    }
-  ];
+  // -------- 7. INTERSTITIAL --------
+  intro('The hands-off champion.', '#FF1493', 'var(--paper)');
 
-  tradeData.forEach((tr, idx) => {
-    PLAN(tr.bg, (card) => {
-      card.appendChild(el('div', { class: 'kicker fade-up' }, `Trade ${idx + 1} of 3 · GW${tr.gw}`));
-      card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--white); margin-top: 2px;' }, `${MGR_BY_LE[tr.mgrA].first} ⇄ ${MGR_BY_LE[tr.mgrB].first}`));
+  // -------- 8. HANDS-OFF (Geraint title) --------
+  add('c-handsoff', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Geraint Hopkins · 🏴󠁧󠁢󠁷󠁬󠁳󠁿'));
+    const stack = el('div', { class: 'ho-stack' });
+    stack.appendChild(el('div', { class: 'ho-row anim up' },
+      el('div', { class: 'ho-num', 'data-count': String(S.transCount[73835]) }, '0'),
+      el('div', { class: 'ho-lbl' }, 'transactions all season')
+    ));
+    stack.appendChild(el('div', { class: 'ho-row anim up' },
+      el('div', { class: 'ho-num', 'data-count': String(S.standings[0].total) }, '0'),
+      el('div', { class: 'ho-lbl' }, 'league points')
+    ));
+    const margin = S.standings[0].total - S.standings[1].total;
+    stack.appendChild(el('div', { class: 'ho-row anim up' },
+      el('div', { class: 'ho-num', 'data-count': '+' + margin }, '+0'),
+      el('div', { class: 'ho-lbl' }, 'point title margin')
+    ));
+    n.appendChild(stack);
+    n.appendChild(el('div', { class: 'ho-cap anim up' }, 'Geraint barely looked at his team.'));
+  });
 
-      const tradeBox = el('div', { class: 'trade-box fade-up', style: 'margin-top: 14px;' });
+  // -------- 9. INTERSTITIAL --------
+  intro('The trades. All three of them.', 'var(--orange)', 'var(--ink)');
 
-      const tenureWindow = (pid, le, gw) => {
-        const own = S.ownByGw[pid] || {};
-        const arr = [];
-        for (let g = gw; g <= MAX_GW; g++) if (own[g] === le) arr.push(g);
-        return arr;
-      };
-
-      // mgrA side: shows what mgrA receives
-      const aSide = el('div', { class: 'trade-side' },
-        el('div', { class: 'trade-mgr' }, MGR_BY_LE[tr.mgrA].first),
-        el('div', { class: 'tiny', style: 'opacity: 0.7;' }, 'received'),
+  // -------- 10-12. THREE TRADES --------
+  function tradeCard(opts) {
+    const { gw, mgrA, mgrB, items, verdict, stamp, bg, dark, story } = opts;
+    add('c-trade' + (dark ? ' dark' : ''), { style: `background: ${bg};` }, (n) => {
+      n.appendChild(el('div', { class: 'topline' },
+        el('div', {},
+          el('div', { class: 'caption anim fade' }, `Trade · GW${gw}`),
+          el('h2', { class: 'anim up' }, `${MGR_BY_LE[mgrA].first} ⇄ ${MGR_BY_LE[mgrB].first}`),
+        ),
+        el('div', { class: 'caption anim fade', style: 'text-align: right;' }, story)
+      ));
+      const swap = el('div', { class: 'swap' });
+      const sideA = el('div', { class: 'col-side left' },
+        el('div', { class: 'col-mgr' }, MGR_BY_LE[mgrA].first),
+        el('div', { class: 'col-tag' }, 'Received'),
       );
       let aTotal = 0;
-      tr.items.forEach(it => {
-        const pts = tenureWindow(it.mgrAGets, tr.mgrA, tr.gw).reduce((s,g) => s + S.getPts(it.mgrAGets, g), 0);
+      items.forEach(it => {
+        const pts = S.tenurePts(it.toA, mgrA, gw);
         aTotal += pts;
-        aSide.appendChild(el('div', { class: 'trade-row' },
-          el('div', { class: 'nm' }, S.pname(it.mgrAGets)),
-          el('div', { class: 'pp' }, String(pts))
+        sideA.appendChild(el('div', { class: 'player' },
+          el('div', {},
+            el('div', { class: 'pname' }, S.pname(it.toA)),
+            el('div', { class: 'pteam' }, `${S.ppos(it.toA)} · ${S.pteam(it.toA)}`),
+          ),
+          el('div', { class: 'ppts' }, String(pts))
         ));
       });
-      aSide.appendChild(el('div', { class: 'trade-pts', style: 'margin-top: 6px; text-align: right; color: var(--yellow);' }, `${aTotal} PTS`));
+      sideA.appendChild(el('div', { class: 'col-total' }, aTotal + ' pts while held'));
 
-      const bSide = el('div', { class: 'trade-side' },
-        el('div', { class: 'trade-mgr' }, MGR_BY_LE[tr.mgrB].first),
-        el('div', { class: 'tiny', style: 'opacity: 0.7;' }, 'received'),
+      const sideB = el('div', { class: 'col-side right' },
+        el('div', { class: 'col-mgr' }, MGR_BY_LE[mgrB].first),
+        el('div', { class: 'col-tag' }, 'Received'),
       );
       let bTotal = 0;
-      tr.items.forEach(it => {
-        const pts = tenureWindow(it.mgrBGets, tr.mgrB, tr.gw).reduce((s,g) => s + S.getPts(it.mgrBGets, g), 0);
+      items.forEach(it => {
+        const pts = S.tenurePts(it.toB, mgrB, gw);
         bTotal += pts;
-        bSide.appendChild(el('div', { class: 'trade-row' },
-          el('div', { class: 'nm' }, S.pname(it.mgrBGets)),
-          el('div', { class: 'pp' }, String(pts))
+        sideB.appendChild(el('div', { class: 'player' },
+          el('div', {},
+            el('div', { class: 'pname' }, S.pname(it.toB)),
+            el('div', { class: 'pteam' }, `${S.ppos(it.toB)} · ${S.pteam(it.toB)}`),
+          ),
+          el('div', { class: 'ppts' }, String(pts))
         ));
       });
-      bSide.appendChild(el('div', { class: 'trade-pts', style: 'margin-top: 6px; text-align: right; color: var(--yellow);' }, `${bTotal} PTS`));
+      sideB.appendChild(el('div', { class: 'col-total' }, bTotal + ' pts while held'));
 
-      tradeBox.appendChild(aSide);
-      tradeBox.appendChild(el('div', { class: 'trade-arrow' }, '⇄'));
-      tradeBox.appendChild(bSide);
+      const arrowSvg = `<svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 26 L55 26 M45 16 L55 26 L45 36 M55 54 L5 54 M15 44 L5 54 L15 64" stroke="${dark ? '#F4F1EA' : '#0A0A0A'}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>`;
+      swap.appendChild(sideA);
+      swap.appendChild(el('div', { class: 'arrow', html: arrowSvg }));
+      swap.appendChild(sideB);
+      n.appendChild(swap);
 
-      card.appendChild(tradeBox);
-
-      card.appendChild(el('div', { class: 'fade-up', style: 'margin-top: 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px;' },
-        el('div', { class: 'verdict-pill' }, `${MGR_BY_LE[tr.vMgr].first} won by ${tr.delta}`),
-        el('div', { class: 'body', style: 'font-style: italic; font-weight: 700; max-width: 520px;' }, tr.story)
+      n.appendChild(el('div', { class: 'verdict' },
+        el('div', { class: 'verdict-line' }, verdict),
+        el('div', { class: 'stamp' }, stamp),
       ));
-    });
+    }, dark);
+  }
+
+  tradeCard({
+    gw: 4, mgrA: 73858, mgrB: 73822,
+    items: [{ toA: 419, toB: 413 }],  // christopher gets Grealish (419), Peter gets Marmoush (413)
+    verdict: 'christopher took Grealish off Peter for a Marmoush that never landed.',
+    stamp: 'Steal', bg: 'var(--lime)', dark: false,
+    story: 'Grealish out · Marmoush in',
+  });
+  tradeCard({
+    gw: 9, mgrA: 73858, mgrB: 73847,
+    items: [
+      { toA: 267, toB: 266 },   // Sarr / Eze
+      { toA: 449, toB: 235 },   // B.Fernandes / Palmer
+      { toA: 97,  toB: 666 },   // Evanilson / Ekitiké
+    ],
+    verdict: 'Michael shipped Bruno and still came out 30 points ahead.',
+    stamp: 'Steal · Michael', bg: 'var(--orange)', dark: false,
+    story: '6 players · GW9',
+  });
+  tradeCard({
+    gw: 18, mgrA: 73847, mgrB: 73788,
+    items: [{ toA: 499, toB: 97 }], // Michael gets Isak, Mark gets Evanilson
+    verdict: 'Mark sold Isak at the peak. Isak scored 12 the rest of the way.',
+    stamp: 'Steal · Mark', bg: 'var(--cyan)', dark: false,
+    story: 'Isak out · Evanilson in',
   });
 
-  // --- 8-13. MANAGER CARDS (reverse finishing order) ---
-  // Build verdicts hardcoded — keep light
-  const verdicts = {
-    73822: { v: 'Tapped out at GW28. The other 9 weeks were a vibe.', high: 'GW11: 60 vs Geraint. He led the league briefly. We saw you.', },
-    73847: { v: '100 transactions. Five different left-backs in November. Still 5th.', },
-    73858: { v: 'Second-most points-for. Fourth place. Football is cruel.', },
-    73827: { v: 'Bought, dropped, re-bought. Bought, dropped, re-bought.', },
-    73788: { v: 'Quiet, persistent, profitable. Almost caught the king.', },
-    73835: { v: '28 transactions. 75 points. A masterclass in doing very little.', },
+  // -------- 13. INTERSTITIAL --------
+  intro('Meet the managers.', 'var(--lime)', 'var(--ink)');
+
+  // -------- 14-19. MANAGER CARDS (reverse order) --------
+  const verdictByMgr = {
+    73822: 'Built a team in August, switched off in February, and still finished fewer points behind than anyone expected.',
+    73847: 'Made a hundred transactions, fielded five different left-backs in November, and finished fifth.',
+    73858: 'Scored more points-for than anyone except Geraint. Finished fourth. The fixture computer was not his friend.',
+    73827: 'Best XI of the season on his good days, kept losing to bench points on his bad ones.',
+    73788: 'Quiet, persistent, won on the trade desk twice. Almost caught Geraint, never quite did.',
+    73835: 'Drafted a title-winning squad, then ignored it for nine months. Pure stubborn brilliance.',
   };
-  const colors = [
-    { bg: 'bg-10', dark: true },   // Peter (6th)
-    { bg: 'bg-8',  dark: true },   // Michael
-    { bg: 'bg-11', dark: false },  // christopher
-    { bg: 'bg-5',  dark: true },   // Steven
-    { bg: 'bg-9',  dark: true },   // Mark
-    { bg: 'bg-mesh-citrus', dark: false }, // Geraint
-  ];
-  // reverse rank order: rank 6,5,4,3,2,1
-  const reversed = [...S.standings].sort((a,b) => b.rank - a.rank);
-  reversed.forEach((s, idx) => {
+  const mgrBg = {
+    73822: { bg: 'var(--purple)', dark: true,  accent: 'var(--yellow)' },
+    73847: { bg: 'var(--orange)', dark: false, accent: 'var(--ink)' },
+    73858: { bg: 'var(--lime)',   dark: false, accent: 'var(--ink)' },
+    73827: { bg: 'var(--pink)',   dark: true,  accent: 'var(--yellow)' },
+    73788: { bg: 'var(--cyan)',   dark: false, accent: 'var(--ink)' },
+    73835: { bg: 'var(--yellow)', dark: false, accent: 'var(--ink)' },
+  };
+  const sortedRev = [...S.standings].sort((a, b) => b.rank - a.rank);
+  sortedRev.forEach(s => {
     const m = MGR_BY_LE[s.league_entry];
-    const palette = colors[idx];
-    PLAN(palette.bg, (card) => {
-      card.appendChild(el('div', { class: 'mgr-rank' }, '#' + s.rank));
-      card.appendChild(el('div', { class: 'kicker fade-up' }, `Manager · ${s.rank} of 6`));
-      card.appendChild(el('div', { class: 'mgr-name fade-up', style: 'margin-top: 6px;' }, m.first));
-      card.appendChild(el('div', { class: 'mgr-team fade-up' }, m.team));
-      card.appendChild(el('div', { class: 'tiny fade-up', style: 'margin-top: 4px;' }, `${s.matches_won}W · ${s.matches_drawn}D · ${s.matches_lost}L · ${s.total} PTS · ${s.points_for} PF`));
-
-      const hl = S.hl[m.le];
-      const bw = S.bestWorstTr[m.le];
-      const nem = S.nemesis[m.le];
-
-      const grid = el('div', { class: 'stat-grid fade-up', style: 'margin-top: 14px;' });
-      grid.appendChild(el('div', { class: 'stat' },
-        el('div', { class: 'label' }, 'High Score'),
-        el('div', { class: 'val' }, String(hl.hi.pts)),
-        el('div', { class: 'sub' }, `GW${hl.hi.gw}`)
+    const conf = mgrBg[m.le];
+    const bw = S.bwTr[m.le];
+    const nem = S.nemesis[m.le];
+    add('c-mgr ' + (conf.dark ? 'dark' : 'light'), { style: `background: ${conf.bg}; color: ${conf.dark ? 'var(--paper)' : 'var(--ink)'};` }, (n) => {
+      n.appendChild(el('div', { class: 'watermark' }, '#' + s.rank));
+      n.appendChild(el('div', { class: 'head' },
+        el('div', { class: 'role' }, `Manager ${s.rank} of 6`),
+        el('div', { class: 'first' }, m.first),
+        el('div', { class: 'team' }, m.team),
+        el('div', { class: 'record' }, `${s.matches_won}W · ${s.matches_drawn}D · ${s.matches_lost}L  →  ${s.total} PTS`),
       ));
-      grid.appendChild(el('div', { class: 'stat' },
-        el('div', { class: 'label' }, 'Low Score'),
-        el('div', { class: 'val' }, String(hl.lo.pts)),
-        el('div', { class: 'sub' }, `GW${hl.lo.gw}`)
+
+      const stats = el('div', { class: 'stats' });
+      stats.appendChild(el('div', { class: 'srow' },
+        el('div', { class: 'l' }, 'Points-for'),
+        el('div', { class: 'v' }, String(s.points_for)),
+        el('div', { class: 'sub' }, `Avg ${(s.points_for / 37).toFixed(1)}/GW`)
+      ));
+      stats.appendChild(el('div', { class: 'srow' },
+        el('div', { class: 'l' }, 'High score'),
+        el('div', { class: 'v' }, String(S.hl[m.le].hi.pts)),
+        el('div', { class: 'sub' }, `GW${S.hl[m.le].hi.gw}`)
+      ));
+      stats.appendChild(el('div', { class: 'srow' },
+        el('div', { class: 'l' }, 'Low score'),
+        el('div', { class: 'v' }, String(S.hl[m.le].lo.pts)),
+        el('div', { class: 'sub' }, `GW${S.hl[m.le].lo.gw}`)
       ));
       if (bw.best) {
-        grid.appendChild(el('div', { class: 'stat' },
-          el('div', { class: 'label' }, 'Best Move'),
-          el('div', { class: 'val' }, S.pname(bw.best.inP)),
-          el('div', { class: 'sub' }, `GW${bw.best.gw} · +${bw.best.delta} vs ${S.pname(bw.best.outP)}`)
+        stats.appendChild(el('div', { class: 'srow' },
+          el('div', { class: 'l' }, 'Best move'),
+          el('div', { class: 'v' }, S.pname(bw.best.inP)),
+          el('div', { class: 'sub' }, `+${bw.best.delta} vs ${S.pname(bw.best.outP)}, GW${bw.best.gw}`)
         ));
       }
       if (bw.worst) {
-        grid.appendChild(el('div', { class: 'stat' },
-          el('div', { class: 'label' }, 'Worst Move'),
-          el('div', { class: 'val' }, S.pname(bw.worst.inP)),
-          el('div', { class: 'sub' }, `GW${bw.worst.gw} · ${bw.worst.delta} vs ${S.pname(bw.worst.outP)}`)
+        stats.appendChild(el('div', { class: 'srow' },
+          el('div', { class: 'l' }, 'Worst move'),
+          el('div', { class: 'v' }, S.pname(bw.worst.inP)),
+          el('div', { class: 'sub' }, `${bw.worst.delta} vs ${S.pname(bw.worst.outP)}, GW${bw.worst.gw}`)
         ));
       }
-      card.appendChild(grid);
-
-      card.appendChild(el('div', { class: 'stat fade-up', style: 'margin-top: 12px;' },
-        el('div', { class: 'label' }, 'Nemesis'),
-        el('div', { class: 'val' }, MGR_BY_LE[nem.le].first),
-        el('div', { class: 'sub' }, `Beat them ${nem.count}×: GW${nem.gws.join(', ')}`)
+      stats.appendChild(el('div', { class: 'srow' },
+        el('div', { class: 'l' }, 'Nemesis'),
+        el('div', { class: 'v' }, MGR_BY_LE[nem.le].first),
+        el('div', { class: 'sub' }, `Beat him ${nem.count}× (GW ${nem.gws.join(', ')})`)
       ));
-
-      card.appendChild(el('div', { class: 'verdict fade-up', style: 'margin-top: 14px;' }, verdicts[m.le].v));
-    }, { dark: palette.dark, light: !palette.dark });
+      // Special christopher line
+      if (m.le === 73858) {
+        stats.appendChild(el('div', { class: 'srow' },
+          el('div', { class: 'l' }, 'Best draft'),
+          el('div', { class: 'v' }, 'Jamie Gittens'),
+          el('div', { class: 'sub', style: 'font-style: italic;' }, '(redraft)')
+        ));
+      }
+      n.appendChild(stats);
+      n.appendChild(el('div', { class: 'verdict' }, verdictByMgr[m.le]));
+    }, conf.dark);
   });
 
-  // --- 14. CHAMPION (Geraint) ---
-  PLAN('bg-mesh-citrus', (card) => {
-    // confetti
-    const conf = el('div', { class: 'confetti' });
-    const cols = ['#FFEB3B','#FF1493','#00BCD4','#FF6F00','#C6FF00','#FFFFFF'];
-    for (let i = 0; i < 40; i++) {
-      const span = el('i', { style: `left: ${Math.random()*100}%; background: ${cols[i%cols.length]}; transform: rotate(${Math.random()*360}deg); animation-delay: ${Math.random()*0.8}s;` });
-      conf.appendChild(span);
-    }
-    card.appendChild(conf);
+  // -------- 20. INTERSTITIAL --------
+  intro('The awards.', 'var(--ink)', 'var(--paper)');
 
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Champion'));
-    card.appendChild(el('div', { class: 'fill', style: 'justify-content: center; gap: 8px;' },
-      el('div', { class: 'h1 pop', style: 'font-size: clamp(80px, 24vw, 180px); color: var(--black); line-height: 0.85;' }, 'GERAINT'),
-      el('div', { class: 'body fade-up', style: 'font-weight: 800; font-size: clamp(18px, 5vw, 24px);' }, '🏴󠁧󠁢󠁷󠁬󠁳󠁿'),
-      el('div', { class: 'giant-num pop', style: 'color: var(--purple); margin-top: 6px;' }, String(S.standings[0].total)),
-      el('div', { class: 'h3 fade-up', style: 'color: var(--purple);' }, 'POINTS · 25W · 0D · 12L'),
-      el('div', { class: 'body fade-up', style: 'margin-top: 12px; font-style: italic; font-weight: 800; max-width: 480px; text-align: center;' }, 'No draws. Bring back the goldilocks zone.'),
+  // -------- 21. CHAMPION (victory lap) --------
+  add('c-champ', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Champion · Craig/McDowell/Hopkins Cup 2025/26'));
+    const crown = `<svg class="crown anim scale" viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 50 L0 14 L20 30 L36 6 L50 30 L64 6 L80 30 L100 14 L92 50 Z M6 56 L94 56 L94 62 L6 62 Z" stroke="#0A0A0A" stroke-width="3" stroke-linejoin="round" />
+    </svg>`;
+    const wrap = el('div', { class: 'crown-wrap' });
+    wrap.innerHTML = crown;
+    wrap.appendChild(el('div', { class: 'gname anim up' }, 'Geraint'));
+    wrap.appendChild(el('div', { class: 'gflag anim up' }, '🏴󠁧󠁢󠁷󠁬󠁳󠁿'));
+    wrap.appendChild(el('div', { class: 'stat-row' },
+      el('div', { class: 'pts anim up' }, String(S.standings[0].total),
+        el('small', {}, 'League points')
+      ),
+      el('div', { class: 'pts anim up' }, '+13',
+        el('small', {}, 'Title margin')
+      ),
+      el('div', { class: 'pts anim up' }, '25-0-12',
+        el('small', {}, 'Record')
+      ),
+    ));
+    n.appendChild(wrap);
+  });
+
+  // -------- 22. BEST TRADE (recap as headline) --------
+  add('c-besttrade c-trade light', { style: 'background: var(--cyan);' }, (n) => {
+    n.appendChild(el('div', { class: 'topline' },
+      el('div', {},
+        el('div', { class: 'caption anim fade' }, 'Headline Award · GW18'),
+        el('h2', { class: 'anim up' }, 'Best Trade'),
+      ),
+      el('div', { class: 'caption anim fade', style: 'text-align: right;' }, 'Isak out · Evanilson in')
+    ));
+    const swap = el('div', { class: 'swap' });
+    const isakPts = S.tenurePts(499, 73847, 18);
+    const evaPts = S.tenurePts(97, 73788, 18);
+    const sideA = el('div', { class: 'col-side left' },
+      el('div', { class: 'col-mgr' }, 'Michael'),
+      el('div', { class: 'col-tag' }, 'Received'),
+      el('div', { class: 'player' },
+        el('div', {},
+          el('div', { class: 'pname' }, 'Isak'),
+          el('div', { class: 'pteam' }, 'FWD · NEW'),
+        ),
+        el('div', { class: 'ppts' }, String(isakPts))
+      ),
+      el('div', { class: 'col-total' }, isakPts + ' pts'),
+    );
+    const sideB = el('div', { class: 'col-side right' },
+      el('div', { class: 'col-mgr' }, 'Mark'),
+      el('div', { class: 'col-tag' }, 'Received'),
+      el('div', { class: 'player' },
+        el('div', {},
+          el('div', { class: 'pname' }, 'Evanilson'),
+          el('div', { class: 'pteam' }, 'FWD · BOU'),
+        ),
+        el('div', { class: 'ppts' }, String(evaPts))
+      ),
+      el('div', { class: 'col-total' }, evaPts + ' pts'),
+    );
+    const arrowSvg = `<svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 26 L55 26 M45 16 L55 26 L45 36 M55 54 L5 54 M15 44 L5 54 L15 64" stroke="#0A0A0A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>`;
+    swap.appendChild(sideA);
+    swap.appendChild(el('div', { class: 'arrow', html: arrowSvg }));
+    swap.appendChild(sideB);
+    n.appendChild(swap);
+    n.appendChild(el('div', { class: 'verdict' },
+      el('div', { class: 'verdict-line' }, 'Mark won by 47 points and Isak\'s form fell off a cliff.'),
+      el('div', { class: 'stamp' }, 'Winner: Mark'),
     ));
   });
 
-  // --- 15. BEST TRADE (Mark) — recap as headline award
-  PLAN('bg-9', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Headline Award', name: 'Best Trade', nameColor: 'var(--white)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Mark'),
-        el('div', { class: 'award-team fade-up' }, 'Carrying Timber'),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--white); margin-top: 10px;' }, 'ISAK → EVANILSON'),
-        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700;' }, 'GW18. Mark shipped Isak to Michael. Isak then scored 12 the rest of the way.'),
-        el('div', { class: 'fade-up' }, el('span', { class: 'verdict-pill', style: 'background: var(--lime); color: var(--black);' }, 'Net swing: +47 to Mark')),
-      ]
-    }));
-  }, { dark: true });
-
-  // --- 16. ASLEEP AT THE WHEEL (Peter) ---
-  PLAN('bg-6', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Headline Award', name: 'Asleep at the Wheel', nameColor: 'var(--cyan)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Peter'),
-        el('div', { class: 'award-team fade-up' }, 'MaxPoints'),
-        el('div', { class: 'giant-num pop', style: 'color: var(--white); font-size: clamp(140px, 38vw, 240px);' }, '9'),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--cyan);' }, 'Gameweeks Untouched'),
-        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700; font-style: italic;' }, 'Last move: GW28. From there, radio silence to the line.'),
-      ]
-    }));
-  }, { dark: true });
-
-  // --- 17. MOST INFLUENTIAL TRANSFER (christopher / Gittens) — hardcoded ---
-  PLAN('bg-1', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Headline Award', name: 'Most Influential Transfer', nameColor: 'var(--black)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--purple);' }, 'christopher'),
-        el('div', { class: 'award-team fade-up' }, 'The Masterplan'),
-        el('div', { class: 'display pop', style: 'font-size: clamp(82px, 22vw, 160px); color: var(--black); line-height: 0.85; letter-spacing: -0.02em; margin-top: 8px;' }, 'GITTENS'),
-        el('div', { class: 'fade-up', style: 'font-family: \'Space Grotesk\', sans-serif; font-style: italic; font-weight: 600; font-size: clamp(18px, 5vw, 24px); color: var(--purple);' }, '(redraft)'),
-      ]
-    }));
-  });
-
-  // --- 18. BEST LATE-ROUND DRAFT PICK (christopher / Guéhi R14) ---
-  PLAN('bg-11', (card) => {
-    let gueId = null;
-    for (const id in S.players) {
-      if (S.players[id].web_name === 'Guéhi') { gueId = +id; break; }
+  // -------- 23. BEST DRAFT PICK (christopher / Guéhi R14 P82) --------
+  add('c-draft', {}, (n) => {
+    const guehi = S.pidByName('Guéhi', 'MCI') || 260;
+    let gPts = 0;
+    for (let g = 1; g <= MAX_GW; g++) {
+      if (S.ownByGw[guehi]?.[g] === 73858) gPts += S.getPts(guehi, g);
     }
-    let tp = 0;
-    if (gueId) for (let g = 1; g <= MAX_GW; g++) tp += S.getPts(gueId, g);
-    card.appendChild(awardLayout({
-      kicker: 'Headline Award', name: 'Late-Round Robbery', nameColor: 'var(--black)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--purple);' }, 'christopher'),
-        el('div', { class: 'award-team fade-up' }, 'The Masterplan'),
-        el('div', { class: 'h2 fade-up', style: 'color: var(--black); margin-top: 10px;' }, 'GUÉHI'),
-        el('div', { class: 'h3 fade-up' }, 'Round 14, Pick 4'),
-        el('div', { class: 'giant-num pop', style: 'color: var(--purple); font-size: clamp(110px, 30vw, 200px);' }, String(tp || 179)),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--black);' }, 'POINTS · 82nd OVERALL'),
-      ]
-    }));
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Headline Award'));
+    n.appendChild(el('div', { class: 'pickno anim up' },
+      el('small', {}, 'Overall pick'),
+      '#82'
+    ));
+    n.appendChild(el('div', { class: 'pname anim up' }, 'Guéhi'));
+    n.appendChild(el('div', { class: 'meta' },
+      el('div', { class: 'anim up' }, el('b', {}, String(gPts || 179)), el('s', {}, 'Points scored')),
+      el('div', { class: 'anim up' }, el('b', {}, 'R14'), el('s', {}, 'Round · 4th pick')),
+      el('div', { class: 'anim up' }, el('b', {}, '37/37'), el('s', {}, 'Gameweeks held')),
+    ));
+    n.appendChild(el('div', { class: 'who anim up' },
+      el('s', {}, 'Picked by'),
+      ' ',
+      el('b', {}, 'christopher'),
+      ' · The Masterplan'
+    ));
   });
 
-  // --- 19. GOALKEEPING HOWLER (Steven) ---
-  PLAN('bg-5', (card) => {
+  // -------- 24. MOST INFLUENTIAL TRANSFER (Gittens — theatrical) --------
+  add('c-gittens', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption tag' }, 'Headline Award'));
+    n.appendChild(el('div', { class: 'head' },
+      el('span', { class: 'w' }, 'Most'),
+      ' ',
+      el('span', { class: 'w' }, 'Influential'),
+      ' ',
+      el('span', { class: 'w' }, 'Transfer'),
+    ));
+    n.appendChild(el('div', { class: 'reveal' },
+      el('div', { class: 'who' }, 'christopher · The Masterplan'),
+      el('div', { class: 'gittens', style: 'position: relative;' }, 'Gittens',
+        el('div', { class: 'stamp' }, 'Redraft')
+      ),
+      el('div', { class: 'redraft' }, '(redraft)'),
+    ));
+  }, true);
+
+  // -------- 25. ASLEEP AT THE WHEEL (Peter — calendar) --------
+  add('c-asleep', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Headline Award'));
+    n.appendChild(el('div', { class: 'name anim up' }, 'Asleep at the Wheel'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Peter',
+      el('s', {}, 'MaxPoints · finished 6th')
+    ));
+    const cal = el('div', { class: 'cal' });
+    const strip = el('div', { class: 'strip' });
+    const events = new Set(S.dormant[73822].allEvents);
+    const lastEvent = S.dormant[73822].lastEvent;
+    for (let g = 1; g <= MAX_GW; g++) {
+      let cls = 'gw';
+      if (g > lastEvent) cls += ' dormant';
+      else if (events.has(g)) cls += ' last-tx';
+      const cell = el('div', { class: cls, title: `GW${g}` });
+      cell.style.transitionDelay = (200 + g * 40) + 'ms';
+      strip.appendChild(cell);
+    }
+    cal.appendChild(strip);
+    cal.appendChild(el('div', { class: 'x-axis' },
+      el('span', {}, 'GW1'),
+      el('span', {}, 'GW10'),
+      el('span', {}, 'GW20'),
+      el('span', {}, 'GW28'),
+      el('span', {}, 'GW37')
+    ));
+    cal.appendChild(el('div', { class: 'legend anim fade' },
+      el('span', {}, el('i', { style: 'background: var(--yellow);' }), 'Made a move'),
+      el('span', {}, el('i', { style: 'background: var(--orange);' }), 'Dormant'),
+    ));
+    n.appendChild(cal);
+    n.appendChild(el('div', { class: 'verdict anim up' },
+      'Peter\'s last transaction was GW28. He didn\'t touch his team for the final nine gameweeks.'
+    ));
+  }, true);
+
+  // -------- 26. INTERSTITIAL --------
+  intro('And now the bits nobody asked for.', 'var(--cyan)', 'var(--ink)');
+
+  // -------- 27. GOALKEEPING HOWLER (Steven) --------
+  add('c-howler', {}, (n) => {
+    // Count wrong-keeper picks
     let howl = 0;
     for (let g = 1; g <= MAX_GW; g++) {
-      const pk = S.d.picks[`76218_${g}`];
-      if (!pk) continue;
+      const pk = S.d.picks[`76218_${g}`]; if (!pk) continue;
       const gks = pk.picks.filter(p => S.ppos(p.element) === 'GKP');
       if (gks.length !== 2) continue;
       const start = gks.find(p => p.position === 1);
@@ -1097,379 +1531,388 @@ function buildCards(S) {
       if (!start || !bench) continue;
       if (S.getPts(bench.element, g) > S.getPts(start.element, g)) howl++;
     }
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'Goalkeeping Howler', nameColor: 'var(--yellow)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--white);' }, 'Steven'),
-        el('div', { class: 'award-team fade-up' }, '✨'),
-        el('div', { class: 'giant-num pop', style: 'color: var(--yellow); font-size: clamp(140px, 40vw, 260px);' }, String(howl)),
-        el('div', { class: 'body fade-up', style: 'font-weight: 800; font-style: italic; max-width: 460px; font-size: clamp(18px, 5vw, 22px);' }, 'Picked the wrong keeper this many times. There were only two options.'),
-      ]
-    }));
-  }, { dark: true });
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'Goalkeeping Howler'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Steven · ✨'));
+    n.appendChild(el('div', { class: 'body' },
+      el('div', { class: 'keepers' },
+        el('div', { class: 'gk right anim left' },
+          el('div', { class: 'gk-ico' }, '✓'),
+          el('div', { class: 'gk-label' }, 'Bench keeper', el('small', {}, 'Outscored the starter'))
+        ),
+        el('div', { class: 'gk wrong anim left' },
+          el('div', { class: 'gk-ico' }, '✗'),
+          el('div', { class: 'gk-label' }, 'Starting keeper', el('small', {}, 'Selected anyway'))
+        ),
+      ),
+      el('div', { class: 'count anim scale', 'data-count': String(howl) }, '0',
+        el('span', {}, 'GWs picking wrong')
+      )
+    ));
+    n.appendChild(el('div', { class: 'punch anim up' }, 'There were only two options.'));
+  }, true);
 
-  // --- 20. PHANTOM XI (Steven, GW34) ---
-  PLAN('bg-3', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'Phantom XI', nameColor: 'var(--pink)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--white);' }, 'Steven'),
-        el('div', { class: 'award-team fade-up' }, '✨'),
-        el('div', { class: 'giant-num pop', style: 'color: var(--pink); font-size: clamp(110px, 30vw, 200px);' }, 'GW34'),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--cyan);' }, '5 starters · 0 minutes · 16 pts'),
-        el('div', { class: 'body fade-up', style: 'font-weight: 700; font-style: italic; max-width: 460px;' }, 'Almost half the XI never left the bus. Final score: 16.'),
-      ]
-    }));
-  }, { dark: true });
-
-  // --- 21. COIN FLIP (Peter, positive) ---
-  PLAN('bg-7', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'The Coin Flip', nameColor: 'var(--black)',
-      children: [
-        el('div', { class: 'h2 pop', style: 'color: var(--black); font-size: clamp(60px, 17vw, 110px);' }, 'PETER 33'),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--purple);' }, 'beat'),
-        el('div', { class: 'h2 pop', style: 'color: var(--purple); font-size: clamp(60px, 17vw, 110px);' }, 'MICHAEL 32'),
-        el('div', { class: 'h3 fade-up' }, 'GW23 · margin: 1'),
-        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700; font-style: italic;' }, 'Peter\'s eighth and most dramatic win of the year.'),
-      ]
-    }));
+  // -------- 28. PHANTOM XI (Steven GW34) --------
+  add('c-phantom', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award · GW34'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'Phantom XI'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Steven · ✨'));
+    // Build a pitch with 11 players, 5 ghosts (zeros in GW34)
+    const pk = S.d.picks[`76218_34`];
+    const starters = pk.picks.filter(p => p.position <= 11);
+    // Define formation slots (rough positions on pitch by player position)
+    const slots = {
+      GKP: [{ x: 50, y: 92 }],
+      DEF: [{ x: 18, y: 70 }, { x: 38, y: 70 }, { x: 62, y: 70 }, { x: 82, y: 70 }],
+      MID: [{ x: 18, y: 45 }, { x: 38, y: 45 }, { x: 62, y: 45 }, { x: 82, y: 45 }],
+      FWD: [{ x: 32, y: 18 }, { x: 50, y: 18 }, { x: 68, y: 18 }],
+    };
+    const byPos = { GKP: [], DEF: [], MID: [], FWD: [] };
+    starters.forEach(p => { byPos[S.ppos(p.element)].push(p.element); });
+    const pitch = el('div', { class: 'pitch' });
+    function placeRow(posKey, list) {
+      const positions = slots[posKey].slice(0, list.length);
+      list.forEach((pid, i) => {
+        const pos = positions[i] || positions[positions.length - 1];
+        const isGhost = S.getMins(pid, 34) === 0;
+        const dot = el('div', { class: 'player' + (isGhost ? ' ghost' : ''), style: `left: ${pos.x}%; top: ${pos.y}%; transition-delay: ${300 + i * 100}ms;` },
+          S.pname(pid).slice(0, 6)
+        );
+        pitch.appendChild(dot);
+      });
+    }
+    placeRow('GKP', byPos.GKP);
+    placeRow('DEF', byPos.DEF);
+    placeRow('MID', byPos.MID);
+    placeRow('FWD', byPos.FWD);
+    n.appendChild(el('div', { class: 'pitch-wrap anim fade' }, pitch));
+    n.appendChild(el('div', { class: 'stat-row' },
+      el('div', { class: 'anim up' }, el('b', {}, '5'), el('s', {}, 'Starters · 0 mins')),
+      el('div', { class: 'anim up' }, el('b', {}, '16'), el('s', {}, 'Final score')),
+      el('div', { class: 'anim up' }, el('b', {}, '−26'), el('s', {}, 'Lost to Mark')),
+    ));
+    n.appendChild(el('div', { class: 'punch anim up' }, 'Almost half the XI never left the bus.'));
   });
 
-  // --- 22. LOYALIST TAX (Peter, Salah) ---
-  PLAN('bg-6', (card) => {
-    let salId = null;
-    for (const id in S.players) if (S.players[id].web_name === 'M.Salah') { salId = +id; break; }
+  // -------- 29. THREE STRIKES (Mark / Amad) --------
+  add('c-strikes', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'Three Strikes'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Mark · Carrying Timber'));
+    const triple = el('div', { class: 'triple' });
+    [['GW24', 'SIGNED'], ['GW32', 'RE-SIGNED'], ['GW34', 'RE-RE-SIGNED']].forEach(([gw, label]) => {
+      triple.appendChild(el('div', { class: 'strike-row' },
+        el('span', { class: 'x' }, '✗'),
+        el('span', { class: 'nm' }, 'Amad'),
+        el('span', { class: 'gw' }, `${gw} · ${label}`)
+      ));
+    });
+    n.appendChild(triple);
+    n.appendChild(el('div', { class: 'punch anim up' }, 'Could not quit. Refused to commit.'));
+  });
+
+  // -------- 30. WELCOME AND GOODBYE (Michael / Mamardashvili) --------
+  add('c-welcome', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'Welcome, and Goodbye'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Michael · Jota win again *20'));
+    const reel = el('div', { class: 'reel' });
+    reel.appendChild(el('div', { class: 'arrived anim left' },
+      el('span', { class: 'tg' }, 'Arrived'),
+      el('span', { class: 'gwn' }, 'GW7')
+    ));
+    reel.appendChild(el('div', { class: 'pname anim up' }, 'Mamardashvili'));
+    reel.appendChild(el('div', { class: 'left anim left' },
+      el('span', { class: 'tg bad' }, 'Dropped'),
+      el('span', { class: 'gwn' }, 'GW10')
+    ));
+    reel.appendChild(el('div', { class: 'joiner anim fade' }, 'Never started him. Not once.'));
+    n.appendChild(reel);
+    n.appendChild(el('div', { class: 'punch anim up' }, 'Three gameweeks. Zero starts. A swift, unsentimental goodbye.'));
+  });
+
+  // -------- 31. RIGHT PLACE RIGHT TIME (Michael / Schade) --------
+  add('c-rprt', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'Right Place, Right Time'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Michael · Jota win again *20'));
+    n.appendChild(el('div', { class: 'player-name anim up' }, 'Schade'));
+    // Build mini chart showing Schade points across GWs around pickup
+    const schade = S.pidByName('Schade');
+    const PICKUP_GW = 17;
+    const RANGE_START = 12, RANGE_END = 23;
+    const pts = []; for (let g = RANGE_START; g <= RANGE_END; g++) pts.push(S.getPts(schade, g));
+    const maxP = Math.max(...pts, 1);
+    const VB_W = 800, VB_H = 280;
+    const PAD = { l: 36, r: 30, t: 30, b: 36 };
+    const innerW = VB_W - PAD.l - PAD.r, innerH = VB_H - PAD.t - PAD.b;
+    const xFor = i => PAD.l + i / (pts.length - 1) * innerW;
+    const yFor = v => PAD.t + (1 - v / maxP) * innerH;
+    const path = 'M ' + pts.map((v, i) => `${xFor(i)},${yFor(v)}`).join(' L ');
+    const pickIdx = PICKUP_GW - RANGE_START;
+    const bars = pts.map((v, i) => {
+      const isAfter = (i + RANGE_START) >= PICKUP_GW;
+      const fill = isAfter ? '#FF1493' : '#0A0A0A';
+      return `<circle cx="${xFor(i)}" cy="${yFor(v)}" r="6" fill="${fill}" />`;
+    }).join('');
+    const labels = [RANGE_START, PICKUP_GW, RANGE_END].map(g => {
+      const i = g - RANGE_START;
+      return `<text class="gw-label" x="${xFor(i)}" y="${VB_H - 10}" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="13" fill="#0A0A0A">GW${g}</text>`;
+    }).join('');
+    const arrow = `
+      <line x1="${xFor(pickIdx)}" y1="${PAD.t - 6}" x2="${xFor(pickIdx)}" y2="${yFor(pts[pickIdx]) - 12}" stroke="#0A0A0A" stroke-width="2" />
+      <polygon points="${xFor(pickIdx)},${yFor(pts[pickIdx]) - 6} ${xFor(pickIdx) - 6},${yFor(pts[pickIdx]) - 16} ${xFor(pickIdx) + 6},${yFor(pts[pickIdx]) - 16}" fill="#0A0A0A" />
+      <text x="${xFor(pickIdx)}" y="${PAD.t - 12}" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="12" fill="#0A0A0A">PICKED UP</text>
+    `;
+    const svg = `<svg viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <path d="${path}" stroke="#0A0A0A" stroke-width="3" fill="none" />
+      ${bars}
+      ${labels}
+      ${arrow}
+    </svg>`;
+    n.appendChild(el('div', { class: 'chart-wrap anim fade', html: svg }));
+    n.appendChild(el('div', { class: 'punch anim up' }, '2 points the three weeks before. 26 the three weeks after.'));
+  });
+
+  // -------- 32. LOYALIST TAX (Peter / Salah) --------
+  add('c-loyal', {}, (n) => {
+    const salId = S.pidByName('M.Salah') || 381;
     let pts = 0;
-    if (salId) for (let g = 1; g <= MAX_GW; g++) if (S.ownByGw[salId]?.[g] === 73822) pts += S.getPts(salId, g);
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'The Loyalist Tax', nameColor: 'var(--orange)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Peter'),
-        el('div', { class: 'h2 fade-up', style: 'color: var(--white);' }, 'SALAH'),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--orange);' }, 'Held all 37 weeks'),
-        el('div', { class: 'giant-num pop', style: 'color: var(--white); font-size: clamp(120px, 34vw, 200px);' }, String(pts || 117)),
-        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 800; font-style: italic;' }, 'Points. Loyalty is its own reward.'),
-      ]
-    }));
-  }, { dark: true });
+    for (let g = 1; g <= MAX_GW; g++) if (S.ownByGw[salId]?.[g] === 73822) pts += S.getPts(salId, g);
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'The Loyalist Tax'));
+    n.appendChild(el('div', { class: 'who anim up' }, 'Peter · MaxPoints'));
+    n.appendChild(el('div', { class: 'stack' },
+      el('div', { class: 'player-name anim up' }, 'Salah'),
+      el('div', { class: 'figures' },
+        el('div', { class: 'fig anim up' }, el('b', {}, '37/37'), el('s', {}, 'Gameweeks held')),
+        el('div', { class: 'fig anim up' }, el('b', {}, String(pts || 117)), el('s', {}, 'Total points scored')),
+      ),
+      el('div', { class: 'punch anim up' }, 'Held him every single week. Loyalty is its own reward.'),
+    ));
+  }, true);
 
-  // --- 23. RIGHT PLACE, RIGHT TIME (Michael, Schade) ---
-  PLAN('bg-8', (card) => {
-    let pid = null;
-    for (const id in S.players) if (S.players[id].web_name === 'Schade') { pid = +id; break; }
-    const before = pid ? [14,15,16].reduce((s,g) => s + S.getPts(pid, g), 0) : 2;
-    const after  = pid ? [17,18,19].reduce((s,g) => s + S.getPts(pid, g), 0) : 26;
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'Right Place, Right Time', nameColor: 'var(--white)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--yellow);' }, 'Michael'),
-        el('div', { class: 'h2 fade-up', style: 'color: var(--white);' }, 'SCHADE'),
-        el('div', { class: 'h3 fade-up' }, 'Picked up GW17'),
-        el('div', { class: 'fade-up', style: 'display: flex; gap: 24px; margin-top: 8px; align-items: baseline;' },
-          el('div', { class: 'col center', style: 'align-items: center;' },
-            el('div', { class: 'giant-num', style: 'font-size: clamp(80px, 22vw, 130px); color: var(--white); opacity: 0.6;' }, String(before)),
-            el('div', { class: 'tiny' }, '3 GW before'),
-          ),
-          el('div', { class: 'display', style: 'font-size: 40px; color: var(--yellow);' }, '→'),
-          el('div', { class: 'col center', style: 'align-items: center;' },
-            el('div', { class: 'giant-num', style: 'font-size: clamp(80px, 22vw, 130px); color: var(--yellow);' }, String(after)),
-            el('div', { class: 'tiny' }, '3 GW after'),
-          ),
-        ),
-        el('div', { class: 'body fade-up', style: 'max-width: 440px; font-weight: 700; font-style: italic; margin-top: 6px;' }, 'Caught lightning. Just the once.'),
-      ]
-    }));
-  }, { dark: true });
+  // -------- 33. INTERSTITIAL --------
+  intro('But what if…', 'var(--yellow)', 'var(--ink)');
 
-  // --- 24. THE HYPERACTIVE (Michael) ---
-  PLAN('bg-mesh-pink', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'The Tinkerer', nameColor: 'var(--yellow)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--white);' }, 'Michael'),
-        el('div', { class: 'award-team fade-up' }, 'Jota win again *20'),
-        el('div', { class: 'fade-up', style: 'display: flex; gap: 24px; margin-top: 14px; align-items: baseline; justify-content: center;' },
-          el('div', { class: 'col center', style: 'align-items: center;' },
-            el('div', { class: 'giant-num', style: 'font-size: clamp(110px, 30vw, 180px); color: var(--yellow);' }, String(S.transCount[73847])),
-            el('div', { class: 'tiny' }, 'Michael\'s moves'),
-          ),
-          el('div', { class: 'col center', style: 'align-items: center;' },
-            el('div', { class: 'giant-num', style: 'font-size: clamp(110px, 30vw, 180px); color: var(--white);' }, String(S.transCount[73835])),
-            el('div', { class: 'tiny' }, 'Geraint\'s moves'),
-          ),
-        ),
-        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 800; font-style: italic; margin-top: 8px;' }, 'They finished 5th and 1st. Draw your own conclusions.'),
-      ]
-    }));
-  }, { dark: true });
-
-  // --- 25. THREE STRIKES (Mark, Amad) ---
-  PLAN('bg-2', (card) => {
-    card.appendChild(awardLayout({
-      kicker: 'Micro-Story Award', name: 'Three Strikes', nameColor: 'var(--purple)',
-      children: [
-        el('div', { class: 'award-winner pop', style: 'color: var(--black);' }, 'Mark'),
-        el('div', { class: 'award-team fade-up' }, 'Carrying Timber'),
-        el('div', { class: 'h2 fade-up', style: 'color: var(--purple); margin-top: 10px;' }, 'AMAD'),
-        el('div', { class: 'h3 fade-up', style: 'color: var(--black);' }, 'Signed three separate times'),
-        el('div', { class: 'fade-up', style: 'display: flex; gap: 14px; margin-top: 8px; justify-content: center; flex-wrap: wrap;' },
-          ['GW24','GW32','GW34'].map(g => el('div', { class: 'h2', style: 'font-size: clamp(24px, 7vw, 36px); color: var(--purple); border: 3px solid var(--purple); padding: 6px 12px; border-radius: 8px;' }, g))
-        ),
-        el('div', { class: 'body fade-up', style: 'max-width: 460px; font-weight: 700; font-style: italic; margin-top: 12px;' }, 'Some people just can\'t quit.'),
-      ]
-    }));
+  // -------- 34. CF: Everyone Plays Pete --------
+  function cfTable(opts) {
+    const { title, desc, w, takeaway, bg, dark, takeawayColor } = opts;
+    add('c-cf' + (dark ? ' dark' : ''), { style: `background: ${bg}; color: ${dark ? 'var(--paper)' : 'var(--ink)'};` }, (n) => {
+      n.appendChild(el('div', { class: 'caption anim fade' }, 'Counterfactual'));
+      n.appendChild(el('div', { class: 'head anim up' }, title));
+      n.appendChild(el('div', { class: 'desc anim up' }, desc));
+      const tbl = el('div', { class: 'cf-tbl' });
+      tbl.appendChild(el('div', { class: 'cf-row hdr' },
+        el('div', {}, '#'),
+        el('div', { class: 'l' }, 'Manager'),
+        el('div', { class: 'v', style: 'text-align: right;' }, 'W-D-L'),
+        el('div', { class: 'pts', style: 'text-align: right; font-family: Space Grotesk; font-size: 10px; font-weight: 700; letter-spacing: 0.14em;' }, 'PTS'),
+        el('div', { class: 'delta', style: 'text-align: right; font-family: Space Grotesk; font-size: 10px; font-weight: 700; letter-spacing: 0.14em;' }, 'Δ')
+      ));
+      const realPos = {}; S.standings.forEach(s => realPos[s.league_entry] = s.rank);
+      const rows = sortedFromWld(w);
+      rows.forEach((r, i) => {
+        const delta = realPos[r.le] - (i + 1);
+        const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
+        const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
+        tbl.appendChild(el('div', { class: 'cf-row' },
+          el('div', { class: 'pos' }, String(i + 1)),
+          el('div', { class: 'nm' }, MGR_BY_LE[r.le].first),
+          el('div', { class: 'v' }, `${r.w}-${r.d}-${r.l}`),
+          el('div', { class: 'pts' }, String(r.pts)),
+          el('div', { class: 'delta ' + cls }, arr)
+        ));
+      });
+      n.appendChild(tbl);
+      n.appendChild(el('div', { class: 'takeaway anim up', style: `color: ${takeawayColor || (dark ? 'var(--yellow)' : 'var(--ink)')};` }, takeaway));
+    }, dark);
+  }
+  cfTable({
+    title: 'Everyone Plays Pete',
+    desc: 'Every week your H2H opponent is Peter\'s actual lineup. Peter, fairly, plays the league average.',
+    w: S.cfPete(),
+    takeaway: 'christopher leaps to 2nd. Peter stays last, even against himself.',
+    bg: 'var(--purple)', dark: true, takeawayColor: 'var(--lime)'
   });
 
-  // --- 26. COUNTERFACTUAL 1: EVERYONE PLAYS PETE ---
-  PLAN('bg-6', (card) => {
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Counterfactual'));
-    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--yellow); margin-top: 2px; font-size: clamp(38px, 11vw, 70px);' }, 'Everyone Plays Pete'));
-    card.appendChild(el('div', { class: 'body fade-up', style: 'opacity: 0.85; margin-top: 4px; font-weight: 600;' }, 'If your H2H opponent was always Peter\'s lineup. (Peter played the league average.)'));
+  // -------- 35. CF: Optimal XI --------
+  const { w: optW, optGw } = S.cfOptimal();
+  // Find biggest bench leaver
+  const benchDiffs = MANAGERS.map(m => {
+    let opt = 0, act = 0;
+    for (let g = 1; g <= MAX_GW; g++) { opt += optGw[g][m.le]; act += S.gwPts[g][m.le]; }
+    return { le: m.le, diff: opt - act };
+  }).sort((a, b) => b.diff - a.diff);
+  cfTable({
+    title: 'Optimal XI Every Week',
+    desc: 'If everyone fielded their best possible eleven each week. No more bench points lost.',
+    w: optW,
+    takeaway: `${MGR_BY_LE[benchDiffs[0].le].first} left ${benchDiffs[0].diff} points on the bench. The most in the league.`,
+    bg: 'var(--paper)', dark: false
+  });
 
-    const wld = S.cfEveryonePlaysPete();
-    const rows = sortedStandings(wld);
-    const realPos = {};
-    S.standings.forEach(s => realPos[s.league_entry] = s.rank);
+  // -------- 36. CF: No Transfers --------
+  cfTable({
+    title: 'No Transfers Ever',
+    desc: 'Everyone\'s GW1 draft squad plays every week. No waivers, no trades, no second chances.',
+    w: S.cfNoTransfer(),
+    takeaway: 'Mark drafts a title. Geraint drops to 5th. The waiver wire actually mattered.',
+    bg: 'var(--pink)', dark: true, takeawayColor: 'var(--yellow)'
+  });
 
-    const tbl = el('table', { class: 'cf-tbl fade-up', style: 'margin-top: 14px;' });
-    tbl.appendChild(el('thead', {},
-      el('tr', {},
-        el('th', { class: 'l', style: 'width: 7%;' }, '#'),
-        el('th', { class: 'l' }, 'Manager'),
-        el('th', {}, 'W-D-L'),
-        el('th', {}, 'Pts'),
-        el('th', {}, 'Δ')
-      )
-    ));
-    const tb = el('tbody');
-    rows.forEach((r, i) => {
-      const delta = realPos[r.le] - (i + 1);
-      const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
-      const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
-      tb.appendChild(el('tr', {},
-        el('td', { class: 'l' }, String(i + 1)),
-        el('td', { class: 'l name' }, MGR_BY_LE[r.le].first),
-        el('td', {}, `${r.w}-${r.d}-${r.l}`),
-        el('td', {}, String(r.pts)),
-        el('td', { class: 'arrow ' + cls }, arr)
-      ));
-    });
-    tbl.appendChild(tb);
-    card.appendChild(tbl);
-    card.appendChild(el('div', { class: 'body fade-up', style: 'margin-top: 14px; font-weight: 700; font-style: italic; color: var(--cyan);' }, 'christopher jumps to 2nd. Peter stays last, even against himself.'));
-  }, { dark: true });
+  // -------- 37. INTERSTITIAL --------
+  intro('By the numbers.', 'var(--ink)', 'var(--paper)');
 
-  // --- 27. COUNTERFACTUAL 2: OPTIMAL XI ---
-  PLAN('bg-9', (card) => {
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Counterfactual'));
-    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--yellow); margin-top: 2px; font-size: clamp(38px, 11vw, 70px);' }, 'Optimal XI'));
-    card.appendChild(el('div', { class: 'body fade-up', style: 'opacity: 0.85; margin-top: 4px; font-weight: 600;' }, 'If every manager fielded their best possible eleven every week.'));
-
-    const { wld, optGw } = S.cfOptimalXi();
-    const rows = sortedStandings(wld);
-    const realPos = {};
-    S.standings.forEach(s => realPos[s.league_entry] = s.rank);
-
-    const tbl = el('table', { class: 'cf-tbl fade-up', style: 'margin-top: 14px;' });
-    tbl.appendChild(el('thead', {},
-      el('tr', {},
-        el('th', { class: 'l', style: 'width: 7%;' }, '#'),
-        el('th', { class: 'l' }, 'Manager'),
-        el('th', {}, 'PF'),
-        el('th', {}, 'Pts'),
-        el('th', {}, 'Δ')
-      )
-    ));
-    const tb = el('tbody');
-    rows.forEach((r, i) => {
-      const delta = realPos[r.le] - (i + 1);
-      const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
-      const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
-      tb.appendChild(el('tr', {},
-        el('td', { class: 'l' }, String(i + 1)),
-        el('td', { class: 'l name' }, MGR_BY_LE[r.le].first),
-        el('td', {}, String(r.pf)),
-        el('td', {}, String(r.pts)),
-        el('td', { class: 'arrow ' + cls }, arr)
-      ));
-    });
-    tbl.appendChild(tb);
-    card.appendChild(tbl);
-
-    // Biggest leaver-on-bench
-    let bench = MANAGERS.map(m => {
-      let opt = 0, act = 0;
-      for (let g = 1; g <= MAX_GW; g++) {
-        opt += optGw[g][m.le];
-        act += S.gwPts[g][m.le];
-      }
-      return { le: m.le, diff: opt - act };
-    });
-    bench.sort((a,b) => b.diff - a.diff);
-    card.appendChild(el('div', { class: 'body fade-up', style: 'margin-top: 14px; font-weight: 700; font-style: italic; color: var(--yellow);' }, `${MGR_BY_LE[bench[0].le].first} left ${bench[0].diff} pts on the bench. The most in the league.`));
-  }, { dark: true });
-
-  // --- 28. COUNTERFACTUAL 3: NO TRANSFERS EVER ---
-  PLAN('bg-mesh-pink', (card) => {
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Counterfactual'));
-    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--yellow); margin-top: 2px; font-size: clamp(38px, 11vw, 70px);' }, 'No Transfers Ever'));
-    card.appendChild(el('div', { class: 'body fade-up', style: 'opacity: 0.85; margin-top: 4px; font-weight: 600;' }, 'Everyone\'s GW1 draft squad plays every week, forever.'));
-
-    const wld = S.cfNoTransfers();
-    const rows = sortedStandings(wld);
-    const realPos = {};
-    S.standings.forEach(s => realPos[s.league_entry] = s.rank);
-
-    const tbl = el('table', { class: 'cf-tbl fade-up', style: 'margin-top: 14px;' });
-    tbl.appendChild(el('thead', {},
-      el('tr', {},
-        el('th', { class: 'l', style: 'width: 7%;' }, '#'),
-        el('th', { class: 'l' }, 'Manager'),
-        el('th', {}, 'W-D-L'),
-        el('th', {}, 'Pts'),
-        el('th', {}, 'Δ')
-      )
-    ));
-    const tb = el('tbody');
-    rows.forEach((r, i) => {
-      const delta = realPos[r.le] - (i + 1);
-      const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
-      const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
-      tb.appendChild(el('tr', {},
-        el('td', { class: 'l' }, String(i + 1)),
-        el('td', { class: 'l name' }, MGR_BY_LE[r.le].first),
-        el('td', {}, `${r.w}-${r.d}-${r.l}`),
-        el('td', {}, String(r.pts)),
-        el('td', { class: 'arrow ' + cls }, arr)
-      ));
-    });
-    tbl.appendChild(tb);
-    card.appendChild(tbl);
-    card.appendChild(el('div', { class: 'body fade-up', style: 'margin-top: 14px; font-weight: 700; font-style: italic; color: var(--yellow);' }, 'Mark drafts a title. Geraint drops to 5th. The waiver wire actually mattered.'));
-  }, { dark: true });
-
-  // --- 29. AGGREGATE STATS ---
-  PLAN('bg-2', (card) => {
-    card.appendChild(el('div', { class: 'kicker fade-up' }, 'Season in Numbers'));
-    card.appendChild(el('div', { class: 'h2 fade-up', style: 'color: var(--purple); margin-top: 2px;' }, 'By the Numbers'));
-
-    const totalAccepted = S.transferEval.length;
+  // -------- 38. AGGREGATE STATS --------
+  add('c-agg', {}, (n) => {
+    n.appendChild(el('div', { class: 'caption anim fade' }, 'Season in numbers'));
+    n.appendChild(el('div', { class: 'head anim up' }, 'For the Books'));
+    const totalAccepted = S.accepted.length;
     const totalTrades = S.d.trades.trades.length;
     const totalWaivers = S.d.trans.transactions.filter(t => t.kind === 'w').length;
     const totalFA = S.d.trans.transactions.filter(t => t.kind === 'f').length;
-    // Hot Potato: player owned by most managers
+    // most owned (across GWs)
     const ownerSets = {};
-    for (const pid in S.ownByGw) {
-      ownerSets[pid] = new Set(Object.values(S.ownByGw[pid]));
-    }
+    for (const pid in S.ownByGw) ownerSets[pid] = new Set(Object.values(S.ownByGw[pid]));
     let hot = { pid: null, n: 0 };
-    for (const pid in ownerSets) {
-      if (ownerSets[pid].size > hot.n) hot = { pid: +pid, n: ownerSets[pid].size };
-    }
-
-    // Highest single GW
-    let highScore = { pts: 0, gw: 0, le: 0 };
+    for (const pid in ownerSets) if (ownerSets[pid].size > hot.n) hot = { pid: +pid, n: ownerSets[pid].size };
+    // high score
+    let high = { p: 0, g: 0, le: 0 };
     for (let g = 1; g <= MAX_GW; g++) for (const m of MANAGERS) {
-      if (S.gwPts[g][m.le] > highScore.pts) highScore = { pts: S.gwPts[g][m.le], gw: g, le: m.le };
+      if (S.gwPts[g][m.le] > high.p) high = { p: S.gwPts[g][m.le], g, le: m.le };
     }
+    // GW average for Geraint
+    const gAvg = (S.standings[0].points_for / 37).toFixed(1);
 
-    const grid = el('div', { class: 'agg-grid fade-up', style: 'margin-top: 16px;' });
-    grid.appendChild(el('div', { class: 'agg-cell' },
-      el('div', { class: 'num' }, String(totalAccepted)),
-      el('div', { class: 'lab' }, 'Accepted Transfers')
+    const grid = el('div', { class: 'grid' });
+    grid.appendChild(el('div', { class: 'cell c1 anim scale' },
+      el('b', {}, String(totalAccepted)),
+      el('s', {}, 'Accepted transfers')
     ));
-    grid.appendChild(el('div', { class: 'agg-cell' },
-      el('div', { class: 'num' }, String(totalWaivers)),
-      el('div', { class: 'lab' }, 'Waiver Claims (incl. denied)')
+    grid.appendChild(el('div', { class: 'cell c2 anim scale' },
+      el('b', {}, String(totalWaivers)),
+      el('s', {}, 'Waiver claims submitted')
     ));
-    grid.appendChild(el('div', { class: 'agg-cell' },
-      el('div', { class: 'num' }, String(totalTrades)),
-      el('div', { class: 'lab' }, 'Trades Completed')
+    grid.appendChild(el('div', { class: 'cell c3 anim scale' },
+      el('b', {}, String(totalTrades)),
+      el('s', {}, 'Trades completed')
     ));
-    grid.appendChild(el('div', { class: 'agg-cell' },
-      el('div', { class: 'num' }, String(totalFA)),
-      el('div', { class: 'lab' }, 'Free-Agent Pickups')
+    grid.appendChild(el('div', { class: 'cell c4 anim scale' },
+      el('b', {}, hot.pid ? S.pname(hot.pid) : '—'),
+      el('s', {}, `Owned by ${hot.n} different managers (most-travelled)`)
     ));
-    grid.appendChild(el('div', { class: 'agg-cell' },
-      el('div', { class: 'num', style: 'font-size: clamp(24px, 7vw, 36px);' }, hot.pid ? S.pname(hot.pid) : '—'),
-      el('div', { class: 'lab' }, `Owned by ${hot.n} different managers`)
+    grid.appendChild(el('div', { class: 'cell c5 anim scale' },
+      el('b', {}, String(high.p)),
+      el('s', {}, `Highest GW · ${MGR_BY_LE[high.le].first} GW${high.g}`)
     ));
-    grid.appendChild(el('div', { class: 'agg-cell' },
-      el('div', { class: 'num' }, String(highScore.pts)),
-      el('div', { class: 'lab' }, `Highest GW · ${MGR_BY_LE[highScore.le].first} GW${highScore.gw}`)
+    grid.appendChild(el('div', { class: 'cell c6 anim scale' },
+      el('b', {}, gAvg),
+      el('s', {}, 'Geraint\'s points per GW average')
     ));
-    card.appendChild(grid);
+    n.appendChild(grid);
   });
 
-  // --- 30. CLOSING ---
-  PLAN('bg-mesh-pink', (card) => {
-    card.appendChild(el('div', { class: 'fill center', style: 'gap: 18px;' },
-      el('div', { class: 'kicker fade-up' }, 'And that\'s a wrap'),
-      el('div', { class: 'display pop', style: 'font-size: clamp(70px, 20vw, 160px); line-height: 0.88; max-width: 720px;' },
-        el('div', {}, 'See you'),
-        el('div', { style: 'color: var(--yellow);' }, 'next season,'),
-        el('div', {}, 'lads.'),
-      ),
-      el('div', { class: 'body fade-up', style: 'max-width: 360px; text-align: center; font-weight: 800; opacity: 0.85;' }, 'GW38 never happened. Neither did half the trades we approved. Brilliant year, everyone.'),
+  // -------- 39. CLOSING --------
+  add('c-close', {}, (n) => {
+    n.appendChild(el('div', { class: 'top' }, 'Craig/McDowell/Hopkins Cup · End of season 2025/26'));
+    n.appendChild(el('div', { class: 'stack' },
+      el('div', { class: 'line l1' }, 'See'),
+      el('div', { class: 'line l2', style: 'color: var(--yellow);' }, 'you'),
+      el('div', { class: 'line l3' }, 'in August.'),
     ));
-  }, { dark: true });
+    n.appendChild(el('div', { class: 'sub' }, 'GW38 never happened. Neither did half the trades we approved. Good year, lads.'));
+  }, true);
 
-  // Now render planned cards with numbering
-  cardsPlan.forEach((c, idx) => {
-    const cls = c.cls;
-    const opts = c.opts || {};
-    const card = addCard(cls, c.fn, opts);
-    card.appendChild(pgIndicator(idx + 1, cardsPlan.length));
-  });
-
-  // Build nav dots
+  // Setup nav dots
   const nav = document.getElementById('nav');
-  cardsPlan.forEach((_, i) => nav.appendChild(el('div', { class: 'nav-dot' + (i === 0 ? ' active' : '') })));
+  cards.forEach((c, i) => {
+    const dot = el('div', { class: 'nav-dot' + (i === 0 ? ' active' : '') });
+    if (!c.isDark) dot.classList.add('dark');
+    nav.appendChild(dot);
+  });
+
+  return cards;
 }
 
 // ============================================================
-// SCROLL OBSERVER
+// SCROLL OBSERVER + ANIMATIONS
 // ============================================================
-function setupObserver() {
-  const cards = document.querySelectorAll('.card');
+function setupObserver(cards) {
+  const cardEls = cards.map(c => c.el);
   const dots = document.querySelectorAll('.nav-dot');
-  const io = new IntersectionObserver((entries) => {
+  const seen = new Set();
+  const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
-      const i = Array.from(cards).indexOf(en.target);
-      if (en.isIntersecting && en.intersectionRatio > 0.5) {
-        en.target.classList.add('in');
+      const i = cardEls.indexOf(en.target);
+      if (en.isIntersecting && en.intersectionRatio > 0.55) {
+        if (!seen.has(en.target)) {
+          en.target.classList.add('in');
+          seen.add(en.target);
+          // run counters and per-card on-enter triggers
+          en.target.querySelectorAll('[data-count]').forEach(node => {
+            const final = node.getAttribute('data-count');
+            animateCounter(node, final);
+          });
+          // Trigger race chart endpoint reveals after lines finish
+          const race = en.target.querySelector('.race-svg');
+          if (race) {
+            const endpoints = race.querySelectorAll('.endpoint');
+            endpoints.forEach((ep, idx) => setTimeout(() => ep.classList.add('in'), 400 * idx + 600));
+          }
+          // Trigger timeline event pops
+          const tl = en.target.querySelector('.tl-svg');
+          if (tl) {
+            const evs = tl.querySelectorAll('.ev');
+            evs.forEach((e, idx) => setTimeout(() => e.classList.add('in'), 1700 + idx * 55));
+          }
+        }
         dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
-        // also activate row-anim staggered
-        const rows = en.target.querySelectorAll('.tbl tbody tr.row-anim');
-        // already handled via .card.in .tbl tr.row-anim styles
-      } else if (!en.isIntersecting) {
-        // keep card animated once shown — Wrapped style: don't undo
       }
     });
-  }, { threshold: [0, 0.3, 0.6, 0.9, 1.0] });
-  cards.forEach(c => io.observe(c));
-  // Initial card
-  if (cards[0]) cards[0].classList.add('in');
+  }, { threshold: [0, 0.3, 0.55, 0.85, 1] });
+  cardEls.forEach(c => io.observe(c));
+  // Activate first card immediately
+  if (cardEls[0]) {
+    cardEls[0].classList.add('in');
+    seen.add(cardEls[0]);
+    cardEls[0].querySelectorAll('[data-count]').forEach(node => animateCounter(node, node.getAttribute('data-count')));
+  }
 }
 
-// Keyboard scroll-snap navigation
+function animateCounter(node, finalStr) {
+  // Detect prefix and number
+  const m = /^([+-]?)(\d+)(.*)$/.exec(finalStr);
+  if (!m) { node.textContent = finalStr; return; }
+  const sign = m[1], target = parseInt(m[2], 10), suffix = m[3] || '';
+  // For very small numbers, count slowly. Larger numbers, faster.
+  let duration;
+  if (target <= 20) duration = 1500 + target * 100;
+  else duration = 1800;
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = Math.round(target * eased);
+    node.textContent = (sign || '') + val + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+    else node.textContent = finalStr;
+  }
+  requestAnimationFrame(tick);
+}
+
 function setupKeyboard() {
-  const scroller = document.getElementById('scroller');
-  let scrolling = false;
-  document.addEventListener('keydown', (e) => {
-    if (scrolling) return;
-    const ch = window.innerHeight;
+  const sc = document.getElementById('scroller');
+  let busy = false;
+  document.addEventListener('keydown', e => {
+    if (busy) return;
+    const h = window.innerHeight;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-      scrolling = true;
-      scroller.scrollBy({ top: ch, behavior: 'smooth' });
-      e.preventDefault();
-      setTimeout(() => scrolling = false, 600);
+      busy = true; sc.scrollBy({ top: h, behavior: 'smooth' }); e.preventDefault();
+      setTimeout(() => busy = false, 600);
     } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-      scrolling = true;
-      scroller.scrollBy({ top: -ch, behavior: 'smooth' });
-      e.preventDefault();
-      setTimeout(() => scrolling = false, 600);
+      busy = true; sc.scrollBy({ top: -h, behavior: 'smooth' }); e.preventDefault();
+      setTimeout(() => busy = false, 600);
     }
   });
 }
@@ -1479,16 +1922,16 @@ function setupKeyboard() {
 // ============================================================
 (async () => {
   try {
-    const data = await loadAll();
-    const state = buildState(data);
-    buildCards(state);
-    setupObserver();
+    const d = await loadAll();
+    const S = compute(d);
+    const cards = buildAll(S);
+    setupObserver(cards);
     setupKeyboard();
     document.getElementById('loading').classList.add('gone');
     setTimeout(() => document.getElementById('loading').remove(), 500);
-  } catch (err) {
-    console.error(err);
-    document.getElementById('loading').textContent = 'Failed to load. Check console.';
+  } catch (e) {
+    console.error(e);
+    document.getElementById('loading').innerHTML = '<div class="lt">Couldn\'t load. Check the console.</div>';
   }
 })();
 </script>

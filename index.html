@@ -1114,6 +1114,50 @@ function buildPhantomXI(){
       <div class="mid-numeral counter" data-target="16" data-duration="2400">0</div>
       <div class="recipient" style="font-size:clamp(16px,2.4vw,22px);letter-spacing:.06em;">points scored</div>
     </div>
+    <div class="explainer fade-up d12" style="font-style:italic;text-align:center;max-width:46ch;margin:0 auto;">Five of these men were not, in fact, playing football that day.</div>
+  </div>`;
+  return c;
+}
+
+// ---- The Believer (Peter / 4 MUN players for 7 GWs) ----
+function buildBeliever(){
+  const c = makeCard('bg-cyan');
+  c.innerHTML = `<div class="award-card">
+    <div class="caption fade-down d1">Award · GW27–33</div>
+    <div class="award-name fade-up d2">The Believer</div>
+    <div class="explainer fade-up d3" style="max-width:46ch;">Started the same four Manchester United players in his XI for seven consecutive gameweeks.</div>
+    <div class="recipient fade-up d4">Peter · MaxPoints</div>
+    <div class="hero-area fade-up d6" style="display:flex;flex-direction:column;gap:clamp(6px,1.2vh,12px);margin-top:clamp(10px,2vh,18px);align-items:flex-start;">
+      <div style="font-family:'Anton',sans-serif;font-size:clamp(28px,5.2vw,56px);line-height:1;text-transform:uppercase;">Shaw</div>
+      <div style="font-family:'Anton',sans-serif;font-size:clamp(28px,5.2vw,56px);line-height:1;text-transform:uppercase;">Casemiro</div>
+      <div style="font-family:'Anton',sans-serif;font-size:clamp(28px,5.2vw,56px);line-height:1;text-transform:uppercase;">Cunha</div>
+      <div style="font-family:'Anton',sans-serif;font-size:clamp(28px,5.2vw,56px);line-height:1;text-transform:uppercase;">Šeško</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:.18em;margin-top:clamp(10px,2vh,18px);">
+      <div class="hero-numeral counter" data-target="7" data-duration="2400" style="font-size:clamp(72px,14vh,160px);">0</div>
+      <div class="recipient">straight gameweeks</div>
+    </div>
+    <div class="explainer fade-up d12" style="font-style:italic;max-width:48ch;">He had a system. The system was Manchester United. He finished sixth.</div>
+  </div>`;
+  return c;
+}
+
+// ---- Worse Than Nothing (Michael × Andersen) ----
+function buildWorseThanNothing(){
+  const c = makeCard('bg-purple');
+  c.innerHTML = `<div class="award-card" style="text-align:center;align-items:center;">
+    <div class="caption fade-down d1" style="align-self:flex-start;">Award · GW36</div>
+    <div class="award-name fade-up d2" style="align-self:flex-start;">Worse Than Nothing</div>
+    <div class="explainer fade-up d3" style="max-width:54ch;align-self:flex-start;">Signed a player off the wire. Player scored him a negative number of points.</div>
+    <div class="recipient fade-up d4" style="align-self:flex-start;">Michael · Jota win again *20</div>
+    <div class="hero-area fade-up d6" style="display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6vh,16px);margin:clamp(14px,3vh,28px) 0;width:100%;">
+      <div style="font-family:'Anton',sans-serif;font-size:clamp(64px,12vw,160px);text-transform:uppercase;line-height:.95;color:var(--lime);">Andersen</div>
+      <div style="display:flex;align-items:baseline;gap:.12em;color:var(--lime);">
+        <div class="hero-numeral" style="font-size:clamp(96px,18vh,220px);">−2</div>
+        <div class="recipient" style="font-size:clamp(20px,3vw,32px);letter-spacing:.04em;">PTS</div>
+      </div>
+    </div>
+    <div class="explainer fade-up d12" style="font-style:italic;max-width:50ch;text-align:center;">He had ninety-nine other transactions to choose from this season. He chose this one too.</div>
   </div>`;
   return c;
 }
@@ -1456,17 +1500,21 @@ function buildDeck(){
   deck.appendChild(buildInterstitial('And now the bits nobody asked for.', 'bg-lime'));
   // 27. Revolving Door
   deck.appendChild(buildRevolvingDoor());
-  // 28. Goalkeeping Howler
+  // 28. Worse Than Nothing (Michael × Andersen)
+  deck.appendChild(buildWorseThanNothing());
+  // 29. Goalkeeping Howler
   deck.appendChild(buildHowler());
-  // 29. Welcome and Goodbye
+  // 30. Welcome and Goodbye
   deck.appendChild(buildWelcomeGoodbye());
-  // 30. The Beating
+  // 31. The Believer (Peter × MUN block)
+  deck.appendChild(buildBeliever());
+  // 32. The Beating
   deck.appendChild(buildBeating());
-  // 31. The Coin Flip
+  // 33. The Coin Flip
   deck.appendChild(buildCoinFlip());
-  // 32. Phantom XI
+  // 34. Phantom XI
   deck.appendChild(buildPhantomXI());
-  // 33. The Opening Act
+  // 35. The Opening Act
   deck.appendChild(buildOpeningAct());
 
   // 34. Interstitial

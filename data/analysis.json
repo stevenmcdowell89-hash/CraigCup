@@ -3545,6 +3545,20 @@
    "offered_gave": [
     "Marmoush"
    ],
+   "offered_got_detail": [
+    {
+     "name": "Grealish",
+     "pts": 24,
+     "weeks": 9
+    }
+   ],
+   "received_got_detail": [
+    {
+     "name": "Marmoush",
+     "pts": 5,
+     "weeks": 10
+    }
+   ],
    "offered_gain": 24,
    "received_gain": 5,
    "delta": 19
@@ -3563,6 +3577,40 @@
     "Palmer",
     "Ekitik\u00e9"
    ],
+   "offered_got_detail": [
+    {
+     "name": "Sarr",
+     "pts": 12,
+     "weeks": 5
+    },
+    {
+     "name": "B.Fernandes",
+     "pts": 199,
+     "weeks": 30
+    },
+    {
+     "name": "Evanilson",
+     "pts": 3,
+     "weeks": 3
+    }
+   ],
+   "received_got_detail": [
+    {
+     "name": "Eze",
+     "pts": 41,
+     "weeks": 10
+    },
+    {
+     "name": "Palmer",
+     "pts": 95,
+     "weeks": 29
+    },
+    {
+     "name": "Ekitik\u00e9",
+     "pts": 91,
+     "weeks": 24
+    }
+   ],
    "offered_gain": 214,
    "received_gain": 227,
    "delta": -13
@@ -3576,6 +3624,20 @@
    ],
    "offered_gave": [
     "Evanilson"
+   ],
+   "offered_got_detail": [
+    {
+     "name": "Isak",
+     "pts": 12,
+     "weeks": 8
+    }
+   ],
+   "received_got_detail": [
+    {
+     "name": "Evanilson",
+     "pts": 59,
+     "weeks": 16
+    }
    ],
    "offered_gain": 12,
    "received_gain": 59,

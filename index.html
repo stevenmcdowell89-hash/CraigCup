@@ -176,11 +176,10 @@ html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000;color:v
 /* Asleep at the Wheel */
 .asleep-stage{display:grid;grid-template-columns:1fr;gap:max(14px,2.4vmin);align-items:center;flex:1;align-content:center}
 .cal-grid{display:grid;grid-template-columns:repeat(19,1fr);gap:3px;width:100%;max-width:780px;margin:0 auto}
-.cal-cell{aspect-ratio:1;border:1.5px solid var(--c-black);display:grid;place-items:center;font-family:var(--f-body);font-weight:700;font-size:clamp(9px,1.1vw,12px)}
-.cal-cell.has{background:var(--c-black);color:var(--c-yellow)}
-.cal-cell.dormant{background:transparent}
-.cal-cell.in-streak{background:var(--c-black);color:var(--c-yellow);border-color:var(--c-black);position:relative}
-.cal-cell.in-streak::after{content:"·";position:absolute;font-size:1.8em;line-height:0;top:50%;left:50%;transform:translate(-50%,-30%);color:var(--c-yellow);opacity:.7}
+.cal-cell{aspect-ratio:1;border:1.5px solid rgba(0,0,0,.6);display:grid;place-items:center;font-family:var(--f-body);font-weight:700;font-size:clamp(9px,1.1vw,12px)}
+.cal-cell.has{background:var(--c-black);color:var(--c-yellow);border-color:var(--c-black)}
+.cal-cell.dormant{background:transparent;color:rgba(0,0,0,.5)}
+.cal-cell.in-streak{background:var(--c-pink);color:var(--c-off);border-color:var(--c-pink)}
 .asleep-num-row{display:flex;align-items:baseline;gap:.25em;justify-content:center}
 .asleep-num-row .n{font-family:var(--f-display);font-size:clamp(110px,20vh,230px);line-height:.85}
 .asleep-num-row .u{font-family:var(--f-display);font-size:clamp(28px,4vw,48px);text-transform:uppercase;letter-spacing:.05em}
@@ -197,9 +196,9 @@ html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000;color:v
 .beat-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:max(6px,1.5vmin);width:100%;max-width:900px;min-width:0}
 .beat-side{min-width:0;overflow:hidden}
 .beat-side{display:flex;flex-direction:column;align-items:center;gap:.3em}
-.beat-name{font-family:var(--f-display);font-size:clamp(26px,4.5vw,56px);line-height:.95;text-transform:uppercase}
+.beat-name{font-family:var(--f-display);font-size:clamp(18px,4.5vw,56px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
 .beat-score{font-family:var(--f-display);font-size:clamp(80px,20vw,240px);line-height:.85;letter-spacing:-.02em}
-.beat-dash{font-family:var(--f-display);font-size:clamp(70px,13vw,160px);line-height:.85;opacity:.45}
+.beat-dash{font-family:var(--f-display);font-size:clamp(48px,13vw,160px);line-height:.85;opacity:.45}
 .beat-meta{font-family:var(--f-body);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:clamp(11px,1.4vw,14px);opacity:.75;text-align:center}
 
 /* Phantom XI */

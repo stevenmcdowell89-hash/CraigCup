@@ -80,8 +80,41 @@ body{font-family:'Inter',sans-serif}
 .cold-open .sub{margin-top:24px;letter-spacing:.4em;font-size:clamp(12px,1.5vw,16px)}
 
 /* Interstitial */
-.interstitial{display:flex;align-items:center;justify-content:center;text-align:center}
+.interstitial{display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.interstitial::before{
+  content:'';position:absolute;inset:-20% -20%;
+  background-image:repeating-linear-gradient(-45deg, transparent 0 32px, currentColor 32px 33px);
+  opacity:.07;pointer-events:none;z-index:0;
+  transform:translateX(-100%);
+  transition:transform 1.2s cubic-bezier(.18,.8,.25,1);
+}
+.card.in-view .interstitial::before, .interstitial.in-view::before{transform:translateX(0)}
+.interstitial .card-inner{position:relative;z-index:1}
 .interstitial .text{font-family:'Anton',sans-serif;font-size:clamp(56px,10vw,150px);line-height:.95;text-transform:uppercase;max-width:14ch;margin:0 auto}
+
+/* Verdict stamp polish — drop shadow lands with the stamp */
+.verdict{display:inline-block;font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);padding:8px 18px;border:3px solid currentColor;letter-spacing:.04em;align-self:start;justify-self:start;text-transform:uppercase;line-height:1;filter:drop-shadow(0 4px 0 rgba(0,0,0,.22))}
+
+/* Confetti for the Champion card */
+.confetti-piece{position:absolute;top:-24px;width:8px;height:14px;opacity:0;pointer-events:none;z-index:0;border-radius:1px}
+@keyframes confetti-fall{
+  0%{opacity:0;transform:translateY(-20px) rotate(0deg)}
+  10%{opacity:1}
+  100%{opacity:0;transform:translateY(110vh) rotate(720deg)}
+}
+.card.in-view .confetti-piece{animation:confetti-fall 4.2s cubic-bezier(.36,.07,.55,1) forwards}
+
+/* Scroll-progress dots on the right edge */
+#scroll-dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:5px;z-index:50;pointer-events:none;opacity:0;transition:opacity .3s ease}
+#scroll-dots.show{opacity:1}
+.sd-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.28;transition:transform .25s ease, opacity .25s ease}
+.sd-dot.active{opacity:1;transform:scale(2.1)}
+@media (max-width:600px){#scroll-dots{right:6px}.sd-dot{width:4px;height:4px}}
+
+/* Cold-open letters reveal */
+.cup-letter{display:inline-block;opacity:0;transform:translateY(40px) scale(.7) rotate(-8deg);will-change:transform,opacity}
+.card.in-view .cup-letter{animation:cupIn .9s cubic-bezier(.18,.8,.25,1) forwards}
+@keyframes cupIn{0%{opacity:0;transform:translateY(40px) scale(.7) rotate(-8deg)}60%{opacity:1;transform:translateY(-4px) scale(1.06) rotate(2deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}}
 
 /* Table */
 .scoreboard{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px 18px;width:100%;align-items:center}
@@ -122,7 +155,6 @@ body{font-family:'Inter',sans-serif}
 .swap-side .players{font-family:'Anton',sans-serif;font-size:clamp(28px,4.2vw,54px);line-height:1.03;text-transform:uppercase}
 .swap-side .delta{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.6vw,18px);margin-top:6px;font-variant-numeric:tabular-nums}
 .swap-arrow{font-family:'Anton',sans-serif;font-size:clamp(36px,6vw,72px);opacity:.6}
-.verdict{display:inline-block;font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);padding:8px 18px;border:3px solid currentColor;letter-spacing:.04em;align-self:start;justify-self:start;text-transform:uppercase;line-height:1}
 
 /* Manager card */
 /* Manager card layout — text on left, position number on right (no overlap) */
@@ -240,6 +272,7 @@ body{font-family:'Inter',sans-serif}
 <body>
 <div id="loader"><div class="l1">CRAIG CUP</div><div class="l2">Loading the receipts…</div></div>
 <div class="deck" id="deck"></div>
+<div id="scroll-dots" aria-hidden="true"></div>
 <script>
 // ==== Manager data and constants ====
 const MGR = {
@@ -312,8 +345,37 @@ function buildDeck(){
 
 const CARDS = []; // populated below in card definitions
 
-// ==== Observer ====
+// ==== Observer + scroll-progress dots ====
+function setupScrollDots(cards){
+  const wrap = document.getElementById('scroll-dots');
+  wrap.innerHTML = '';
+  cards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'sd-dot';
+    wrap.appendChild(d);
+  });
+  // Mirror background contrast: pick text colour based on current card's bg class
+  setTimeout(() => wrap.classList.add('show'), 800);
+}
+function updateScrollDot(activeIdx){
+  const wrap = document.getElementById('scroll-dots');
+  if(!wrap) return;
+  [...wrap.children].forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  // Pick a contrasting dot colour from the active card's background
+  const active = document.querySelectorAll('.card')[activeIdx];
+  if(active){
+    const bg = getComputedStyle(active).backgroundColor;
+    const m = bg.match(/(\d+),\s*(\d+),\s*(\d+)/);
+    if(m){
+      const lum = (parseInt(m[1])*299 + parseInt(m[2])*587 + parseInt(m[3])*114) / 1000;
+      wrap.style.color = lum > 140 ? '#0A0A0A' : '#F4F1EA';
+    }
+  }
+}
+
 function setupObserver(deck){
+  const cards = document.querySelectorAll('.card');
+  setupScrollDots(cards);
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting && entry.intersectionRatio >= 0.35){
@@ -321,10 +383,15 @@ function setupObserver(deck){
           entry.target.classList.add('in-view');
           entry.target.dispatchEvent(new CustomEvent('cardEnter'));
         }
+        // Update progress dot for whichever card is most in view
+        if(entry.intersectionRatio >= 0.6){
+          const idx = [...cards].indexOf(entry.target);
+          if(idx >= 0) updateScrollDot(idx);
+        }
       }
     });
   }, {threshold: [0, 0.35, 0.6, 1], rootMargin: '0px'});
-  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+  cards.forEach(c => observer.observe(c));
   // Trigger first card manually since it's already in view
   setTimeout(() => {
     const first = document.querySelector('.card');
@@ -332,6 +399,7 @@ function setupObserver(deck){
       first.classList.add('in-view');
       first.dispatchEvent(new CustomEvent('cardEnter'));
     }
+    updateScrollDot(0);
   }, 60);
 }
 
@@ -347,18 +415,23 @@ fetch('./data/analysis.json').then(r=>r.json()).then(data => {
 
 // ===== Card definitions appended via push =====
 
-// 1. Cold open
-CARDS.push(() => card({
-  cls:'cold-open bg-grad-po',
-  html:`
-    <div style="display:flex;flex-direction:column;align-items:center;text-align:center">
-      <div class="cup">
-        <span class="ani ani-up d1">CRAIG</span>
-        <span class="ani ani-up d3" style="display:block">CUP</span>
-      </div>
-      <div class="sub ani ani-fade d6">END OF SEASON · 2025/26</div>
-    </div>`
-}));
+// 1. Cold open — letter-by-letter reveal with kinetic stagger
+CARDS.push(() => {
+  function lettersOf(word, baseDelay){
+    return word.split('').map((c,i)=>`<span class="cup-letter" style="animation-delay:${baseDelay + i*0.07}s">${c}</span>`).join('');
+  }
+  return card({
+    cls:'cold-open bg-grad-po',
+    html:`
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center">
+        <div class="cup">
+          <div>${lettersOf('CRAIG', 0.15)}</div>
+          <div>${lettersOf('CUP',   0.65)}</div>
+        </div>
+        <div class="sub ani ani-fade d8">END OF SEASON · 2025/26</div>
+      </div>`
+  });
+});
 
 // 2. Interstitial
 CARDS.push(() => card({
@@ -382,10 +455,11 @@ CARDS.push(() => {
       wrap.className = 'row row-anim';
       wrap.style.animationDelay = (idx * 0.13 + 0.15) + 's';
       wrap.style.display = 'contents';
+      const crown = s.rank === 1 ? `<svg viewBox="0 0 56 22" style="width:clamp(30px,4vw,46px);height:auto;display:inline-block;vertical-align:middle;margin-right:8px" aria-hidden="true"><path d="M3 18 L9 4 L17 14 L28 0 L39 14 L47 4 L53 18 L53 22 L3 22 Z" fill="#FFD400"/><circle cx="9" cy="4" r="2" fill="#F4F1EA"/><circle cx="28" cy="0" r="2" fill="#F4F1EA"/><circle cx="47" cy="4" r="2" fill="#F4F1EA"/></svg>` : '';
       wrap.innerHTML = `
         <div class="rank">${s.rank}</div>
         <div>
-          <div class="name">${MGR[s.le].first}</div>
+          <div class="name">${crown}${MGR[s.le].first}</div>
           <div class="team">${MGR[s.le].team}</div>
         </div>
         <div class="wdl">W${s.w}–D${s.d}–L${s.l}<br>PF ${s.pf}</div>
@@ -758,32 +832,53 @@ CARDS.push(() => card({
 }));
 
 // 21. Champion — victory lap for Geraint
-CARDS.push(() => card({
-  cls:'bg-yellow',
-  html: `
-    <div class="award-name ani ani-up d1">Champion of the Craig Cup.</div>
-    <div class="explainer ani ani-fade d2">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
-    <div style="display:flex;align-items:center;gap:24px;margin-top:18px;flex-wrap:wrap">
-      <svg class="ani ani-pop d3" viewBox="0 0 100 120" style="width:clamp(70px,11vw,130px);height:auto;flex-shrink:0" aria-hidden="true">
-        <!-- Trophy cup -->
-        <path d="M30 18 H70 V35 Q70 60 50 65 Q30 60 30 35 Z" fill="#0A0A0A"/>
-        <!-- Handles -->
-        <path d="M30 22 Q15 22 15 35 Q15 48 30 48" fill="none" stroke="#0A0A0A" stroke-width="5"/>
-        <path d="M70 22 Q85 22 85 35 Q85 48 70 48" fill="none" stroke="#0A0A0A" stroke-width="5"/>
-        <!-- Stem & base -->
-        <rect x="45" y="64" width="10" height="20" fill="#0A0A0A"/>
-        <rect x="32" y="84" width="36" height="8" fill="#0A0A0A"/>
-        <rect x="28" y="92" width="44" height="10" fill="#0A0A0A"/>
-        <!-- Number 1 carved into the cup -->
-        <text x="50" y="48" text-anchor="middle" font-family="Anton" font-size="28" fill="#FFEB3B">1</text>
-      </svg>
-      <div>
-        <div class="hero-name ani ani-up d4">Geraint</div>
-        <div class="recipient ani ani-fade d5" style="margin-top:6px">🏴󠁧󠁢󠁷󠁬󠁳󠁿 &nbsp; · &nbsp; 78 league pts &nbsp;·&nbsp; +13 on second</div>
+CARDS.push(() => {
+  // Generate confetti particles (one-shot, fall on cardEnter)
+  const palette = ['#0A0A0A','#FF1493','#6A1B9A','#00BCD4','#FF6F00','#00C853','#F4F1EA'];
+  const confettiPieces = Array.from({length:32}, (_,i)=>{
+    const left = Math.round(Math.random()*100);
+    const delay = (Math.random()*1.6).toFixed(2);
+    const sway = (Math.random()*60 - 30).toFixed(1);
+    const rot = Math.round(Math.random()*360);
+    const dur = (3.2 + Math.random()*1.6).toFixed(2);
+    const w = 6 + Math.round(Math.random()*5);
+    const h = 10 + Math.round(Math.random()*8);
+    const col = palette[i % palette.length];
+    return `<span class="confetti-piece" style="left:${left}%;width:${w}px;height:${h}px;background:${col};animation-delay:${delay}s;animation-duration:${dur}s;transform:rotate(${rot}deg) translateX(${sway}px)"></span>`;
+  }).join('');
+  return card({
+    cls:'bg-yellow',
+    html:`
+      ${confettiPieces}
+      <div class="award-name ani ani-up d1">Champion of the Craig Cup.</div>
+      <div class="explainer ani ani-fade d2">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+      <div style="display:flex;align-items:center;gap:24px;margin-top:18px;flex-wrap:wrap">
+        <svg class="ani ani-pop d3" viewBox="0 0 100 130" style="width:clamp(80px,12vw,140px);height:auto;flex-shrink:0;filter:drop-shadow(0 4px 0 rgba(0,0,0,.18))" aria-hidden="true">
+          <!-- Crown above the trophy -->
+          <path d="M22 12 L30 4 L38 12 L50 0 L62 12 L70 4 L78 12 V18 H22 Z" fill="#0A0A0A"/>
+          <circle cx="30" cy="4" r="2.5" fill="#FF1493"/>
+          <circle cx="50" cy="0" r="2.5" fill="#FF1493"/>
+          <circle cx="70" cy="4" r="2.5" fill="#FF1493"/>
+          <!-- Trophy cup -->
+          <path d="M30 28 H70 V45 Q70 70 50 75 Q30 70 30 45 Z" fill="#0A0A0A"/>
+          <!-- Handles -->
+          <path d="M30 32 Q15 32 15 45 Q15 58 30 58" fill="none" stroke="#0A0A0A" stroke-width="5"/>
+          <path d="M70 32 Q85 32 85 45 Q85 58 70 58" fill="none" stroke="#0A0A0A" stroke-width="5"/>
+          <!-- Stem & base -->
+          <rect x="45" y="74" width="10" height="20" fill="#0A0A0A"/>
+          <rect x="32" y="94" width="36" height="8" fill="#0A0A0A"/>
+          <rect x="28" y="102" width="44" height="10" fill="#0A0A0A"/>
+          <!-- Number 1 -->
+          <text x="50" y="58" text-anchor="middle" font-family="Anton" font-size="28" fill="#FFEB3B">1</text>
+        </svg>
+        <div>
+          <div class="hero-name ani ani-up d4">Geraint</div>
+          <div class="recipient ani ani-fade d5" style="margin-top:6px">🏴󠁧󠁢󠁷󠁬󠁳󠁿 &nbsp; · &nbsp; 78 league pts &nbsp;·&nbsp; +13 on second</div>
+        </div>
       </div>
-    </div>
-    <div class="zinger ani ani-fade d7 mt-lg">Took the trophy with his feet up. Lap of honour optional.</div>`
-}));
+      <div class="zinger ani ani-fade d7 mt-lg">Took the trophy with his feet up. Lap of honour optional.</div>`
+  });
+});
 
 // 22. Best Trade — Mark wins the Isak ↔ Evanilson swap (gap +47, so WIN not STEAL)
 CARDS.push(() => {

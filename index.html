@@ -816,43 +816,38 @@ CARDS.push(() => {
   });
 });
 
-// 24. Most Influential Transfer — MADUEKE / 1 PT for christopher
+// 24. Most Influential Transfer — GITTENS / 0 PTS for christopher (hardcoded per spec)
 CARDS.push(() => {
   const el = card({
     cls:'bg-grad-po',
     html:`
       <div class="caption ani ani-fade d1">AWARD · MOST INFLUENTIAL TRANSFER</div>
       <div class="award-name ani ani-up d2" style="word-break:normal">The transfer that changed the league.</div>
-      <div class="explainer ani ani-fade d3">Picked by christopher · The Masterplan · GW16</div>
+      <div class="explainer ani ani-fade d3">Picked by christopher · The Masterplan</div>
       <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:36px;gap:18px">
-        <div class="hero-name ani ani-pop d6" id="madueke-name" style="font-size:clamp(70px,14vw,180px);opacity:0">MADUEKE</div>
+        <div class="hero-name ani ani-pop d6" id="gittens-name" style="font-size:clamp(70px,14vw,180px);opacity:0">GITTENS</div>
         <div style="display:flex;align-items:baseline;gap:14px">
-          <div class="counter ani ani-fade" id="madueke-pts" style="opacity:0;font-size:clamp(80px,14vw,180px)">0</div>
-          <div class="caption ani ani-fade" id="madueke-unit" style="opacity:0;font-size:clamp(16px,2.4vw,28px);letter-spacing:.1em">PT</div>
+          <div class="counter ani ani-fade" id="gittens-pts" style="opacity:0;font-size:clamp(80px,14vw,180px)">0</div>
+          <div class="caption ani ani-fade" id="gittens-unit" style="opacity:0;font-size:clamp(16px,2.4vw,28px);letter-spacing:.1em">PTS</div>
         </div>
-        <div class="zinger ani" id="madueke-italic" style="opacity:0;font-size:clamp(13px,1.5vw,18px)"><em>across 4 weeks held by christopher</em></div>
+        <div class="zinger ani" id="gittens-italic" style="opacity:0;font-size:clamp(13px,1.5vw,18px)"><em>while held by christopher</em></div>
       </div>`
   });
   el.addEventListener('cardEnter', () => {
-    const name = el.querySelector('#madueke-name');
-    const pts  = el.querySelector('#madueke-pts');
-    const unit = el.querySelector('#madueke-unit');
-    const ital = el.querySelector('#madueke-italic');
-    // Big name appears after delay (theatrical)
+    const name = el.querySelector('#gittens-name');
+    const pts  = el.querySelector('#gittens-pts');
+    const unit = el.querySelector('#gittens-unit');
+    const ital = el.querySelector('#gittens-italic');
+    // Big name appears after a setup hold (theatrical)
     setTimeout(() => {
       name.style.animation = 'popIn .6s cubic-bezier(.18,.8,.25,1) forwards';
     }, 2100);
-    // Long hold, then 0 PTS counter
+    // Long hold ~1500ms, then 0 PTS lands — the deadpan punchline is that it stays at 0
     setTimeout(() => {
       pts.style.animation = 'fadeUp .5s ease-out forwards';
       unit.style.animation = 'fadeUp .5s ease-out forwards';
       unit.style.animationDelay = '.2s';
-      // counter ticks 0 to 1
-      setTimeout(() => {
-        let v = 0;
-        const interval = setInterval(() => { v++; pts.textContent = v; if(v>=1) clearInterval(interval); }, 800);
-        unit.textContent = 'PT';
-      }, 300);
+      pts.textContent = '0';
     }, 4100);
     setTimeout(() => {
       ital.style.animation = 'fadeUp .6s ease-out forwards';

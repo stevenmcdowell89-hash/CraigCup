@@ -1,1939 +1,1664 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-<title>Craig/McDowell/Hopkins Cup — End of Season 2025/26</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Craig Cup — End of Season 2025/26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --green:  #00C853;
-  --yellow: #FFEB3B;
-  --pink:   #FF1493;
-  --purple: #6A1B9A;
-  --orange: #FF6F00;
-  --cyan:   #00BCD4;
-  --lime:   #C6FF00;
-  --paper:  #F4F1EA;
-  --ink:    #0A0A0A;
+:root{
+  --black:#0A0A0A; --off:#F4F1EA;
+  --yellow:#FFEB3B; --lime:#C6FF00;
+  --pink:#FF1493; --purple:#6A1B9A;
+  --orange:#FF6F00; --cyan:#00BCD4;
+  --green:#00C853;
+  --gold:#FFD400;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; width: 100%; overflow: hidden; background: var(--ink); color: var(--paper); font-family: 'Inter', system-ui, sans-serif; }
-body { font-size: 16px; line-height: 1.3; -webkit-font-smoothing: antialiased; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--black);color:var(--off);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif}
+.deck{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none;}
+.deck::-webkit-scrollbar{display:none}
+.card{height:100vh;height:100dvh;width:100vw;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;padding:24px;isolation:isolate}
+.card-inner{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:2}
+@media (max-width: 480px){.card{padding:18px} .card-inner{gap:10px}}
 
-#scroller {
-  height: 100vh; height: 100dvh;
-  width: 100vw;
-  overflow-y: scroll; overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-#scroller::-webkit-scrollbar { display: none; }
-#scroller { scrollbar-width: none; }
+/* Type */
+.display{font-family:'Anton','Bebas Neue',sans-serif;letter-spacing:.01em;text-transform:uppercase;line-height:1}
+.headline{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,9vw,96px);line-height:1.0;letter-spacing:.005em;text-transform:uppercase;overflow-wrap:anywhere}
+.award-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(44px,7.5vw,108px);line-height:.98;text-transform:uppercase;letter-spacing:.005em;overflow-wrap:anywhere}
+.hero-numeral{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(120px,22vh,300px);line-height:.85}
+.hero-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(54px,11vw,140px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
+.recipient{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2.6vw,28px);letter-spacing:.01em}
+.explainer{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(14px,1.9vw,20px);line-height:1.4;max-width:46ch;opacity:.92}
+.body-text{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(15px,2vw,22px);line-height:1.45}
+.caption{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(11px,1.2vw,15px);letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.zinger{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(14px,1.9vw,22px);line-height:1.35;font-style:italic;opacity:.95}
 
-.card {
-  height: 100vh; height: 100dvh;
-  width: 100vw;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.card > div { flex: 1; min-height: 0; width: 100%; }
+/* Animations: arrival = .ani-up, scale = .ani-pop, draw=.ani-draw */
+.ani{opacity:0;will-change:transform,opacity}
+.card.in-view .ani-up{animation:slideUp .8s cubic-bezier(.18,.8,.25,1) forwards}
+.card.in-view .ani-pop{animation:popIn .6s cubic-bezier(.18,.8,.25,1) forwards}
+.card.in-view .ani-fade{animation:fadeUp .6s ease-out forwards}
+.card.in-view .ani-left{animation:slideLeft .6s cubic-bezier(.18,.8,.25,1) forwards}
+.card.in-view .ani-right{animation:slideRight .6s cubic-bezier(.18,.8,.25,1) forwards}
+.card.in-view .ani-stamp{animation:stamp .55s cubic-bezier(.18,.8,.25,1) forwards}
+.card.in-view .ani-drop{animation:dropIn .6s cubic-bezier(.18,.8,.25,1) forwards}
+@keyframes slideUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideLeft{from{opacity:0;transform:translateX(-38px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(38px)}to{opacity:1;transform:translateX(0)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.92) translateY(8px)}60%{transform:scale(1.02) translateY(0)}100%{opacity:1;transform:scale(1)}}
+@keyframes stamp{0%{opacity:0;transform:scale(.7) rotate(-8deg)}60%{transform:scale(1.05) rotate(-2deg);opacity:1}100%{opacity:1;transform:scale(1) rotate(-3deg)}}
+@keyframes dropIn{0%{opacity:0;transform:translateY(-28px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 
-/* Typography */
-.display { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif; letter-spacing: -0.005em; line-height: 0.9; text-transform: uppercase; font-weight: 400; }
-.mono { font-family: 'JetBrains Mono', 'Courier New', monospace; font-weight: 800; letter-spacing: -0.02em; }
-.body-txt { font-family: 'Inter', sans-serif; font-weight: 600; line-height: 1.3; }
-.caption { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(10px, 1.4vw, 13px); }
-.label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(10px, 1.2vw, 12px); opacity: 0.75; }
+/* delays */
+.d1{animation-delay:.15s !important}.d2{animation-delay:.35s !important}.d3{animation-delay:.55s !important}
+.d4{animation-delay:.8s !important}.d5{animation-delay:1.05s !important}.d6{animation-delay:1.35s !important}
+.d7{animation-delay:1.7s !important}.d8{animation-delay:2.1s !important}.d9{animation-delay:2.5s !important}
+.d10{animation-delay:3.0s !important}
+
+/* Backgrounds */
+.bg-black{background:var(--black);color:var(--off)}
+.bg-off{background:var(--off);color:var(--black)}
+.bg-yellow{background:var(--yellow);color:var(--black)}
+.bg-lime{background:var(--lime);color:var(--black)}
+.bg-pink{background:var(--pink);color:var(--off)}
+.bg-purple{background:var(--purple);color:var(--off)}
+.bg-orange{background:var(--orange);color:var(--black)}
+.bg-cyan{background:var(--cyan);color:var(--black)}
+.bg-green{background:var(--green);color:var(--off)}
+.bg-grad-po{background:linear-gradient(135deg,#FF1493 0%,#FF6F00 100%);color:var(--black)}
+.bg-grad-py{background:linear-gradient(160deg,#6A1B9A 0%,#FFEB3B 100%);color:var(--off)}
+
+/* Cold open */
+.cold-open .cup{font-family:'Anton',sans-serif;font-size:clamp(80px,20vw,260px);line-height:.9;text-transform:uppercase}
+.cold-open .sub{margin-top:24px;letter-spacing:.4em;font-size:clamp(12px,1.5vw,16px)}
+
+/* Interstitial */
+.interstitial{display:flex;align-items:center;justify-content:center;text-align:center}
+.interstitial .text{font-family:'Anton',sans-serif;font-size:clamp(56px,10vw,150px);line-height:.95;text-transform:uppercase;max-width:14ch;margin:0 auto}
+
+/* Table */
+.scoreboard{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px 18px;width:100%;align-items:center}
+.scoreboard .row{display:contents}
+.scoreboard .rank{font-family:'Anton',sans-serif;font-size:clamp(54px,8vw,100px);line-height:.85;color:var(--green);text-align:right;min-width:1.4em}
+.scoreboard .name{font-family:'Anton',sans-serif;font-size:clamp(28px,4.5vw,56px);line-height:1;text-transform:uppercase}
+.scoreboard .team{font-family:'Inter',sans-serif;font-size:clamp(12px,1.5vw,17px);opacity:.8;margin-top:4px;font-weight:500}
+.scoreboard .wdl{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.7vw,19px);opacity:.85;text-align:right;font-variant-numeric:tabular-nums}
+.scoreboard .pts{font-family:'Anton',sans-serif;font-size:clamp(34px,5vw,68px);line-height:.9;color:var(--green);font-variant-numeric:tabular-nums;text-align:right}
+.scoreboard .sep{grid-column:1/-1;height:1px;background:rgba(244,241,234,.12)}
+.row-anim{opacity:0;transform:translateX(-30px)}
+.card.in-view .row-anim{animation:slideLeft .55s cubic-bezier(.18,.8,.25,1) forwards}
+
+/* Race chart */
+.race-wrap{display:grid;grid-template-columns:1fr;gap:12px;height:100%;width:100%}
+.race-svg{width:100%;height:100%;max-height:74vh}
+.race-line{fill:none;stroke-width:3px;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+.race-label{font-family:'Anton',sans-serif;font-size:14px;text-transform:uppercase}
+
+/* Key moments */
+.km-list{display:flex;flex-direction:column;gap:clamp(10px,2vh,22px);width:100%}
+.km-item{display:grid;grid-template-columns:90px 1fr;gap:18px;align-items:baseline;border-top:1px solid currentColor;padding-top:12px;opacity:.92}
+.km-item:first-child{border-top:none;padding-top:0}
+.km-gw{font-family:'Anton',sans-serif;font-size:clamp(28px,3.6vw,48px);line-height:1;text-transform:uppercase}
+.km-text{font-family:'Inter',sans-serif;font-size:clamp(15px,2vw,22px);line-height:1.3}
+
+/* Big-three stats card */
+.threestats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:end;width:100%}
+@media (max-width:600px){.threestats{grid-template-columns:1fr;gap:16px;text-align:left}}
+.ts-num{font-family:'Anton',sans-serif;font-size:clamp(90px,16vw,200px);line-height:.85;font-variant-numeric:tabular-nums}
+.ts-label{font-family:'Space Grotesk',sans-serif;font-size:clamp(12px,1.5vw,16px);text-transform:uppercase;letter-spacing:.15em;margin-top:4px;opacity:.85}
+
+/* Trade swap */
+.swap{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;width:100%}
+@media (max-width:600px){.swap{grid-template-columns:1fr;gap:14px}.swap-arrow{justify-self:start;transform:rotate(90deg)}}
+.swap-side{display:flex;flex-direction:column;gap:6px}
+.swap-side .who{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.6vw,18px);opacity:.85;text-transform:uppercase;letter-spacing:.1em}
+.swap-side .players{font-family:'Anton',sans-serif;font-size:clamp(28px,4.2vw,54px);line-height:1.03;text-transform:uppercase}
+.swap-side .delta{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.6vw,18px);margin-top:6px;font-variant-numeric:tabular-nums}
+.swap-arrow{font-family:'Anton',sans-serif;font-size:clamp(36px,6vw,72px);opacity:.6}
+.verdict{display:inline-block;font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);padding:8px 18px;border:3px solid currentColor;letter-spacing:.04em;align-self:start;justify-self:start;text-transform:uppercase;line-height:1}
+
+/* Manager card */
+.mgr{position:relative;width:100%;height:100%;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start;align-content:start;padding-top:8px}
+@media (max-width:760px){.mgr{grid-template-columns:1fr;gap:18px}}
+.mgr-pos{position:absolute;right:-2vw;top:-3vh;font-family:'Anton',sans-serif;font-size:clamp(220px,42vw,580px);line-height:.8;opacity:.16;z-index:1;pointer-events:none}
+.mgr-content{position:relative;z-index:2}
+.mgr-name{font-family:'Anton',sans-serif;font-size:clamp(72px,12vw,180px);line-height:.9;text-transform:uppercase}
+.mgr-team{font-family:'Space Grotesk',sans-serif;font-size:clamp(18px,2.6vw,30px);font-weight:500;margin-top:4px;opacity:.92}
+.mgr-stats{display:flex;flex-direction:column;gap:clamp(6px,1.4vh,12px);margin-top:4px}
+.mgr-stat{display:grid;grid-template-columns:auto 1fr;gap:12px;border-top:1px solid currentColor;padding-top:6px;opacity:.95}
+.mgr-stat:first-child{border-top:none;padding-top:0}
+.mgr-stat-label{font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.3vw,14px);text-transform:uppercase;letter-spacing:.1em;opacity:.75;align-self:start}
+.mgr-stat-val{font-family:'Anton',sans-serif;font-size:clamp(16px,2.2vw,28px);line-height:1.1;text-transform:uppercase}
+.mgr-verdict{font-family:'Space Grotesk',sans-serif;font-style:italic;font-size:clamp(13px,1.6vw,20px);margin-top:12px;opacity:.95;line-height:1.35}
+
+/* Goalkeeping howler hero */
+.gk-row{display:flex;gap:30px;align-items:center;justify-content:center;margin:14px 0}
+.gk-icon{width:clamp(70px,12vw,120px);height:clamp(86px,15vw,150px);border:5px solid currentColor;border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative}
+.gk-icon::before{content:'';width:60%;height:60%;border:5px solid currentColor;border-radius:50%}
+.gk-icon.good{border-color:#00C853;color:#00C853}
+.gk-icon.bad{border-color:#FF1493;color:#FF1493}
+.gk-mark{position:absolute;font-size:clamp(36px,6vw,60px);font-family:'Anton',sans-serif;line-height:1}
+.gk-howl-num{font-family:'Anton',sans-serif;font-size:clamp(150px,28vh,360px);line-height:.85;font-variant-numeric:tabular-nums;display:inline-block}
+.gk-howl-unit{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);line-height:1;display:inline-block;margin-left:18px;text-transform:uppercase;vertical-align:top;margin-top:.5em}
+
+/* Phantom XI hero */
+.phantom-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,auto);gap:10px;width:100%;max-width:540px;margin:8px 0}
+.phantom-pos{display:flex;align-items:center;justify-content:center;padding:10px 6px;border:2px solid currentColor;border-radius:10px;font-family:'Anton',sans-serif;font-size:clamp(12px,1.5vw,16px);min-height:54px;text-align:center;text-transform:uppercase;line-height:1.05;transition:all .4s ease}
+.phantom-pos.zero{opacity:.3;background:rgba(244,241,234,.05);position:relative}
+.phantom-pos.zero::after{content:'×';position:absolute;font-size:60px;color:#FF1493;font-family:'Anton',sans-serif;line-height:1}
+
+/* Final reveal stamp */
+.stampbox{display:inline-block;padding:10px 22px;border:4px solid currentColor;font-family:'Anton',sans-serif;font-size:clamp(22px,3.2vw,42px);text-transform:uppercase;letter-spacing:.05em;transform:rotate(-3deg);line-height:1}
+
+/* Counter style */
+.counter{font-family:'Anton',sans-serif;font-variant-numeric:tabular-nums;line-height:.85}
+
+/* Counterfactual table */
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%}
+@media (max-width:700px){.cf-grid{grid-template-columns:1fr}}
+.cf-table{font-family:'Space Grotesk',sans-serif;width:100%;border-collapse:collapse}
+.cf-table th{font-family:'Anton',sans-serif;font-size:clamp(14px,1.6vw,18px);text-align:left;padding:6px 8px;border-bottom:1px solid currentColor;text-transform:uppercase;letter-spacing:.05em;opacity:.7}
+.cf-table td{font-size:clamp(13px,1.5vw,17px);padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.08);font-variant-numeric:tabular-nums}
+.cf-table .rank{font-family:'Anton',sans-serif;font-size:clamp(16px,2vw,22px);width:1em;color:currentColor;opacity:.8}
+.cf-table .delta{font-weight:700}
+.cf-table .delta-up{color:#00C853}
+.cf-table .delta-down{color:#FF1493}
+.cf-card .cf-title{font-family:'Anton',sans-serif;font-size:clamp(28px,4.2vw,48px);line-height:1;text-transform:uppercase;margin-bottom:6px}
+.cf-card .cf-sub{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.5vw,17px);margin-bottom:14px;line-height:1.4;opacity:.9}
+
+/* Stories */
+.story-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start;width:100%}
+@media (max-width:760px){.story-grid{grid-template-columns:1fr;gap:18px}}
+.story-title{font-family:'Anton',sans-serif;font-size:clamp(40px,6vw,76px);line-height:.95;text-transform:uppercase}
+.story-tag{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.5vw,17px);letter-spacing:.1em;text-transform:uppercase;opacity:.78;margin-top:6px}
+.story-body{font-family:'Inter',sans-serif;font-size:clamp(15px,1.85vw,21px);line-height:1.5;margin-top:14px;max-width:48ch}
+.story-vis{display:flex;align-items:center;justify-content:center;min-height:220px}
+
+/* Sparkline / mini chart shared */
+.mini-svg{width:100%;height:auto;max-width:520px}
+
+/* Aggregate stats grid */
+.agg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;width:100%}
+@media (max-width:720px){.agg-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+.agg-item .agg-num{font-family:'Anton',sans-serif;font-size:clamp(56px,9vw,128px);line-height:.85;font-variant-numeric:tabular-nums}
+.agg-item .agg-label{font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.3vw,15px);text-transform:uppercase;letter-spacing:.1em;margin-top:6px;opacity:.85;line-height:1.3}
+
+/* Closing card */
+.closing .one-last{font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.3vw,15px);letter-spacing:.3em;text-transform:uppercase;opacity:.78;margin-bottom:20px}
+.closing .fact{font-family:'Anton',sans-serif;font-size:clamp(38px,6vw,80px);line-height:1.05;text-transform:uppercase}
+.closing .signoff{font-family:'Inter',sans-serif;font-style:italic;font-size:clamp(13px,1.6vw,18px);margin-top:30px;opacity:.7}
+
+/* Hot potato hero (centered name) */
+.hp-center{font-family:'Anton',sans-serif;font-size:clamp(70px,14vw,180px);text-transform:uppercase;line-height:.95;text-align:center;letter-spacing:.01em}
+.hp-arrows{font-family:'Space Grotesk',sans-serif;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:clamp(13px,1.6vw,19px);margin-top:18px;opacity:.92}
+.hp-step{padding:4px 10px;border:1px solid currentColor;border-radius:4px;font-weight:500}
+
+/* Beating scoreline */
+.scoreline{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;width:100%}
+.scoreline .side{display:flex;flex-direction:column;align-items:center;gap:6px}
+.scoreline .side-name{font-family:'Anton',sans-serif;font-size:clamp(34px,5.5vw,72px);line-height:.95;text-transform:uppercase;text-align:center}
+.scoreline .side-score{font-family:'Anton',sans-serif;font-size:clamp(110px,20vw,260px);line-height:.85;font-variant-numeric:tabular-nums}
+.scoreline .dash{font-family:'Anton',sans-serif;font-size:clamp(70px,12vw,150px);line-height:.85;opacity:.7}
+
+/* Welcome and goodbye */
+.wg-box{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;width:100%}
+@media (max-width:600px){.wg-box{grid-template-columns:1fr}}
+.wg-cell{padding:14px 16px;border:2px solid currentColor;border-radius:8px}
+.wg-tag{font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.3vw,14px);letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+.wg-gw{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,90px);line-height:.95;margin-top:4px;text-transform:uppercase}
 
 /* Loading */
-#loading {
-  position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: var(--ink); color: var(--paper); z-index: 9999;
-  transition: opacity 400ms ease;
-}
-#loading.gone { opacity: 0; pointer-events: none; }
-#loading .lt { font-family: 'Anton', sans-serif; font-size: clamp(32px, 6vw, 48px); letter-spacing: 0.02em; }
-#loading .ls { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.2em; font-size: 11px; opacity: 0.6; margin-top: 12px; text-transform: uppercase; }
-#loading .lb { width: 180px; height: 3px; background: rgba(255,255,255,0.1); margin-top: 24px; overflow: hidden; }
-#loading .lb i { display: block; width: 30%; height: 100%; background: var(--lime); animation: lb 1.4s ease-in-out infinite; }
-@keyframes lb { 0% { transform: translateX(-100%); } 100% { transform: translateX(400%); } }
+#loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--black);color:var(--off);z-index:9999;flex-direction:column;gap:12px;font-family:'Anton',sans-serif;letter-spacing:.05em;text-transform:uppercase}
+#loader.hide{opacity:0;pointer-events:none;transition:opacity .4s ease}
+#loader .l1{font-size:clamp(40px,7vw,76px)}
+#loader .l2{font-size:clamp(11px,1.3vw,14px);letter-spacing:.3em;opacity:.7;font-family:'Space Grotesk',sans-serif}
 
-/* Animation primitives — gated by .in on the card */
-.anim { opacity: 0; transition-timing-function: cubic-bezier(.2,.7,.2,1); }
-.fade { transition: opacity 600ms ease; }
-.up   { transform: translateY(28px); transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
-.left { transform: translateX(-40px); transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
-.right{ transform: translateX(40px);  transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
-.scale{ transform: scale(0.78); transition: opacity 500ms ease, transform 600ms cubic-bezier(.34,1.4,.5,1); }
-.card.in .anim { opacity: 1; transform: translate(0,0) scale(1); }
-
-/* Side-scroll nav progress */
-#nav { position: fixed; right: 6px; top: 50%; transform: translateY(-50%); z-index: 30; display: flex; flex-direction: column; gap: 3px; pointer-events: none; }
-.nav-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: background .2s, height .2s; }
-.nav-dot.dark { background: rgba(0,0,0,0.2); }
-.nav-dot.active { background: var(--yellow); height: 14px; border-radius: 2px; }
-
-/* ============================================================
-   CARD 1: COLD OPEN
-   ============================================================ */
-.c-open {
-  background: linear-gradient(160deg, #FF1493 0%, #FF6F00 100%);
-  color: var(--paper);
-  padding: clamp(24px, 5vw, 56px);
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.c-open .marker { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.3em; font-size: 11px; opacity: 0.9; text-transform: uppercase; }
-.c-open .stack {
-  flex: 1;
-  display: flex; flex-direction: column; justify-content: center;
-}
-.c-open .stack .line {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(72px, 18vw, 200px);
-  line-height: 0.88;
-  letter-spacing: -0.012em;
-  text-transform: uppercase;
-}
-.c-open .stack .line .slash { color: rgba(0,0,0,0.55); margin-right: 6px; }
-.c-open .stack .line.l3 { color: var(--ink); }
-.c-open .sub { display: flex; align-items: baseline; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
-.c-open .sub .right-block { text-align: right; }
-.c-open .sub .right-block b { font-family: 'Anton', sans-serif; font-size: clamp(24px, 4vw, 38px); display: block; letter-spacing: 0.01em; line-height: 1; }
-.c-open .sub .right-block s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; }
-/* per-line entry */
-.c-open .stack .line { opacity: 0; transform: translateY(40px); transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
-.card.in .c-open .stack .line { opacity: 1; transform: none; }
-.card.in .c-open .stack .l1 { transition-delay: 200ms; }
-.card.in .c-open .stack .l2 { transition-delay: 500ms; }
-.card.in .c-open .stack .l3 { transition-delay: 800ms; }
-
-/* ============================================================
-   INTERSTITIAL
-   ============================================================ */
-.c-intro {
-  display: flex; align-items: center; justify-content: center;
-  padding: clamp(20px, 5vw, 48px);
-  text-align: center;
-}
-.c-intro .text {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(48px, 11vw, 130px);
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  max-width: 920px;
-}
-.c-intro .tag { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.2em; font-size: 11px; text-transform: uppercase; margin-bottom: 18px; opacity: 0.75; }
-
-/* ============================================================
-   CARD 3: FINAL TABLE (scoreboard)
-   ============================================================ */
-.c-table {
-  background: var(--ink);
-  color: var(--paper);
-  display: flex; flex-direction: column;
-  padding: clamp(20px, 5vw, 56px);
-}
-.c-table .topline { display: flex; align-items: baseline; justify-content: space-between; }
-.c-table .topline h2 { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 90px); line-height: 1; }
-.scoreboard {
-  flex: 1; margin-top: clamp(16px, 3vh, 30px);
-  display: flex; flex-direction: column;
-  border-top: 4px solid var(--green);
-  border-bottom: 4px solid var(--green);
-}
-.scoreboard .hdr {
-  display: grid;
-  grid-template-columns: 70px 1fr 56px 56px 56px 96px;
-  align-items: center;
-  padding: 10px 12px;
-  background: var(--green);
-  color: var(--ink);
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.16em; font-size: clamp(10px, 1.3vw, 13px); text-transform: uppercase;
-}
-.scoreboard .hdr .l { text-align: left; }
-.scoreboard .hdr .r { text-align: right; }
-.scoreboard .row {
-  display: grid;
-  grid-template-columns: 70px 1fr 56px 56px 56px 96px;
-  align-items: center;
-  padding: clamp(10px, 2.4vh, 22px) 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1);
-}
-.scoreboard .row:last-child { border-bottom: 0; }
-.card.in .scoreboard .row { opacity: 1; transform: none; }
-.card.in .scoreboard .row:nth-child(2) { transition-delay: 100ms; }
-.card.in .scoreboard .row:nth-child(3) { transition-delay: 250ms; }
-.card.in .scoreboard .row:nth-child(4) { transition-delay: 400ms; }
-.card.in .scoreboard .row:nth-child(5) { transition-delay: 550ms; }
-.card.in .scoreboard .row:nth-child(6) { transition-delay: 700ms; }
-.card.in .scoreboard .row:nth-child(7) { transition-delay: 850ms; }
-.scoreboard .pos { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(36px, 7vw, 64px); letter-spacing: -0.04em; line-height: 1; color: var(--paper); }
-.scoreboard .row.champ .pos, .scoreboard .row.champ .total { color: var(--yellow); }
-.scoreboard .mgr { display: flex; flex-direction: column; }
-.scoreboard .mgr .nm { font-family: 'Anton', sans-serif; font-size: clamp(20px, 4.4vw, 32px); line-height: 1; }
-.scoreboard .mgr .tm { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(10px, 1.5vw, 13px); opacity: 0.6; margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
-.scoreboard .wdl { font-family: 'Anton', sans-serif; font-size: clamp(18px, 3.6vw, 28px); text-align: right; opacity: 0.85; }
-.scoreboard .total { font-family: 'Anton', sans-serif; font-size: clamp(30px, 6vw, 52px); text-align: right; line-height: 1; }
-.c-table .foot { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; }
-.c-table .foot .left, .c-table .foot .right { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.5; }
-
-/* ============================================================
-   CARD 5: RACE CHART
-   ============================================================ */
-.c-race { background: var(--ink); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-race h2 { font-family: 'Anton', sans-serif; font-size: clamp(34px, 7vw, 64px); line-height: 1; margin-top: 6px; }
-.c-race .race-wrap { flex: 1; margin: 14px 0; display: flex; min-height: 0; }
-.race-svg { width: 100%; height: 100%; display: block; }
-.race-svg .gw-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; fill: rgba(255,255,255,0.45); }
-.race-svg .pos-label { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 22px; fill: rgba(255,255,255,0.32); }
-.race-svg path.race-line { fill: none; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 4500; stroke-dashoffset: 4500; }
-.card.in .race-svg path.race-line { animation: draw 600ms ease-out forwards; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
-.race-svg .endpoint { opacity: 0; transition: opacity 400ms ease; }
-.race-svg .endpoint.in { opacity: 1; }
-.race-svg .annot-line { stroke: rgba(255,255,255,0.25); stroke-width: 1; stroke-dasharray: 3 4; }
-.race-svg .annot { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; fill: rgba(255,255,255,0.85); }
-.c-race .race-caption { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(13px, 1.8vw, 16px); opacity: 0.85; }
-
-/* ============================================================
-   CARD 6: TIMELINE
-   ============================================================ */
-.c-timeline { background: var(--paper); color: var(--ink); padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; }
-.c-timeline h2 { font-family: 'Anton', sans-serif; font-size: clamp(36px, 7vw, 72px); line-height: 1; margin-top: 4px; }
-.c-timeline .tl-wrap { flex: 1; margin-top: 16px; position: relative; overflow: hidden; min-height: 0; display: flex; }
-.tl-svg { width: 100%; height: 100%; display: block; flex: 1; }
-.tl-svg .axis { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 2000; stroke-dashoffset: 2000; }
-.card.in .tl-svg .axis { animation: draw 1500ms ease-out forwards; animation-delay: 200ms; }
-.tl-svg .gw-mark { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12px; fill: var(--ink); opacity: 0.55; }
-.tl-svg .ev { opacity: 0; transition: opacity 350ms ease; }
-.tl-svg .ev.in { opacity: 1; }
-.tl-svg .ev-dot { stroke-width: 2; }
-.tl-svg .ev-line { stroke: rgba(0,0,0,0.18); stroke-width: 1; stroke-dasharray: 2 3; }
-.tl-svg .ev-label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 10px; fill: var(--ink); }
-.tl-svg .ev-label.pl { fill: var(--purple); }
-.tl-svg .track-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--ink); }
-
-/* ============================================================
-   CARD 8: HANDS-OFF (3 giant numbers)
-   ============================================================ */
-.c-handsoff { background: var(--green); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-handsoff .ho-stack {
-  flex: 1; display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: clamp(8px, 1.6vh, 18px);
-  margin-top: 14px;
-}
-.c-handsoff .ho-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,0.3); }
-.c-handsoff .ho-row:last-child { border-bottom: 0; }
-.c-handsoff .ho-num { font-family: 'Anton', sans-serif; font-size: clamp(110px, 24vw, 260px); line-height: 0.82; letter-spacing: -0.02em; }
-.c-handsoff .ho-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.12em; font-size: clamp(12px, 1.6vw, 16px); text-transform: uppercase; max-width: 180px; text-align: right; }
-.c-handsoff .ho-cap { font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.5vw, 38px); line-height: 1.05; max-width: 720px; }
-
-/* ============================================================
-   TRADE CARDS
-   ============================================================ */
-.c-trade { padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; color: var(--ink); }
-.c-trade .topline { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
-.c-trade .topline h2 { font-family: 'Anton', sans-serif; font-size: clamp(32px, 6.5vw, 56px); line-height: 1; }
-.c-trade .swap {
-  flex: 1; margin-top: 18px; min-height: 0;
-  display: grid; grid-template-columns: 1fr 56px 1fr; gap: 12px; align-items: stretch;
-}
-.c-trade .col-side { display: flex; flex-direction: column; gap: 10px; padding: 14px; background: rgba(0,0,0,0.07); border-radius: 14px; }
-.c-trade.dark .col-side { background: rgba(255,255,255,0.10); }
-.c-trade .col-mgr { font-family: 'Anton', sans-serif; font-size: clamp(20px, 4.4vw, 30px); line-height: 1; }
-.c-trade .col-tag { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; opacity: 0.7; text-transform: uppercase; }
-.c-trade .player { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: rgba(255,255,255,0.55); border-radius: 8px; }
-.c-trade.dark .player { background: rgba(0,0,0,0.30); }
-.c-trade .player .pname { font-family: 'Anton', sans-serif; font-size: clamp(18px, 3.5vw, 24px); line-height: 1; }
-.c-trade .player .pteam { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 10px; opacity: 0.6; letter-spacing: 0.06em; }
-.c-trade .player .ppts { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(18px, 3.8vw, 26px); }
-.c-trade .arrow { display: flex; align-items: center; justify-content: center; }
-.c-trade .arrow svg { width: 100%; max-width: 56px; height: auto; opacity: 0; transition: opacity 600ms ease; }
-.card.in .c-trade .arrow svg { opacity: 1; transition-delay: 700ms; }
-.c-trade .col-total { margin-top: auto; font-family: 'Anton', sans-serif; font-size: clamp(22px, 5.2vw, 36px); text-align: right; }
-.c-trade .verdict {
-  margin-top: 16px;
-  display: flex; justify-content: flex-end; align-items: center; gap: 14px;
-}
-.c-trade .stamp {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(28px, 6.2vw, 42px);
-  padding: 6px 14px;
-  border: 4px solid currentColor;
-  letter-spacing: 0.08em;
-  transform: rotate(-6deg) scale(0.6);
-  opacity: 0;
-  transition: opacity 400ms ease, transform 500ms cubic-bezier(.34, 1.6, .4, 1);
-}
-.card.in .c-trade .stamp { opacity: 1; transform: rotate(-6deg) scale(1); transition-delay: 1500ms; }
-.c-trade .verdict-line { font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700; font-size: clamp(13px, 1.8vw, 17px); max-width: 360px; text-align: right; }
-.c-trade .col-side.left  { opacity: 0; transform: translateX(-20px); transition: opacity 600ms ease, transform 700ms cubic-bezier(.2,.7,.2,1); }
-.c-trade .col-side.right { opacity: 0; transform: translateX(20px);  transition: opacity 600ms ease, transform 700ms cubic-bezier(.2,.7,.2,1); }
-.card.in .c-trade .col-side.left  { opacity: 1; transform: none; transition-delay: 200ms; }
-.card.in .c-trade .col-side.right { opacity: 1; transform: none; transition-delay: 1000ms; }
-
-/* ============================================================
-   MANAGER CARDS
-   ============================================================ */
-.c-mgr { padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; position: relative; overflow: hidden; }
-.c-mgr .watermark {
-  position: absolute;
-  top: 50%; transform: translateY(-50%);
-  right: -6vw;
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(260px, 56vw, 700px);
-  line-height: 0.78;
-  opacity: 0.10;
-  pointer-events: none;
-  letter-spacing: -0.06em;
-}
-.c-mgr.light .watermark { color: rgba(0,0,0,0.16); }
-.c-mgr.dark .watermark { color: rgba(255,255,255,0.18); }
-.c-mgr .head { position: relative; z-index: 2; }
-.c-mgr .head .role { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.16em; font-size: 11px; text-transform: uppercase; opacity: 0.75; }
-.c-mgr .head .first { font-family: 'Anton', sans-serif; font-size: clamp(60px, 12vw, 120px); line-height: 0.95; letter-spacing: -0.01em; margin-top: 4px; }
-.c-mgr .head .team { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 2vw, 20px); margin-top: 6px; letter-spacing: 0.04em; }
-.c-mgr .head .record { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(14px, 1.8vw, 18px); margin-top: 10px; opacity: 0.85; }
-.c-mgr .stats { position: relative; z-index: 2; margin-top: clamp(14px, 3vh, 28px); display: flex; flex-direction: column; gap: clamp(6px, 1.4vh, 14px); }
-.c-mgr .srow { display: grid; grid-template-columns: 110px 1fr auto; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid currentColor; border-bottom-color: rgba(0,0,0,0.18); }
-.c-mgr.dark .srow { border-bottom-color: rgba(255,255,255,0.18); }
-.c-mgr .srow .l { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
-.c-mgr .srow .v { font-family: 'Anton', sans-serif; font-size: clamp(20px, 3.6vw, 28px); line-height: 1; }
-.c-mgr .srow .sub { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; opacity: 0.65; text-align: right; }
-.c-mgr .verdict {
-  position: relative; z-index: 2; margin-top: auto; padding-top: 14px;
-  font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700;
-  font-size: clamp(16px, 2.2vw, 21px); line-height: 1.3;
-  max-width: 720px;
-}
-/* stagger */
-.c-mgr .head, .c-mgr .srow, .c-mgr .verdict { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
-.card.in .c-mgr .head { opacity: 1; transform: none; transition-delay: 100ms; }
-.card.in .c-mgr .verdict { opacity: 1; transform: none; transition-delay: 1500ms; }
-.card.in .c-mgr .srow:nth-child(1) { opacity: 1; transform: none; transition-delay: 400ms; }
-.card.in .c-mgr .srow:nth-child(2) { opacity: 1; transform: none; transition-delay: 520ms; }
-.card.in .c-mgr .srow:nth-child(3) { opacity: 1; transform: none; transition-delay: 640ms; }
-.card.in .c-mgr .srow:nth-child(4) { opacity: 1; transform: none; transition-delay: 760ms; }
-.card.in .c-mgr .srow:nth-child(5) { opacity: 1; transform: none; transition-delay: 880ms; }
-.card.in .c-mgr .srow:nth-child(6) { opacity: 1; transform: none; transition-delay: 1000ms; }
-.card.in .c-mgr .srow:nth-child(7) { opacity: 1; transform: none; transition-delay: 1120ms; }
-
-/* ============================================================
-   CHAMPION CARD — victory lap
-   ============================================================ */
-.c-champ { background: linear-gradient(180deg, #FFEB3B 0%, #FFC400 100%); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-champ .crown-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
-.c-champ .crown { width: clamp(80px, 12vw, 130px); height: auto; opacity: 0; transform: translateY(-20px); transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
-.card.in .c-champ .crown { opacity: 1; transform: none; transition-delay: 200ms; }
-.c-champ .gname { font-family: 'Anton', sans-serif; font-size: clamp(90px, 22vw, 260px); line-height: 0.88; letter-spacing: -0.02em; }
-.c-champ .gflag { font-size: clamp(40px, 8vw, 70px); line-height: 1; margin-top: -8px; }
-.c-champ .stat-row { display: flex; flex-wrap: wrap; gap: clamp(16px, 4vw, 36px); margin-top: clamp(16px, 3vh, 32px); align-items: baseline; }
-.c-champ .stat-row .pts { font-family: 'Anton', sans-serif; font-size: clamp(80px, 18vw, 200px); line-height: 0.85; color: var(--ink); }
-.c-champ .stat-row .pts small { font-family: 'Space Grotesk', sans-serif; font-size: clamp(14px, 1.8vw, 17px); font-weight: 700; letter-spacing: 0.16em; display: block; opacity: 0.7; line-height: 1; margin-top: 6px; text-transform: uppercase; }
-
-/* ============================================================
-   BEST TRADE award (recap)
-   ============================================================ */
-.c-besttrade { background: var(--cyan); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-
-/* ============================================================
-   BEST DRAFT PICK
-   ============================================================ */
-.c-draft { background: var(--lime); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-draft .pickno { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(80px, 22vw, 240px); letter-spacing: -0.05em; line-height: 0.88; }
-.c-draft .pickno small { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 1.6vw, 18px); display: block; letter-spacing: 0.2em; opacity: 0.7; line-height: 1; margin-bottom: 6px; text-transform: uppercase; }
-.c-draft .pname { font-family: 'Anton', sans-serif; font-size: clamp(64px, 16vw, 180px); line-height: 0.9; letter-spacing: -0.01em; margin-top: clamp(8px, 1.4vh, 18px); }
-.c-draft .meta { display: flex; gap: clamp(14px, 3vw, 32px); margin-top: clamp(12px, 2vh, 20px); flex-wrap: wrap; }
-.c-draft .meta b { font-family: 'Anton', sans-serif; font-size: clamp(28px, 6vw, 48px); line-height: 1; display: block; }
-.c-draft .meta s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; opacity: 0.7; letter-spacing: 0.16em; text-transform: uppercase; }
-.c-draft .who { margin-top: auto; padding-top: 14px; }
-.c-draft .who b { font-family: 'Anton', sans-serif; font-size: clamp(28px, 5vw, 40px); }
-.c-draft .who s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.65; }
-
-/* ============================================================
-   GITTENS — Most Influential (theatrical)
-   ============================================================ */
-.c-gittens {
-  background: linear-gradient(165deg, #FF1493 0%, #FF6F00 100%);
-  color: var(--paper);
-  padding: clamp(20px, 5vw, 56px);
-  display: flex; flex-direction: column; position: relative; overflow: hidden;
-}
-.c-gittens .tag { opacity: 0; transition: opacity 400ms ease; }
-.card.in .c-gittens .tag { opacity: 1; transition-delay: 300ms; }
-.c-gittens .head { font-family: 'Anton', sans-serif; font-size: clamp(48px, 9vw, 96px); line-height: 1; letter-spacing: -0.005em; margin-top: 8px; text-transform: uppercase; }
-.c-gittens .head .w { display: inline-block; opacity: 0; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms ease; margin-right: 0.15em; }
-.card.in .c-gittens .head .w { opacity: 1; transform: none; }
-.card.in .c-gittens .head .w:nth-child(1) { transition-delay: 700ms; }
-.card.in .c-gittens .head .w:nth-child(2) { transition-delay: 950ms; }
-.card.in .c-gittens .head .w:nth-child(3) { transition-delay: 1200ms; }
-.c-gittens .reveal { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; }
-.c-gittens .who { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(16px, 2.4vw, 22px); letter-spacing: 0.08em; text-transform: uppercase; opacity: 0; transition: opacity 500ms ease; }
-.card.in .c-gittens .who { opacity: 1; transition-delay: 2900ms; }
-.c-gittens .gittens {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(110px, 26vw, 320px);
-  line-height: 0.88; letter-spacing: -0.02em;
-  opacity: 0; transform: scale(0.86);
-  transition: opacity 500ms ease, transform 600ms cubic-bezier(.34,1.6,.4,1);
-  position: relative;
-}
-.card.in .c-gittens .gittens { opacity: 1; transform: scale(1); transition-delay: 2400ms; }
-.c-gittens .redraft {
-  font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700;
-  font-size: clamp(22px, 4.5vw, 36px);
-  opacity: 0; transition: opacity 600ms ease;
-}
-.card.in .c-gittens .redraft { opacity: 1; transition-delay: 4400ms; }
-.c-gittens .stamp {
-  position: absolute;
-  display: inline-block;
-  font-family: 'Anton', sans-serif;
-  background: var(--paper); color: var(--ink);
-  font-size: clamp(14px, 2.2vw, 20px);
-  padding: 6px 10px;
-  border: 3px solid var(--ink);
-  letter-spacing: 0.12em;
-  transform: translate(-50%, -60%) rotate(-12deg) scale(0.6);
-  opacity: 0;
-  transition: opacity 400ms ease, transform 500ms cubic-bezier(.34,1.6,.4,1);
-  top: 22%; left: 75%;
-  pointer-events: none;
-}
-.card.in .c-gittens .stamp { opacity: 1; transform: translate(-50%, -60%) rotate(-12deg) scale(1); transition-delay: 3000ms; }
-
-/* ============================================================
-   ASLEEP AT THE WHEEL — calendar of inactivity
-   ============================================================ */
-.c-asleep { background: var(--purple); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-asleep .name { font-family: 'Anton', sans-serif; font-size: clamp(48px, 11vw, 110px); line-height: 0.95; }
-.c-asleep .who { font-family: 'Anton', sans-serif; color: var(--yellow); font-size: clamp(32px, 6vw, 60px); line-height: 1; margin-top: 10px; }
-.c-asleep .who s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; display: block; line-height: 1; margin-top: 4px; }
-.c-asleep .cal { flex: 1; margin-top: clamp(18px, 4vh, 36px); display: flex; flex-direction: column; min-height: 0; gap: 8px; }
-.c-asleep .cal .strip { display: grid; grid-template-columns: repeat(37, 1fr); gap: 3px; }
-.c-asleep .cal .gw {
-  height: clamp(20px, 4vh, 36px);
-  border-radius: 3px;
-  background: rgba(255,255,255,0.12);
-  position: relative;
-  opacity: 0; transform: scaleY(0);
-  transform-origin: bottom;
-  transition: opacity 240ms ease, transform 320ms ease, background-color 240ms ease;
-}
-.card.in .c-asleep .cal .gw { opacity: 1; transform: scaleY(1); }
-.c-asleep .cal .gw.dormant { background: var(--orange); }
-.c-asleep .cal .gw.last-tx { background: var(--yellow); }
-.c-asleep .cal .x-axis { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 10px; opacity: 0.6; padding: 0 2px; }
-.c-asleep .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
-.c-asleep .legend span { display: inline-flex; align-items: center; gap: 6px; }
-.c-asleep .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
-.c-asleep .verdict { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(28px, 5.2vw, 44px); line-height: 1.05; }
-
-/* ============================================================
-   MICRO: GOALKEEPING HOWLER
-   ============================================================ */
-.c-howler { background: var(--ink); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-howler .head { font-family: 'Anton', sans-serif; color: var(--cyan); font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
-.c-howler .who { font-family: 'Anton', sans-serif; color: var(--paper); font-size: clamp(28px, 6vw, 50px); line-height: 1; margin-top: 12px; }
-.c-howler .body { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; margin-top: clamp(14px, 3vh, 28px); min-height: 0; }
-.c-howler .keepers { display: flex; flex-direction: column; gap: 18px; align-items: center; }
-.c-howler .gk { display: flex; align-items: center; gap: 14px; }
-.c-howler .gk-ico { width: clamp(60px, 12vw, 92px); height: clamp(60px, 12vw, 92px); border-radius: 50%; border: 4px solid currentColor; display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: clamp(32px, 7vw, 50px); }
-.c-howler .gk.right .gk-ico { border-color: var(--green); color: var(--green); }
-.c-howler .gk.wrong .gk-ico { border-color: var(--pink); color: var(--pink); }
-.c-howler .gk-label { font-family: 'Anton', sans-serif; font-size: clamp(20px, 4vw, 30px); line-height: 1.05; }
-.c-howler .gk-label small { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.12em; opacity: 0.65; font-weight: 700; text-transform: uppercase; }
-.c-howler .count { font-family: 'Anton', sans-serif; font-size: clamp(140px, 30vw, 280px); line-height: 0.85; color: var(--yellow); text-align: center; }
-.c-howler .count span { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 0.16em; opacity: 0.7; font-weight: 700; line-height: 1; margin-top: 4px; text-transform: uppercase; color: var(--paper); }
-.c-howler .punch { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 700px; }
-
-/* ============================================================
-   MICRO: PHANTOM XI (pitch diagram)
-   ============================================================ */
-.c-phantom { background: var(--green); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-phantom .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
-.c-phantom .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
-.c-phantom .pitch-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; margin: 18px 0; }
-.c-phantom .pitch { width: 100%; max-width: 480px; aspect-ratio: 3/4; background: rgba(0,0,0,0.10); border: 3px solid rgba(0,0,0,0.6); border-radius: 8px; position: relative; }
-.c-phantom .pitch::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 3px; background: rgba(0,0,0,0.6); }
-.c-phantom .pitch::after  { content: ''; position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; border: 3px solid rgba(0,0,0,0.6); border-radius: 50%; transform: translate(-50%, -50%); }
-.c-phantom .player {
-  position: absolute; transform: translate(-50%, -50%);
-  width: clamp(40px, 9vw, 60px); height: clamp(40px, 9vw, 60px);
-  border-radius: 50%;
-  background: var(--paper);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Anton', sans-serif; font-size: clamp(13px, 2.5vw, 18px);
-  border: 3px solid var(--ink);
-  text-align: center;
-  transition: opacity 600ms ease, transform 600ms ease;
-  opacity: 0;
-}
-.card.in .c-phantom .player { opacity: 1; }
-.c-phantom .player.ghost { opacity: 0.18; }
-.card.in .c-phantom .player.ghost { opacity: 0.18; }
-.c-phantom .player.ghost::after { content: '✗'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--pink); font-size: clamp(40px, 9vw, 60px); }
-.c-phantom .stat-row { display: flex; gap: clamp(14px, 3vw, 28px); margin-top: auto; align-items: baseline; flex-wrap: wrap; }
-.c-phantom .stat-row b { font-family: 'Anton', sans-serif; font-size: clamp(38px, 8vw, 64px); line-height: 1; }
-.c-phantom .stat-row s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; opacity: 0.7; letter-spacing: 0.14em; display: block; text-transform: uppercase; line-height: 1; margin-top: 4px; }
-.c-phantom .punch { margin-top: 12px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
-
-/* ============================================================
-   MICRO: THREE STRIKES
-   ============================================================ */
-.c-strikes { background: var(--orange); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-strikes .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
-.c-strikes .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
-.c-strikes .triple { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 2vh, 22px); }
-.c-strikes .strike-row { display: flex; align-items: baseline; gap: 14px; opacity: 0; transform: translateX(-30px); transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
-.card.in .c-strikes .strike-row { opacity: 1; transform: none; }
-.card.in .c-strikes .strike-row:nth-child(1) { transition-delay: 200ms; }
-.card.in .c-strikes .strike-row:nth-child(2) { transition-delay: 800ms; }
-.card.in .c-strikes .strike-row:nth-child(3) { transition-delay: 1400ms; }
-.c-strikes .strike-row .x { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 72px); line-height: 0.8; color: var(--ink); }
-.c-strikes .strike-row .nm { font-family: 'Anton', sans-serif; font-size: clamp(56px, 12vw, 110px); line-height: 0.9; letter-spacing: -0.01em; }
-.c-strikes .strike-row .gw { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(20px, 3.8vw, 30px); margin-left: auto; opacity: 0.85; }
-.c-strikes .punch { margin-top: 18px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
-
-/* ============================================================
-   MICRO: WELCOME AND GOODBYE
-   ============================================================ */
-.c-welcome { background: var(--paper); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-welcome .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; color: var(--pink); }
-.c-welcome .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
-.c-welcome .reel { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
-.c-welcome .arrived, .c-welcome .left { display: flex; align-items: center; gap: 16px; }
-.c-welcome .tg { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(14px, 2vw, 18px); letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 12px; background: var(--ink); color: var(--paper); }
-.c-welcome .tg.bad { background: var(--pink); }
-.c-welcome .gwn { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(36px, 7vw, 60px); letter-spacing: -0.03em; }
-.c-welcome .pname { font-family: 'Anton', sans-serif; font-size: clamp(64px, 14vw, 150px); line-height: 0.9; letter-spacing: -0.01em; }
-.c-welcome .joiner { font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 700; font-size: clamp(14px, 2vw, 18px); }
-.c-welcome .punch { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
-
-/* ============================================================
-   MICRO: RIGHT PLACE RIGHT TIME (line chart)
-   ============================================================ */
-.c-rprt { background: var(--yellow); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-rprt .head { font-family: 'Anton', sans-serif; font-size: clamp(40px, 8vw, 80px); line-height: 1; margin-top: 6px; }
-.c-rprt .who { font-family: 'Anton', sans-serif; font-size: clamp(26px, 5vw, 44px); line-height: 1; margin-top: 8px; }
-.c-rprt .player-name { font-family: 'Anton', sans-serif; font-size: clamp(38px, 8vw, 70px); line-height: 1; margin-top: 10px; color: var(--ink); }
-.c-rprt .chart-wrap { flex: 1; margin: 18px 0; display: flex; align-items: center; min-height: 0; }
-.c-rprt .chart-wrap svg { width: 100%; height: 100%; display: block; }
-.c-rprt .punch { margin-top: 12px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; }
-
-/* ============================================================
-   MICRO: LOYALIST TAX
-   ============================================================ */
-.c-loyal { background: linear-gradient(170deg, var(--ink) 0%, #2a0f0f 100%); color: var(--paper); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-loyal .head { font-family: 'Anton', sans-serif; font-size: clamp(48px, 11vw, 110px); line-height: 1; margin-top: 6px; color: var(--orange); }
-.c-loyal .who { font-family: 'Anton', sans-serif; font-size: clamp(28px, 6vw, 50px); line-height: 1; margin-top: 8px; }
-.c-loyal .stack { display: flex; flex-direction: column; gap: clamp(20px, 5vh, 50px); margin: auto 0; }
-.c-loyal .player-name { font-family: 'Anton', sans-serif; font-size: clamp(86px, 22vw, 240px); line-height: 0.85; letter-spacing: -0.02em; }
-.c-loyal .figures { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 3vw, 30px); }
-.c-loyal .figures .fig { display: flex; flex-direction: column; }
-.c-loyal .figures b { font-family: 'Anton', sans-serif; font-size: clamp(64px, 14vw, 130px); line-height: 0.9; color: var(--paper); }
-.c-loyal .figures s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em; opacity: 0.7; line-height: 1; text-transform: uppercase; margin-top: 4px; }
-.c-loyal .punch { font-family: 'Anton', sans-serif; font-size: clamp(22px, 4.4vw, 36px); line-height: 1.1; max-width: 720px; color: var(--paper); }
-
-/* ============================================================
-   COUNTERFACTUAL TABLES
-   ============================================================ */
-.c-cf { padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-cf .head { font-family: 'Anton', sans-serif; font-size: clamp(36px, 7vw, 70px); line-height: 1; margin-top: 6px; }
-.c-cf .desc { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(13px, 1.8vw, 17px); margin-top: 8px; max-width: 740px; }
-.cf-tbl { flex: 1; margin-top: 18px; display: flex; flex-direction: column; min-height: 0; }
-.cf-row { display: grid; grid-template-columns: 40px 1fr 80px 80px 60px; gap: 10px; align-items: center; padding: clamp(8px, 1.6vh, 16px) 6px; border-bottom: 2px solid currentColor; border-bottom-color: rgba(0,0,0,0.15); opacity: 0; transform: translateX(-20px); transition: opacity 500ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
-.c-cf.dark .cf-row { border-bottom-color: rgba(255,255,255,0.15); }
-.cf-row.hdr { padding: 6px; opacity: 1 !important; transform: none !important; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; }
-.card.in .cf-row { opacity: 1; transform: none; }
-.card.in .cf-row:nth-child(2) { transition-delay: 200ms; }
-.card.in .cf-row:nth-child(3) { transition-delay: 320ms; }
-.card.in .cf-row:nth-child(4) { transition-delay: 440ms; }
-.card.in .cf-row:nth-child(5) { transition-delay: 560ms; }
-.card.in .cf-row:nth-child(6) { transition-delay: 680ms; }
-.card.in .cf-row:nth-child(7) { transition-delay: 800ms; }
-.cf-row .pos { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(20px, 3.8vw, 28px); }
-.cf-row .nm { font-family: 'Anton', sans-serif; font-size: clamp(20px, 3.8vw, 28px); }
-.cf-row .v { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(15px, 2.5vw, 19px); text-align: right; }
-.cf-row .pts { font-family: 'Anton', sans-serif; font-size: clamp(22px, 4vw, 30px); text-align: right; }
-.cf-row .delta { font-family: 'Anton', sans-serif; font-size: clamp(16px, 2.6vw, 22px); text-align: right; }
-.cf-row .delta.up { color: var(--green); }
-.cf-row .delta.down { color: var(--pink); }
-.cf-row .delta.same { opacity: 0.35; }
-.c-cf .takeaway { margin-top: 14px; font-family: 'Anton', sans-serif; font-size: clamp(22px, 4vw, 32px); line-height: 1.1; max-width: 760px; }
-
-/* ============================================================
-   AGGREGATE STATS
-   ============================================================ */
-.c-agg { background: var(--paper); color: var(--ink); padding: clamp(20px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-agg .head { font-family: 'Anton', sans-serif; font-size: clamp(36px, 7vw, 72px); line-height: 1; margin-top: 6px; }
-.c-agg .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; min-height: 0; }
-.c-agg .cell { display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; border-radius: 12px; }
-.c-agg .cell.c1 { background: var(--lime); }
-.c-agg .cell.c2 { background: var(--cyan); color: var(--ink); }
-.c-agg .cell.c3 { background: var(--pink); color: var(--paper); }
-.c-agg .cell.c4 { background: var(--ink); color: var(--paper); }
-.c-agg .cell.c5 { background: var(--orange); color: var(--ink); }
-.c-agg .cell.c6 { background: var(--yellow); color: var(--ink); }
-.c-agg .cell b { font-family: 'Anton', sans-serif; font-size: clamp(48px, 11vw, 96px); line-height: 0.9; letter-spacing: -0.01em; }
-.c-agg .cell s { text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; line-height: 1.2; margin-top: 6px; text-transform: uppercase; }
-
-/* ============================================================
-   CLOSING
-   ============================================================ */
-.c-close { background: linear-gradient(160deg, #6A1B9A 0%, #FF1493 100%); color: var(--paper); padding: clamp(24px, 5vw, 56px); display: flex; flex-direction: column; }
-.c-close .top { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.22em; font-size: 11px; text-transform: uppercase; opacity: 0.9; }
-.c-close .stack { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
-.c-close .stack .line { font-family: 'Anton', sans-serif; font-size: clamp(78px, 18vw, 200px); line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; opacity: 0; transform: translateY(40px); transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
-.card.in .c-close .stack .line { opacity: 1; transform: none; }
-.card.in .c-close .stack .l1 { transition-delay: 400ms; }
-.card.in .c-close .stack .l2 { transition-delay: 1000ms; }
-.card.in .c-close .stack .l3 { transition-delay: 1600ms; }
-.c-close .sub { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(13px, 1.8vw, 17px); max-width: 720px; opacity: 0; transition: opacity 600ms ease; }
-.card.in .c-close .sub { opacity: 1; transition-delay: 2400ms; }
-
-/* === Body utility text on dark bg === */
-.text-paper { color: var(--paper); }
-
-/* === Mobile adjustments === */
-@media (max-width: 540px) {
-  .scoreboard .hdr, .scoreboard .row { grid-template-columns: 48px 1fr 36px 36px 36px 70px; gap: 4px; }
-  .scoreboard .hdr .h-wdl { display: none; }
-  .c-mgr .watermark { font-size: 110vw; right: -20vw; }
-  .c-mgr .srow { grid-template-columns: 90px 1fr auto; }
-  .c-trade .swap { grid-template-columns: 1fr 36px 1fr; gap: 8px; }
-  .cf-row { grid-template-columns: 26px 1fr 60px 50px 36px; gap: 6px; }
-  .c-agg .grid { grid-template-columns: 1fr; }
-  .c-agg .cell b { font-size: clamp(40px, 14vw, 80px); }
-  .c-handsoff .ho-row { gap: 12px; }
-  .c-handsoff .ho-lbl { max-width: 110px; font-size: 11px; }
-}
-
-/* Crown svg colours */
-svg.crown path { fill: var(--ink); }
+/* utility */
+.flex-col{display:flex;flex-direction:column}
+.gap-sm{gap:8px}.gap-md{gap:14px}.gap-lg{gap:24px}
+.mt-sm{margin-top:6px}.mt-md{margin-top:14px}.mt-lg{margin-top:28px}
+.center{text-align:center}
+.spacer{flex:1}
+.pill{display:inline-block;padding:4px 10px;border:1px solid currentColor;border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.2vw,14px);letter-spacing:.05em;text-transform:uppercase}
+.acc-pink{color:var(--pink)}.acc-yellow{color:var(--yellow)}.acc-cyan{color:var(--cyan)}.acc-purple{color:var(--purple)}
+.bigfact{font-family:'Anton',sans-serif;font-size:clamp(60px,12vw,180px);line-height:.85;letter-spacing:.01em}
 </style>
 </head>
 <body>
-<div id="loading">
-  <div class="lt">CRAIG / McDOWELL / HOPKINS</div>
-  <div class="ls">Counting the trophies</div>
-  <div class="lb"><i></i></div>
-</div>
-<div id="nav"></div>
-<div id="scroller"></div>
-
+<div id="loader"><div class="l1">CRAIG CUP</div><div class="l2">Loading the receipts…</div></div>
+<div class="deck" id="deck"></div>
 <script>
-// ============================================================
-// CONSTANTS
-// ============================================================
-const MAX_GW = 37;
-const MANAGERS = [
-  { le: 73835, eid: 76226, first: 'Geraint',     last: 'Hopkins',  team: '🏴󠁧󠁢󠁷󠁬󠁳󠁿',                color: '#FFEB3B', short: 'GH' },
-  { le: 73788, eid: 76178, first: 'Mark',        last: 'Craig',    team: 'Carrying Timber',     color: '#00BCD4', short: 'MC' },
-  { le: 73827, eid: 76218, first: 'Steven',      last: 'McDowell', team: '✨',                  color: '#FF1493', short: 'SM' },
-  { le: 73858, eid: 76250, first: 'christopher', last: 'craig',    team: 'The Masterplan',      color: '#C6FF00', short: 'CC' },
-  { le: 73847, eid: 76238, first: 'Michael',     last: 'Craig',    team: 'Jota win again *20',  color: '#FF6F00', short: 'MI' },
-  { le: 73822, eid: 76213, first: 'Peter',       last: 'Craig',    team: 'MaxPoints',           color: '#6A1B9A', short: 'PC' },
-];
-const MGR_BY_LE  = Object.fromEntries(MANAGERS.map(m => [m.le, m]));
-const MGR_BY_EID = Object.fromEntries(MANAGERS.map(m => [m.eid, m]));
-
-// Premier League events researched from the 2025-26 season (for the timeline card)
-const PL_EVENTS = [
-  { gw: 4,  date: 'Sep 8',  text: 'Nuno sacked at Forest' },
-  { gw: 6,  date: 'Sep 27', text: 'Potter sacked at West Ham' },
-  { gw: 8,  date: 'Oct 18', text: 'Postecoglou out at Forest' },
-  { gw: 10, date: 'Nov 2',  text: 'Pereira out at Wolves' },
-  { gw: 20, date: 'Jan 5',  text: 'Amorim sacked at Utd' },
-  { gw: 26, date: 'Feb 11', text: 'Frank sacked at Spurs' },
-  { gw: 33, date: 'Apr 22', text: 'Rosenior out at Chelsea' },
-];
-
-// ============================================================
-// LOAD
-// ============================================================
-async function loadAll() {
-  const j = (p) => fetch(p).then(r => r.json());
-  const [league, bs, draft, trans, trades, estatus, game] = await Promise.all([
-    j('./data/league_details.json'),
-    j('./data/bootstrap_static.json'),
-    j('./data/draft_choices.json'),
-    j('./data/transactions.json'),
-    j('./data/trades.json'),
-    j('./data/element_status.json'),
-    j('./data/game.json'),
-  ]);
-  const owned = new Set();
-  draft.choices.forEach(c => owned.add(c.element));
-  trans.transactions.forEach(t => { owned.add(t.element_in); owned.add(t.element_out); });
-  trades.trades.forEach(t => t.tradeitem_set.forEach(ti => { owned.add(ti.element_in); owned.add(ti.element_out); }));
-
-  const picks = {};
-  await Promise.all(MANAGERS.flatMap(m =>
-    Array.from({length: MAX_GW}, (_, i) => i + 1).map(gw =>
-      j(`./data/picks/${m.eid}_gw${gw}.json`).then(d => {
-        picks[`${m.eid}_${gw}`] = d;
-        d.picks.forEach(p => owned.add(p.element));
-      }).catch(() => {})
-    )
-  ));
-  const phist = {};
-  await Promise.all([...owned].map(pid =>
-    j(`./data/player_history/${pid}.json`).then(d => { phist[pid] = d; }).catch(() => {})
-  ));
-  return { league, bs, draft, trans, trades, estatus, game, picks, phist };
-}
-
-// ============================================================
-// STATE
-// ============================================================
-function compute(d) {
-  const players = {}, teams = {}, ptypes = {};
-  d.bs.elements.forEach(e => players[e.id] = e);
-  d.bs.teams.forEach(t => teams[t.id] = t);
-  d.bs.element_types.forEach(t => ptypes[t.id] = t);
-
-  const pname = pid => players[pid] ? players[pid].web_name : `#${pid}`;
-  const ppos  = pid => players[pid] ? ptypes[players[pid].element_type].singular_name_short : '';
-  const pteam = pid => players[pid] ? teams[players[pid].team].short_name : '';
-
-  const pidByName = (n, requireTeam) => {
-    for (const id in players) {
-      if (players[id].web_name === n && (!requireTeam || teams[players[id].team].short_name === requireTeam)) return +id;
-    }
-    return null;
-  };
-
-  // per-gw points
-  const pts = {}, mins = {};
-  for (const pid in d.phist) {
-    pts[pid] = {}; mins[pid] = {};
-    d.phist[pid].history.forEach(h => {
-      pts[pid][h.event] = (pts[pid][h.event] || 0) + h.total_points;
-      mins[pid][h.event] = (mins[pid][h.event] || 0) + h.minutes;
-    });
-  }
-  const getPts = (pid, gw) => pts[pid]?.[gw] || 0;
-  const getMins = (pid, gw) => mins[pid]?.[gw] || 0;
-
-  // gw scores
-  const gwPts = {};
-  for (let g = 1; g <= MAX_GW; g++) gwPts[g] = {};
-  d.league.matches.forEach(m => {
-    if (!m.finished) return;
-    gwPts[m.event][m.league_entry_1] = m.league_entry_1_points;
-    gwPts[m.event][m.league_entry_2] = m.league_entry_2_points;
-  });
-
-  // ownership per gw (from picks files = state at start of GW)
-  const ownByGw = {};
-  for (const m of MANAGERS) {
-    for (let g = 1; g <= MAX_GW; g++) {
-      const pk = d.picks[`${m.eid}_${g}`];
-      if (!pk) continue;
-      pk.picks.forEach(p => {
-        ownByGw[p.element] = ownByGw[p.element] || {};
-        ownByGw[p.element][g] = m.le;
-      });
-    }
-  }
-  const tenureWindow = (pid, le, fromGw = 1) => {
-    const own = ownByGw[pid] || {};
-    const arr = [];
-    for (let g = fromGw; g <= MAX_GW; g++) if (own[g] === le) arr.push(g);
-    return arr;
-  };
-  const tenurePts = (pid, le, fromGw = 1) =>
-    tenureWindow(pid, le, fromGw).reduce((s, g) => s + getPts(pid, g), 0);
-
-  // standings
-  const standings = d.league.standings.slice().sort((a, b) => a.rank - b.rank);
-
-  // rank by GW
-  function rankAfter(gwLim) {
-    const w = {};
-    MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
-    d.league.matches.forEach(m => {
-      if (!m.finished || m.event > gwLim) return;
-      const a = m.league_entry_1, b = m.league_entry_2;
-      const ap = m.league_entry_1_points, bp = m.league_entry_2_points;
-      if (ap > bp) { w[a][0]++; w[b][2]++; }
-      else if (bp > ap) { w[b][0]++; w[a][2]++; }
-      else { w[a][1]++; w[b][1]++; }
-      w[a][3] += ap; w[a][4] += bp;
-      w[b][3] += bp; w[b][4] += ap;
-    });
-    const rows = MANAGERS.map(m => ({ le: m.le, pts: w[m.le][0] * 3 + w[m.le][1], pf: w[m.le][3] }));
-    rows.sort((x, y) => (y.pts - x.pts) || (y.pf - x.pf));
-    const out = {}; rows.forEach((r, i) => out[r.le] = i + 1); return out;
-  }
-  const posByGw = {};
-  for (let g = 1; g <= MAX_GW; g++) posByGw[g] = rankAfter(g);
-
-  // high/low GW
-  const hl = {};
-  MANAGERS.forEach(m => {
-    let hi = { gw: 1, pts: -1 }, lo = { gw: 1, pts: 999 };
-    for (let g = 1; g <= MAX_GW; g++) {
-      const p = gwPts[g][m.le];
-      if (p > hi.pts) hi = { gw: g, pts: p };
-      if (p < lo.pts) lo = { gw: g, pts: p };
-    }
-    hl[m.le] = { hi, lo };
-  });
-
-  // accepted transactions
-  const accepted = d.trans.transactions.filter(t => t.result === 'a')
-    .slice().sort((a, b) => a.event - b.event || a.added.localeCompare(b.added));
-
-  // transfer eval
-  const transferEval = accepted.map(t => {
-    const le = MGR_BY_EID[t.entry].le;
-    const inP = t.element_in, outP = t.element_out, gw = t.event;
-    const win = tenureWindow(inP, le, gw);
-    const inPts = win.reduce((s, g) => s + getPts(inP, g), 0);
-    const outPts = win.reduce((s, g) => s + getPts(outP, g), 0);
-    return { le, gw, inP, outP, inPts, outPts, delta: inPts - outPts, winLen: win.length };
-  });
-
-  const bwTr = {};
-  MANAGERS.forEach(m => {
-    const mine = transferEval.filter(t => t.le === m.le && t.winLen >= 1);
-    if (!mine.length) { bwTr[m.le] = { best: null, worst: null }; return; }
-    bwTr[m.le] = {
-      best: mine.reduce((a, b) => a.delta > b.delta ? a : b),
-      worst: mine.reduce((a, b) => a.delta < b.delta ? a : b),
-    };
-  });
-
-  // transaction counts
-  const transCount = {};
-  MANAGERS.forEach(m => transCount[m.le] = 0);
-  accepted.forEach(t => transCount[MGR_BY_EID[t.entry].le]++);
-
-  // dormant
-  const dormant = {};
-  MANAGERS.forEach(m => {
-    const evs = accepted.filter(t => MGR_BY_EID[t.entry].le === m.le).map(t => t.event).sort((a, b) => a - b);
-    const padded = [0, ...evs, MAX_GW + 1];
-    let longest = { len: 0, from: 1, to: 1 };
-    for (let i = 0; i < padded.length - 1; i++) {
-      const len = padded[i + 1] - padded[i] - 1;
-      if (len > longest.len) longest = { len, from: padded[i] + 1, to: padded[i + 1] - 1 };
-    }
-    dormant[m.le] = { longest, total: evs.length, lastEvent: evs.length ? evs[evs.length - 1] : 0, allEvents: evs };
-  });
-
-  // nemesis
-  const lossesTo = {}, lossGws = {};
-  MANAGERS.forEach(m => { lossesTo[m.le] = {}; lossGws[m.le] = {}; MANAGERS.forEach(n => { if (n.le !== m.le) { lossesTo[m.le][n.le] = 0; lossGws[m.le][n.le] = []; } }); });
-  d.league.matches.forEach(m => {
-    if (!m.finished) return;
-    const a = m.league_entry_1, b = m.league_entry_2, ap = m.league_entry_1_points, bp = m.league_entry_2_points;
-    if (ap > bp) { lossesTo[b][a]++; lossGws[b][a].push(m.event); }
-    else if (bp > ap) { lossesTo[a][b]++; lossGws[a][b].push(m.event); }
-  });
-  const nemesis = {};
-  MANAGERS.forEach(m => {
-    let max = -1, who = null;
-    for (const ole in lossesTo[m.le]) if (lossesTo[m.le][ole] > max) { max = lossesTo[m.le][ole]; who = +ole; }
-    nemesis[m.le] = { le: who, count: max, gws: lossGws[m.le][who] };
-  });
-
-  // optimal XI
-  function optimalXi(squad, gw) {
-    const by = { GKP: [], DEF: [], MID: [], FWD: [] };
-    squad.forEach(pid => {
-      const pos = ppos(pid); if (!by[pos]) return; by[pos].push(getPts(pid, gw));
-    });
-    for (const k in by) by[k].sort((a, b) => b - a);
-    if (!by.GKP.length) return 0;
-    const gk = by.GKP[0]; let best = 0;
-    for (const nd of [3, 4, 5]) for (const nf of [1, 2, 3]) {
-      const nm = 10 - nd - nf; if (nm < 3 || nm > 5) continue;
-      if (by.DEF.length < nd || by.MID.length < nm || by.FWD.length < nf) continue;
-      let t = gk;
-      for (let i = 0; i < nd; i++) t += by.DEF[i];
-      for (let i = 0; i < nm; i++) t += by.MID[i];
-      for (let i = 0; i < nf; i++) t += by.FWD[i];
-      if (t > best) best = t;
-    }
-    return best;
-  }
-
-  // counterfactual: everyone plays Pete
-  const PETE = 73822;
-  function cfPete() {
-    const w = {}; MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
-    for (let g = 1; g <= MAX_GW; g++) {
-      const pete = gwPts[g][PETE];
-      const others = MANAGERS.filter(m => m.le !== PETE).map(m => gwPts[g][m.le]);
-      const avg = others.reduce((a, b) => a + b, 0) / others.length;
-      MANAGERS.forEach(m => {
-        const my = gwPts[g][m.le], opp = m.le === PETE ? avg : pete;
-        w[m.le][3] += my; w[m.le][4] += opp;
-        if (my > opp) w[m.le][0]++; else if (my < opp) w[m.le][2]++; else w[m.le][1]++;
-      });
-    }
-    return w;
-  }
-  function cfOptimal() {
-    const optGw = {};
-    for (let g = 1; g <= MAX_GW; g++) {
-      optGw[g] = {};
-      MANAGERS.forEach(m => {
-        const pk = d.picks[`${m.eid}_${g}`];
-        optGw[g][m.le] = pk ? optimalXi(pk.picks.map(p => p.element), g) : 0;
-      });
-    }
-    const w = {}; MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
-    d.league.matches.forEach(m => {
-      if (!m.finished) return;
-      const a = m.league_entry_1, b = m.league_entry_2;
-      const ap = optGw[m.event][a], bp = optGw[m.event][b];
-      w[a][3] += ap; w[a][4] += bp; w[b][3] += bp; w[b][4] += ap;
-      if (ap > bp) { w[a][0]++; w[b][2]++; }
-      else if (bp > ap) { w[b][0]++; w[a][2]++; }
-      else { w[a][1]++; w[b][1]++; }
-    });
-    return { w, optGw };
-  }
-  function cfNoTransfer() {
-    const sq = {};
-    MANAGERS.forEach(m => { sq[m.le] = d.picks[`${m.eid}_1`].picks.map(p => p.element); });
-    const ng = {};
-    for (let g = 1; g <= MAX_GW; g++) {
-      ng[g] = {};
-      MANAGERS.forEach(m => { ng[g][m.le] = optimalXi(sq[m.le], g); });
-    }
-    const w = {}; MANAGERS.forEach(m => w[m.le] = [0, 0, 0, 0, 0]);
-    d.league.matches.forEach(m => {
-      if (!m.finished) return;
-      const a = m.league_entry_1, b = m.league_entry_2;
-      const ap = ng[m.event][a], bp = ng[m.event][b];
-      w[a][3] += ap; w[a][4] += bp; w[b][3] += bp; w[b][4] += ap;
-      if (ap > bp) { w[a][0]++; w[b][2]++; }
-      else if (bp > ap) { w[b][0]++; w[a][2]++; }
-      else { w[a][1]++; w[b][1]++; }
-    });
-    return w;
-  }
-
-  return {
-    d, players, teams, ptypes, pname, ppos, pteam, pidByName,
-    getPts, getMins, gwPts, ownByGw, tenureWindow, tenurePts,
-    standings, posByGw, hl, accepted, transferEval, bwTr,
-    transCount, dormant, nemesis, optimalXi, cfPete, cfOptimal, cfNoTransfer
-  };
-}
-
-// ============================================================
-// HELPERS
-// ============================================================
-function el(tag, props = {}, ...kids) {
-  const e = document.createElement(tag);
-  for (const k in props) {
-    if (k === 'class') e.className = props[k];
-    else if (k === 'html') e.innerHTML = props[k];
-    else if (k === 'style') e.setAttribute('style', props[k]);
-    else if (k.startsWith('on')) e.addEventListener(k.slice(2), props[k]);
-    else if (props[k] != null) e.setAttribute(k, props[k]);
-  }
-  const add = k => {
-    if (k == null || k === false) return;
-    if (Array.isArray(k)) { k.forEach(add); return; }
-    if (typeof k === 'string' || typeof k === 'number') e.appendChild(document.createTextNode(k));
-    else e.appendChild(k);
-  };
-  for (const k of kids) add(k);
-  return e;
-}
-
-function sortedFromWld(w) {
-  return MANAGERS.map(m => {
-    const [W, D, L, PF, PA] = w[m.le];
-    return { le: m.le, w: W, d: D, l: L, pf: PF, pa: PA, pts: W * 3 + D };
-  }).sort((a, b) => (b.pts - a.pts) || (b.pf - a.pf));
-}
-
-// ============================================================
-// CARD BUILDERS — one per card, each producing a unique hero
-// ============================================================
-function buildAll(S) {
-  const root = document.getElementById('scroller');
-  const cards = [];
-  const add = (cls, attrs, builder, isDark = false) => {
-    const c = el('section', { class: 'card', 'data-cls': cls });
-    if (isDark) c.classList.add('dark'); else c.classList.add('light');
-    const inner = el('div', { class: cls, ...attrs });
-    builder(inner);
-    c.appendChild(inner);
-    cards.push({ el: c, isDark });
-    root.appendChild(c);
-    return c;
-  };
-  const intro = (text, bg, fg = 'var(--paper)', tag = null) => {
-    add('c-intro', { style: `background: ${bg}; color: ${fg};` }, (n) => {
-      if (tag) n.appendChild(el('div', { class: 'tag anim up' }, tag));
-      n.appendChild(el('div', { class: 'text anim up' }, text));
-    }, fg === 'var(--paper)');
-  };
-
-  // -------- 1. COLD OPEN --------
-  add('c-open', {}, (n) => {
-    n.appendChild(el('div', { class: 'marker' }, 'Craig/McDowell/Hopkins Cup'));
-    n.appendChild(el('div', { class: 'stack' },
-      el('div', { class: 'line l1' }, el('span', { class: 'slash' }, '/'), 'Craig'),
-      el('div', { class: 'line l2' }, el('span', { class: 'slash' }, '/'), 'McDowell'),
-      el('div', { class: 'line l3' }, el('span', { class: 'slash' }, '/'), 'Hopkins'),
-    ));
-    n.appendChild(el('div', { class: 'sub' },
-      el('div', { class: 'right-block' },
-        el('s', {}, 'Season'),
-        el('b', {}, '2025/26')
-      ),
-      el('div', { class: 'right-block', style: 'text-align: left;' },
-        el('s', {}, 'End of season review'),
-        el('b', {}, 'Card 1 of 39')
-      )
-    ));
-  }, true);
-
-  // -------- 2. INTERSTITIAL --------
-  intro('Right. The final table.', 'var(--paper)', 'var(--ink)');
-
-  // -------- 3. FINAL TABLE --------
-  add('c-table', {}, (n) => {
-    n.appendChild(el('div', { class: 'topline' },
-      el('div', {},
-        el('div', { class: 'caption anim fade' }, 'Final standings · 37 GW'),
-        el('h2', { class: 'anim up' }, 'The Table'),
-      ),
-      el('div', { class: 'caption anim fade', style: 'text-align: right;' }, '6 managers · 114 matches · GW38 not contested')
-    ));
-    const sb = el('div', { class: 'scoreboard' });
-    sb.appendChild(el('div', { class: 'hdr' },
-      el('div', { class: 'l' }, '#'),
-      el('div', { class: 'l' }, 'Manager'),
-      el('div', { class: 'r h-wdl' }, 'W'),
-      el('div', { class: 'r h-wdl' }, 'D'),
-      el('div', { class: 'r h-wdl' }, 'L'),
-      el('div', { class: 'r' }, 'Pts')
-    ));
-    S.standings.forEach((s, i) => {
-      const m = MGR_BY_LE[s.league_entry];
-      const tr = el('div', { class: 'row' + (i === 0 ? ' champ' : '') },
-        el('div', { class: 'pos' }, String(s.rank)),
-        el('div', { class: 'mgr' },
-          el('div', { class: 'nm' }, m.first),
-          el('div', { class: 'tm' }, m.team)
-        ),
-        el('div', { class: 'wdl' }, String(s.matches_won)),
-        el('div', { class: 'wdl' }, String(s.matches_drawn)),
-        el('div', { class: 'wdl' }, String(s.matches_lost)),
-        el('div', { class: 'total' }, String(s.total))
-      );
-      sb.appendChild(tr);
-    });
-    n.appendChild(sb);
-    n.appendChild(el('div', { class: 'foot' },
-      el('div', { class: 'left' }, 'Geraint by 13'),
-      el('div', { class: 'right' }, 'Peter by, well, a lot')
-    ));
-  }, true);
-
-  // -------- 4. INTERSTITIAL --------
-  intro('How we got here.', '#0A0A0A', 'var(--paper)');
-
-  // -------- 5. RACE CHART --------
-  add('c-race', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'The Race'));
-    n.appendChild(el('h2', { class: 'anim up' }, 'League position by gameweek'));
-    const VB_W = 800, VB_H = 540;
-    const PAD = { l: 36, r: 110, t: 30, b: 40 };
-    const innerW = VB_W - PAD.l - PAD.r, innerH = VB_H - PAD.t - PAD.b;
-    const xFor = gw => PAD.l + (gw - 1) / (MAX_GW - 1) * innerW;
-    const yFor = pos => PAD.t + (pos - 1) / 5 * innerH;
-    const orderedByFinish = [...MANAGERS].sort((a, b) => {
-      const ra = S.standings.find(s => s.league_entry === a.le).rank;
-      const rb = S.standings.find(s => s.league_entry === b.le).rank;
-      return ra - rb;
-    });
-    const lines = orderedByFinish.map((m, idx) => {
-      const pts = [];
-      for (let g = 1; g <= MAX_GW; g++) pts.push(`${xFor(g)},${yFor(S.posByGw[g][m.le])}`);
-      const dPath = 'M ' + pts.join(' L ');
-      const last = S.posByGw[MAX_GW][m.le];
-      const delay = idx * 400; // champion first
-      return `
-        <path class="race-line" d="${dPath}" stroke="${m.color}" style="animation-delay: ${delay}ms;" />
-        <g class="endpoint" id="ep-${m.le}" transform="translate(${xFor(MAX_GW) + 8}, ${yFor(last) + 4})">
-          <circle cx="0" cy="-3" r="5" fill="${m.color}" />
-          <text x="10" y="1" font-family="Space Grotesk" font-weight="700" font-size="13" fill="${m.color}">${m.first}</text>
-        </g>`;
-    }).join('');
-    const svg = `<svg class="race-svg" viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet">
-      ${[1,2,3,4,5,6].map(p => `<text class="pos-label" x="${PAD.l - 6}" y="${yFor(p) + 7}" text-anchor="end">${p}</text>`).join('')}
-      ${[1, 10, 19, 28, 37].map(g => `<text class="gw-label" x="${xFor(g)}" y="${VB_H - 8}" text-anchor="middle">GW${g}</text>`).join('')}
-      <line class="annot-line" x1="${xFor(17)}" y1="${PAD.t}" x2="${xFor(17)}" y2="${PAD.t + innerH}" />
-      <text class="annot" x="${xFor(17) + 6}" y="${PAD.t + 14}">GW17 — lead locks</text>
-      ${lines}
-    </svg>`;
-    n.appendChild(el('div', { class: 'race-wrap anim fade', html: svg }));
-    n.appendChild(el('div', { class: 'race-caption anim up' }, 'Lead changed six times before GW17. Then it didn\'t.'));
-  }, true);
-
-  // -------- 6. TIMELINE --------
-  add('c-timeline', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Two seasons running side by side'));
-    n.appendChild(el('h2', { class: 'anim up' }, 'The Timeline'));
-
-    // League events: leader changes, trades, key extremes
-    const leagueEvents = [
-      { gw: 1,  text: 'Geraint takes early lead' },
-      { gw: 4,  text: 'Trade 1: Grealish for Marmoush' },
-      { gw: 9,  text: 'Trade 2: Bruno for Palmer & co.' },
-      { gw: 15, text: 'christopher\'s 93-point week' },
-      { gw: 17, text: 'Geraint takes lead permanently' },
-      { gw: 18, text: 'Trade 3: Mark gets Evanilson' },
-      { gw: 28, text: 'Peter signs off (last move)' },
-      { gw: 33, text: 'christopher 83-81 Geraint' },
-      { gw: 34, text: 'Steven\'s 16-point disaster' },
-    ];
-    const VB_W = 900, VB_H = 600;
-    const PAD_X = 36, AXIS_Y = VB_H * 0.50;
-    const xFor = gw => PAD_X + (gw - 1) / (MAX_GW - 1) * (VB_W - PAD_X * 2);
-    const items = [];
-    items.push(`<text class="track-lbl" x="${PAD_X}" y="40">League</text>`);
-    items.push(`<text class="track-lbl" x="${PAD_X}" y="${VB_H - 14}">Premier League</text>`);
-    // axis
-    items.push(`<line class="axis" x1="${PAD_X}" y1="${AXIS_Y}" x2="${VB_W - PAD_X}" y2="${AXIS_Y}" />`);
-    [1, 10, 19, 28, 37].forEach(g => {
-      items.push(`<text class="gw-mark" x="${xFor(g)}" y="${AXIS_Y + 22}" text-anchor="middle">GW${g}</text>`);
-    });
-    // Stack events without overlap: each event gets its own y row (no modulo)
-    const LEAGUE_TOP = 60, LEAGUE_GAP = 24;
-    leagueEvents.forEach((ev, idx) => {
-      const x = xFor(ev.gw);
-      const y = LEAGUE_TOP + idx * LEAGUE_GAP;
-      items.push(`<g class="ev ev-league" data-gw="${ev.gw}" data-idx="${idx}">
-        <line class="ev-line" x1="${x}" y1="${AXIS_Y - 4}" x2="${x}" y2="${y + 4}" />
-        <circle class="ev-dot" cx="${x}" cy="${y + 4}" r="5" fill="#00C853" stroke="#0A0A0A" />
-        <text class="ev-label" x="${x + 8}" y="${y + 8}">${ev.text}</text>
-      </g>`);
-    });
-    const PL_TOP = AXIS_Y + 40, PL_GAP = 28;
-    PL_EVENTS.forEach((ev, idx) => {
-      const x = xFor(ev.gw);
-      const y = PL_TOP + idx * PL_GAP;
-      items.push(`<g class="ev ev-pl" data-gw="${ev.gw}" data-idx="${idx}">
-        <line class="ev-line" x1="${x}" y1="${AXIS_Y + 4}" x2="${x}" y2="${y - 4}" />
-        <circle class="ev-dot" cx="${x}" cy="${y - 4}" r="5" fill="#6A1B9A" stroke="#0A0A0A" />
-        <text class="ev-label pl" x="${x + 8}" y="${y + 1}">${ev.text}</text>
-      </g>`);
-    });
-    const svg = `<svg class="tl-svg" viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet">${items.join('')}</svg>`;
-    n.appendChild(el('div', { class: 'tl-wrap', html: svg }));
-
-    // Pop events in after axis draws
-    setTimeout(() => {
-      const card = n.closest('.card');
-      if (!card || !card.classList.contains('in')) return;
-      const evs = n.querySelectorAll('.tl-svg .ev');
-      evs.forEach((e, i) => setTimeout(() => e.classList.add('in'), i * 110));
-    }, 2000);
-    // Also expose a small caption
-    n.appendChild(el('div', { class: 'caption anim fade', style: 'margin-top: 8px;' }, 'Six manager sackings happened during this season. Geraint made 28 moves.'));
-  });
-
-  // -------- 7. INTERSTITIAL --------
-  intro('The hands-off champion.', '#FF1493', 'var(--paper)');
-
-  // -------- 8. HANDS-OFF (Geraint title) --------
-  add('c-handsoff', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Geraint Hopkins · 🏴󠁧󠁢󠁷󠁬󠁳󠁿'));
-    const stack = el('div', { class: 'ho-stack' });
-    stack.appendChild(el('div', { class: 'ho-row anim up' },
-      el('div', { class: 'ho-num', 'data-count': String(S.transCount[73835]) }, '0'),
-      el('div', { class: 'ho-lbl' }, 'transactions all season')
-    ));
-    stack.appendChild(el('div', { class: 'ho-row anim up' },
-      el('div', { class: 'ho-num', 'data-count': String(S.standings[0].total) }, '0'),
-      el('div', { class: 'ho-lbl' }, 'league points')
-    ));
-    const margin = S.standings[0].total - S.standings[1].total;
-    stack.appendChild(el('div', { class: 'ho-row anim up' },
-      el('div', { class: 'ho-num', 'data-count': '+' + margin }, '+0'),
-      el('div', { class: 'ho-lbl' }, 'point title margin')
-    ));
-    n.appendChild(stack);
-    n.appendChild(el('div', { class: 'ho-cap anim up' }, 'Geraint barely looked at his team.'));
-  });
-
-  // -------- 9. INTERSTITIAL --------
-  intro('The trades. All three of them.', 'var(--orange)', 'var(--ink)');
-
-  // -------- 10-12. THREE TRADES --------
-  function tradeCard(opts) {
-    const { gw, mgrA, mgrB, items, verdict, stamp, bg, dark, story } = opts;
-    add('c-trade' + (dark ? ' dark' : ''), { style: `background: ${bg};` }, (n) => {
-      n.appendChild(el('div', { class: 'topline' },
-        el('div', {},
-          el('div', { class: 'caption anim fade' }, `Trade · GW${gw}`),
-          el('h2', { class: 'anim up' }, `${MGR_BY_LE[mgrA].first} ⇄ ${MGR_BY_LE[mgrB].first}`),
-        ),
-        el('div', { class: 'caption anim fade', style: 'text-align: right;' }, story)
-      ));
-      const swap = el('div', { class: 'swap' });
-      const sideA = el('div', { class: 'col-side left' },
-        el('div', { class: 'col-mgr' }, MGR_BY_LE[mgrA].first),
-        el('div', { class: 'col-tag' }, 'Received'),
-      );
-      let aTotal = 0;
-      items.forEach(it => {
-        const pts = S.tenurePts(it.toA, mgrA, gw);
-        aTotal += pts;
-        sideA.appendChild(el('div', { class: 'player' },
-          el('div', {},
-            el('div', { class: 'pname' }, S.pname(it.toA)),
-            el('div', { class: 'pteam' }, `${S.ppos(it.toA)} · ${S.pteam(it.toA)}`),
-          ),
-          el('div', { class: 'ppts' }, String(pts))
-        ));
-      });
-      sideA.appendChild(el('div', { class: 'col-total' }, aTotal + ' pts while held'));
-
-      const sideB = el('div', { class: 'col-side right' },
-        el('div', { class: 'col-mgr' }, MGR_BY_LE[mgrB].first),
-        el('div', { class: 'col-tag' }, 'Received'),
-      );
-      let bTotal = 0;
-      items.forEach(it => {
-        const pts = S.tenurePts(it.toB, mgrB, gw);
-        bTotal += pts;
-        sideB.appendChild(el('div', { class: 'player' },
-          el('div', {},
-            el('div', { class: 'pname' }, S.pname(it.toB)),
-            el('div', { class: 'pteam' }, `${S.ppos(it.toB)} · ${S.pteam(it.toB)}`),
-          ),
-          el('div', { class: 'ppts' }, String(pts))
-        ));
-      });
-      sideB.appendChild(el('div', { class: 'col-total' }, bTotal + ' pts while held'));
-
-      const arrowSvg = `<svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 26 L55 26 M45 16 L55 26 L45 36 M55 54 L5 54 M15 44 L5 54 L15 64" stroke="${dark ? '#F4F1EA' : '#0A0A0A'}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>`;
-      swap.appendChild(sideA);
-      swap.appendChild(el('div', { class: 'arrow', html: arrowSvg }));
-      swap.appendChild(sideB);
-      n.appendChild(swap);
-
-      n.appendChild(el('div', { class: 'verdict' },
-        el('div', { class: 'verdict-line' }, verdict),
-        el('div', { class: 'stamp' }, stamp),
-      ));
-    }, dark);
-  }
-
-  tradeCard({
-    gw: 4, mgrA: 73858, mgrB: 73822,
-    items: [{ toA: 419, toB: 413 }],  // christopher gets Grealish (419), Peter gets Marmoush (413)
-    verdict: 'christopher took Grealish off Peter for a Marmoush that never landed.',
-    stamp: 'Steal', bg: 'var(--lime)', dark: false,
-    story: 'Grealish out · Marmoush in',
-  });
-  tradeCard({
-    gw: 9, mgrA: 73858, mgrB: 73847,
-    items: [
-      { toA: 267, toB: 266 },   // Sarr / Eze
-      { toA: 449, toB: 235 },   // B.Fernandes / Palmer
-      { toA: 97,  toB: 666 },   // Evanilson / Ekitiké
-    ],
-    verdict: 'Michael shipped Bruno and still came out 30 points ahead.',
-    stamp: 'Steal · Michael', bg: 'var(--orange)', dark: false,
-    story: '6 players · GW9',
-  });
-  tradeCard({
-    gw: 18, mgrA: 73847, mgrB: 73788,
-    items: [{ toA: 499, toB: 97 }], // Michael gets Isak, Mark gets Evanilson
-    verdict: 'Mark sold Isak at the peak. Isak scored 12 the rest of the way.',
-    stamp: 'Steal · Mark', bg: 'var(--cyan)', dark: false,
-    story: 'Isak out · Evanilson in',
-  });
-
-  // -------- 13. INTERSTITIAL --------
-  intro('Meet the managers.', 'var(--lime)', 'var(--ink)');
-
-  // -------- 14-19. MANAGER CARDS (reverse order) --------
-  const verdictByMgr = {
-    73822: 'Built a team in August, switched off in February, and still finished fewer points behind than anyone expected.',
-    73847: 'Made a hundred transactions, fielded five different left-backs in November, and finished fifth.',
-    73858: 'Scored more points-for than anyone except Geraint. Finished fourth. The fixture computer was not his friend.',
-    73827: 'Best XI of the season on his good days, kept losing to bench points on his bad ones.',
-    73788: 'Quiet, persistent, won on the trade desk twice. Almost caught Geraint, never quite did.',
-    73835: 'Drafted a title-winning squad, then ignored it for nine months. Pure stubborn brilliance.',
-  };
-  const mgrBg = {
-    73822: { bg: 'var(--purple)', dark: true,  accent: 'var(--yellow)' },
-    73847: { bg: 'var(--orange)', dark: false, accent: 'var(--ink)' },
-    73858: { bg: 'var(--lime)',   dark: false, accent: 'var(--ink)' },
-    73827: { bg: 'var(--pink)',   dark: true,  accent: 'var(--yellow)' },
-    73788: { bg: 'var(--cyan)',   dark: false, accent: 'var(--ink)' },
-    73835: { bg: 'var(--yellow)', dark: false, accent: 'var(--ink)' },
-  };
-  const sortedRev = [...S.standings].sort((a, b) => b.rank - a.rank);
-  sortedRev.forEach(s => {
-    const m = MGR_BY_LE[s.league_entry];
-    const conf = mgrBg[m.le];
-    const bw = S.bwTr[m.le];
-    const nem = S.nemesis[m.le];
-    add('c-mgr ' + (conf.dark ? 'dark' : 'light'), { style: `background: ${conf.bg}; color: ${conf.dark ? 'var(--paper)' : 'var(--ink)'};` }, (n) => {
-      n.appendChild(el('div', { class: 'watermark' }, '#' + s.rank));
-      n.appendChild(el('div', { class: 'head' },
-        el('div', { class: 'role' }, `Manager ${s.rank} of 6`),
-        el('div', { class: 'first' }, m.first),
-        el('div', { class: 'team' }, m.team),
-        el('div', { class: 'record' }, `${s.matches_won}W · ${s.matches_drawn}D · ${s.matches_lost}L  →  ${s.total} PTS`),
-      ));
-
-      const stats = el('div', { class: 'stats' });
-      stats.appendChild(el('div', { class: 'srow' },
-        el('div', { class: 'l' }, 'Points-for'),
-        el('div', { class: 'v' }, String(s.points_for)),
-        el('div', { class: 'sub' }, `Avg ${(s.points_for / 37).toFixed(1)}/GW`)
-      ));
-      stats.appendChild(el('div', { class: 'srow' },
-        el('div', { class: 'l' }, 'High score'),
-        el('div', { class: 'v' }, String(S.hl[m.le].hi.pts)),
-        el('div', { class: 'sub' }, `GW${S.hl[m.le].hi.gw}`)
-      ));
-      stats.appendChild(el('div', { class: 'srow' },
-        el('div', { class: 'l' }, 'Low score'),
-        el('div', { class: 'v' }, String(S.hl[m.le].lo.pts)),
-        el('div', { class: 'sub' }, `GW${S.hl[m.le].lo.gw}`)
-      ));
-      if (bw.best) {
-        stats.appendChild(el('div', { class: 'srow' },
-          el('div', { class: 'l' }, 'Best move'),
-          el('div', { class: 'v' }, S.pname(bw.best.inP)),
-          el('div', { class: 'sub' }, `+${bw.best.delta} vs ${S.pname(bw.best.outP)}, GW${bw.best.gw}`)
-        ));
-      }
-      if (bw.worst) {
-        stats.appendChild(el('div', { class: 'srow' },
-          el('div', { class: 'l' }, 'Worst move'),
-          el('div', { class: 'v' }, S.pname(bw.worst.inP)),
-          el('div', { class: 'sub' }, `${bw.worst.delta} vs ${S.pname(bw.worst.outP)}, GW${bw.worst.gw}`)
-        ));
-      }
-      stats.appendChild(el('div', { class: 'srow' },
-        el('div', { class: 'l' }, 'Nemesis'),
-        el('div', { class: 'v' }, MGR_BY_LE[nem.le].first),
-        el('div', { class: 'sub' }, `Beat him ${nem.count}× (GW ${nem.gws.join(', ')})`)
-      ));
-      // Special christopher line
-      if (m.le === 73858) {
-        stats.appendChild(el('div', { class: 'srow' },
-          el('div', { class: 'l' }, 'Best draft'),
-          el('div', { class: 'v' }, 'Jamie Gittens'),
-          el('div', { class: 'sub', style: 'font-style: italic;' }, '(redraft)')
-        ));
-      }
-      n.appendChild(stats);
-      n.appendChild(el('div', { class: 'verdict' }, verdictByMgr[m.le]));
-    }, conf.dark);
-  });
-
-  // -------- 20. INTERSTITIAL --------
-  intro('The awards.', 'var(--ink)', 'var(--paper)');
-
-  // -------- 21. CHAMPION (victory lap) --------
-  add('c-champ', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Champion · Craig/McDowell/Hopkins Cup 2025/26'));
-    const crown = `<svg class="crown anim scale" viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 50 L0 14 L20 30 L36 6 L50 30 L64 6 L80 30 L100 14 L92 50 Z M6 56 L94 56 L94 62 L6 62 Z" stroke="#0A0A0A" stroke-width="3" stroke-linejoin="round" />
-    </svg>`;
-    const wrap = el('div', { class: 'crown-wrap' });
-    wrap.innerHTML = crown;
-    wrap.appendChild(el('div', { class: 'gname anim up' }, 'Geraint'));
-    wrap.appendChild(el('div', { class: 'gflag anim up' }, '🏴󠁧󠁢󠁷󠁬󠁳󠁿'));
-    wrap.appendChild(el('div', { class: 'stat-row' },
-      el('div', { class: 'pts anim up' }, String(S.standings[0].total),
-        el('small', {}, 'League points')
-      ),
-      el('div', { class: 'pts anim up' }, '+13',
-        el('small', {}, 'Title margin')
-      ),
-      el('div', { class: 'pts anim up' }, '25-0-12',
-        el('small', {}, 'Record')
-      ),
-    ));
-    n.appendChild(wrap);
-  });
-
-  // -------- 22. BEST TRADE (recap as headline) --------
-  add('c-besttrade c-trade light', { style: 'background: var(--cyan);' }, (n) => {
-    n.appendChild(el('div', { class: 'topline' },
-      el('div', {},
-        el('div', { class: 'caption anim fade' }, 'Headline Award · GW18'),
-        el('h2', { class: 'anim up' }, 'Best Trade'),
-      ),
-      el('div', { class: 'caption anim fade', style: 'text-align: right;' }, 'Isak out · Evanilson in')
-    ));
-    const swap = el('div', { class: 'swap' });
-    const isakPts = S.tenurePts(499, 73847, 18);
-    const evaPts = S.tenurePts(97, 73788, 18);
-    const sideA = el('div', { class: 'col-side left' },
-      el('div', { class: 'col-mgr' }, 'Michael'),
-      el('div', { class: 'col-tag' }, 'Received'),
-      el('div', { class: 'player' },
-        el('div', {},
-          el('div', { class: 'pname' }, 'Isak'),
-          el('div', { class: 'pteam' }, 'FWD · NEW'),
-        ),
-        el('div', { class: 'ppts' }, String(isakPts))
-      ),
-      el('div', { class: 'col-total' }, isakPts + ' pts'),
-    );
-    const sideB = el('div', { class: 'col-side right' },
-      el('div', { class: 'col-mgr' }, 'Mark'),
-      el('div', { class: 'col-tag' }, 'Received'),
-      el('div', { class: 'player' },
-        el('div', {},
-          el('div', { class: 'pname' }, 'Evanilson'),
-          el('div', { class: 'pteam' }, 'FWD · BOU'),
-        ),
-        el('div', { class: 'ppts' }, String(evaPts))
-      ),
-      el('div', { class: 'col-total' }, evaPts + ' pts'),
-    );
-    const arrowSvg = `<svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 26 L55 26 M45 16 L55 26 L45 36 M55 54 L5 54 M15 44 L5 54 L15 64" stroke="#0A0A0A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>`;
-    swap.appendChild(sideA);
-    swap.appendChild(el('div', { class: 'arrow', html: arrowSvg }));
-    swap.appendChild(sideB);
-    n.appendChild(swap);
-    n.appendChild(el('div', { class: 'verdict' },
-      el('div', { class: 'verdict-line' }, 'Mark won by 47 points and Isak\'s form fell off a cliff.'),
-      el('div', { class: 'stamp' }, 'Winner: Mark'),
-    ));
-  });
-
-  // -------- 23. BEST DRAFT PICK (christopher / Guéhi R14 P82) --------
-  add('c-draft', {}, (n) => {
-    const guehi = S.pidByName('Guéhi', 'MCI') || 260;
-    let gPts = 0;
-    for (let g = 1; g <= MAX_GW; g++) {
-      if (S.ownByGw[guehi]?.[g] === 73858) gPts += S.getPts(guehi, g);
-    }
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Headline Award'));
-    n.appendChild(el('div', { class: 'pickno anim up' },
-      el('small', {}, 'Overall pick'),
-      '#82'
-    ));
-    n.appendChild(el('div', { class: 'pname anim up' }, 'Guéhi'));
-    n.appendChild(el('div', { class: 'meta' },
-      el('div', { class: 'anim up' }, el('b', {}, String(gPts || 179)), el('s', {}, 'Points scored')),
-      el('div', { class: 'anim up' }, el('b', {}, 'R14'), el('s', {}, 'Round · 4th pick')),
-      el('div', { class: 'anim up' }, el('b', {}, '37/37'), el('s', {}, 'Gameweeks held')),
-    ));
-    n.appendChild(el('div', { class: 'who anim up' },
-      el('s', {}, 'Picked by'),
-      ' ',
-      el('b', {}, 'christopher'),
-      ' · The Masterplan'
-    ));
-  });
-
-  // -------- 24. MOST INFLUENTIAL TRANSFER (Gittens — theatrical) --------
-  add('c-gittens', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption tag' }, 'Headline Award'));
-    n.appendChild(el('div', { class: 'head' },
-      el('span', { class: 'w' }, 'Most'),
-      ' ',
-      el('span', { class: 'w' }, 'Influential'),
-      ' ',
-      el('span', { class: 'w' }, 'Transfer'),
-    ));
-    n.appendChild(el('div', { class: 'reveal' },
-      el('div', { class: 'who' }, 'christopher · The Masterplan'),
-      el('div', { class: 'gittens', style: 'position: relative;' }, 'Gittens',
-        el('div', { class: 'stamp' }, 'Redraft')
-      ),
-      el('div', { class: 'redraft' }, '(redraft)'),
-    ));
-  }, true);
-
-  // -------- 25. ASLEEP AT THE WHEEL (Peter — calendar) --------
-  add('c-asleep', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Headline Award'));
-    n.appendChild(el('div', { class: 'name anim up' }, 'Asleep at the Wheel'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Peter',
-      el('s', {}, 'MaxPoints · finished 6th')
-    ));
-    const cal = el('div', { class: 'cal' });
-    const strip = el('div', { class: 'strip' });
-    const events = new Set(S.dormant[73822].allEvents);
-    const lastEvent = S.dormant[73822].lastEvent;
-    for (let g = 1; g <= MAX_GW; g++) {
-      let cls = 'gw';
-      if (g > lastEvent) cls += ' dormant';
-      else if (events.has(g)) cls += ' last-tx';
-      const cell = el('div', { class: cls, title: `GW${g}` });
-      cell.style.transitionDelay = (200 + g * 40) + 'ms';
-      strip.appendChild(cell);
-    }
-    cal.appendChild(strip);
-    cal.appendChild(el('div', { class: 'x-axis' },
-      el('span', {}, 'GW1'),
-      el('span', {}, 'GW10'),
-      el('span', {}, 'GW20'),
-      el('span', {}, 'GW28'),
-      el('span', {}, 'GW37')
-    ));
-    cal.appendChild(el('div', { class: 'legend anim fade' },
-      el('span', {}, el('i', { style: 'background: var(--yellow);' }), 'Made a move'),
-      el('span', {}, el('i', { style: 'background: var(--orange);' }), 'Dormant'),
-    ));
-    n.appendChild(cal);
-    n.appendChild(el('div', { class: 'verdict anim up' },
-      'Peter\'s last transaction was GW28. He didn\'t touch his team for the final nine gameweeks.'
-    ));
-  }, true);
-
-  // -------- 26. INTERSTITIAL --------
-  intro('And now the bits nobody asked for.', 'var(--cyan)', 'var(--ink)');
-
-  // -------- 27. GOALKEEPING HOWLER (Steven) --------
-  add('c-howler', {}, (n) => {
-    // Count wrong-keeper picks
-    let howl = 0;
-    for (let g = 1; g <= MAX_GW; g++) {
-      const pk = S.d.picks[`76218_${g}`]; if (!pk) continue;
-      const gks = pk.picks.filter(p => S.ppos(p.element) === 'GKP');
-      if (gks.length !== 2) continue;
-      const start = gks.find(p => p.position === 1);
-      const bench = gks.find(p => p.position !== 1);
-      if (!start || !bench) continue;
-      if (S.getPts(bench.element, g) > S.getPts(start.element, g)) howl++;
-    }
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'Goalkeeping Howler'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Steven · ✨'));
-    n.appendChild(el('div', { class: 'body' },
-      el('div', { class: 'keepers' },
-        el('div', { class: 'gk right anim left' },
-          el('div', { class: 'gk-ico' }, '✓'),
-          el('div', { class: 'gk-label' }, 'Bench keeper', el('small', {}, 'Outscored the starter'))
-        ),
-        el('div', { class: 'gk wrong anim left' },
-          el('div', { class: 'gk-ico' }, '✗'),
-          el('div', { class: 'gk-label' }, 'Starting keeper', el('small', {}, 'Selected anyway'))
-        ),
-      ),
-      el('div', { class: 'count anim scale', 'data-count': String(howl) }, '0',
-        el('span', {}, 'GWs picking wrong')
-      )
-    ));
-    n.appendChild(el('div', { class: 'punch anim up' }, 'There were only two options.'));
-  }, true);
-
-  // -------- 28. PHANTOM XI (Steven GW34) --------
-  add('c-phantom', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award · GW34'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'Phantom XI'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Steven · ✨'));
-    // Build a pitch with 11 players, 5 ghosts (zeros in GW34)
-    const pk = S.d.picks[`76218_34`];
-    const starters = pk.picks.filter(p => p.position <= 11);
-    // Define formation slots (rough positions on pitch by player position)
-    const slots = {
-      GKP: [{ x: 50, y: 92 }],
-      DEF: [{ x: 18, y: 70 }, { x: 38, y: 70 }, { x: 62, y: 70 }, { x: 82, y: 70 }],
-      MID: [{ x: 18, y: 45 }, { x: 38, y: 45 }, { x: 62, y: 45 }, { x: 82, y: 45 }],
-      FWD: [{ x: 32, y: 18 }, { x: 50, y: 18 }, { x: 68, y: 18 }],
-    };
-    const byPos = { GKP: [], DEF: [], MID: [], FWD: [] };
-    starters.forEach(p => { byPos[S.ppos(p.element)].push(p.element); });
-    const pitch = el('div', { class: 'pitch' });
-    function placeRow(posKey, list) {
-      const positions = slots[posKey].slice(0, list.length);
-      list.forEach((pid, i) => {
-        const pos = positions[i] || positions[positions.length - 1];
-        const isGhost = S.getMins(pid, 34) === 0;
-        const dot = el('div', { class: 'player' + (isGhost ? ' ghost' : ''), style: `left: ${pos.x}%; top: ${pos.y}%; transition-delay: ${300 + i * 100}ms;` },
-          S.pname(pid).slice(0, 6)
-        );
-        pitch.appendChild(dot);
-      });
-    }
-    placeRow('GKP', byPos.GKP);
-    placeRow('DEF', byPos.DEF);
-    placeRow('MID', byPos.MID);
-    placeRow('FWD', byPos.FWD);
-    n.appendChild(el('div', { class: 'pitch-wrap anim fade' }, pitch));
-    n.appendChild(el('div', { class: 'stat-row' },
-      el('div', { class: 'anim up' }, el('b', {}, '5'), el('s', {}, 'Starters · 0 mins')),
-      el('div', { class: 'anim up' }, el('b', {}, '16'), el('s', {}, 'Final score')),
-      el('div', { class: 'anim up' }, el('b', {}, '−26'), el('s', {}, 'Lost to Mark')),
-    ));
-    n.appendChild(el('div', { class: 'punch anim up' }, 'Almost half the XI never left the bus.'));
-  });
-
-  // -------- 29. THREE STRIKES (Mark / Amad) --------
-  add('c-strikes', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'Three Strikes'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Mark · Carrying Timber'));
-    const triple = el('div', { class: 'triple' });
-    [['GW24', 'SIGNED'], ['GW32', 'RE-SIGNED'], ['GW34', 'RE-RE-SIGNED']].forEach(([gw, label]) => {
-      triple.appendChild(el('div', { class: 'strike-row' },
-        el('span', { class: 'x' }, '✗'),
-        el('span', { class: 'nm' }, 'Amad'),
-        el('span', { class: 'gw' }, `${gw} · ${label}`)
-      ));
-    });
-    n.appendChild(triple);
-    n.appendChild(el('div', { class: 'punch anim up' }, 'Could not quit. Refused to commit.'));
-  });
-
-  // -------- 30. WELCOME AND GOODBYE (Michael / Mamardashvili) --------
-  add('c-welcome', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'Welcome, and Goodbye'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Michael · Jota win again *20'));
-    const reel = el('div', { class: 'reel' });
-    reel.appendChild(el('div', { class: 'arrived anim left' },
-      el('span', { class: 'tg' }, 'Arrived'),
-      el('span', { class: 'gwn' }, 'GW7')
-    ));
-    reel.appendChild(el('div', { class: 'pname anim up' }, 'Mamardashvili'));
-    reel.appendChild(el('div', { class: 'left anim left' },
-      el('span', { class: 'tg bad' }, 'Dropped'),
-      el('span', { class: 'gwn' }, 'GW10')
-    ));
-    reel.appendChild(el('div', { class: 'joiner anim fade' }, 'Never started him. Not once.'));
-    n.appendChild(reel);
-    n.appendChild(el('div', { class: 'punch anim up' }, 'Three gameweeks. Zero starts. A swift, unsentimental goodbye.'));
-  });
-
-  // -------- 31. RIGHT PLACE RIGHT TIME (Michael / Schade) --------
-  add('c-rprt', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'Right Place, Right Time'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Michael · Jota win again *20'));
-    n.appendChild(el('div', { class: 'player-name anim up' }, 'Schade'));
-    // Build mini chart showing Schade points across GWs around pickup
-    const schade = S.pidByName('Schade');
-    const PICKUP_GW = 17;
-    const RANGE_START = 12, RANGE_END = 23;
-    const pts = []; for (let g = RANGE_START; g <= RANGE_END; g++) pts.push(S.getPts(schade, g));
-    const maxP = Math.max(...pts, 1);
-    const VB_W = 800, VB_H = 280;
-    const PAD = { l: 36, r: 30, t: 30, b: 36 };
-    const innerW = VB_W - PAD.l - PAD.r, innerH = VB_H - PAD.t - PAD.b;
-    const xFor = i => PAD.l + i / (pts.length - 1) * innerW;
-    const yFor = v => PAD.t + (1 - v / maxP) * innerH;
-    const path = 'M ' + pts.map((v, i) => `${xFor(i)},${yFor(v)}`).join(' L ');
-    const pickIdx = PICKUP_GW - RANGE_START;
-    const bars = pts.map((v, i) => {
-      const isAfter = (i + RANGE_START) >= PICKUP_GW;
-      const fill = isAfter ? '#FF1493' : '#0A0A0A';
-      return `<circle cx="${xFor(i)}" cy="${yFor(v)}" r="6" fill="${fill}" />`;
-    }).join('');
-    const labels = [RANGE_START, PICKUP_GW, RANGE_END].map(g => {
-      const i = g - RANGE_START;
-      return `<text class="gw-label" x="${xFor(i)}" y="${VB_H - 10}" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="13" fill="#0A0A0A">GW${g}</text>`;
-    }).join('');
-    const arrow = `
-      <line x1="${xFor(pickIdx)}" y1="${PAD.t - 6}" x2="${xFor(pickIdx)}" y2="${yFor(pts[pickIdx]) - 12}" stroke="#0A0A0A" stroke-width="2" />
-      <polygon points="${xFor(pickIdx)},${yFor(pts[pickIdx]) - 6} ${xFor(pickIdx) - 6},${yFor(pts[pickIdx]) - 16} ${xFor(pickIdx) + 6},${yFor(pts[pickIdx]) - 16}" fill="#0A0A0A" />
-      <text x="${xFor(pickIdx)}" y="${PAD.t - 12}" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="12" fill="#0A0A0A">PICKED UP</text>
-    `;
-    const svg = `<svg viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-      <path d="${path}" stroke="#0A0A0A" stroke-width="3" fill="none" />
-      ${bars}
-      ${labels}
-      ${arrow}
-    </svg>`;
-    n.appendChild(el('div', { class: 'chart-wrap anim fade', html: svg }));
-    n.appendChild(el('div', { class: 'punch anim up' }, '2 points the three weeks before. 26 the three weeks after.'));
-  });
-
-  // -------- 32. LOYALIST TAX (Peter / Salah) --------
-  add('c-loyal', {}, (n) => {
-    const salId = S.pidByName('M.Salah') || 381;
-    let pts = 0;
-    for (let g = 1; g <= MAX_GW; g++) if (S.ownByGw[salId]?.[g] === 73822) pts += S.getPts(salId, g);
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Micro-Story Award'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'The Loyalist Tax'));
-    n.appendChild(el('div', { class: 'who anim up' }, 'Peter · MaxPoints'));
-    n.appendChild(el('div', { class: 'stack' },
-      el('div', { class: 'player-name anim up' }, 'Salah'),
-      el('div', { class: 'figures' },
-        el('div', { class: 'fig anim up' }, el('b', {}, '37/37'), el('s', {}, 'Gameweeks held')),
-        el('div', { class: 'fig anim up' }, el('b', {}, String(pts || 117)), el('s', {}, 'Total points scored')),
-      ),
-      el('div', { class: 'punch anim up' }, 'Held him every single week. Loyalty is its own reward.'),
-    ));
-  }, true);
-
-  // -------- 33. INTERSTITIAL --------
-  intro('But what if…', 'var(--yellow)', 'var(--ink)');
-
-  // -------- 34. CF: Everyone Plays Pete --------
-  function cfTable(opts) {
-    const { title, desc, w, takeaway, bg, dark, takeawayColor } = opts;
-    add('c-cf' + (dark ? ' dark' : ''), { style: `background: ${bg}; color: ${dark ? 'var(--paper)' : 'var(--ink)'};` }, (n) => {
-      n.appendChild(el('div', { class: 'caption anim fade' }, 'Counterfactual'));
-      n.appendChild(el('div', { class: 'head anim up' }, title));
-      n.appendChild(el('div', { class: 'desc anim up' }, desc));
-      const tbl = el('div', { class: 'cf-tbl' });
-      tbl.appendChild(el('div', { class: 'cf-row hdr' },
-        el('div', {}, '#'),
-        el('div', { class: 'l' }, 'Manager'),
-        el('div', { class: 'v', style: 'text-align: right;' }, 'W-D-L'),
-        el('div', { class: 'pts', style: 'text-align: right; font-family: Space Grotesk; font-size: 10px; font-weight: 700; letter-spacing: 0.14em;' }, 'PTS'),
-        el('div', { class: 'delta', style: 'text-align: right; font-family: Space Grotesk; font-size: 10px; font-weight: 700; letter-spacing: 0.14em;' }, 'Δ')
-      ));
-      const realPos = {}; S.standings.forEach(s => realPos[s.league_entry] = s.rank);
-      const rows = sortedFromWld(w);
-      rows.forEach((r, i) => {
-        const delta = realPos[r.le] - (i + 1);
-        const arr = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : '—';
-        const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'same';
-        tbl.appendChild(el('div', { class: 'cf-row' },
-          el('div', { class: 'pos' }, String(i + 1)),
-          el('div', { class: 'nm' }, MGR_BY_LE[r.le].first),
-          el('div', { class: 'v' }, `${r.w}-${r.d}-${r.l}`),
-          el('div', { class: 'pts' }, String(r.pts)),
-          el('div', { class: 'delta ' + cls }, arr)
-        ));
-      });
-      n.appendChild(tbl);
-      n.appendChild(el('div', { class: 'takeaway anim up', style: `color: ${takeawayColor || (dark ? 'var(--yellow)' : 'var(--ink)')};` }, takeaway));
-    }, dark);
-  }
-  cfTable({
-    title: 'Everyone Plays Pete',
-    desc: 'Every week your H2H opponent is Peter\'s actual lineup. Peter, fairly, plays the league average.',
-    w: S.cfPete(),
-    takeaway: 'christopher leaps to 2nd. Peter stays last, even against himself.',
-    bg: 'var(--purple)', dark: true, takeawayColor: 'var(--lime)'
-  });
-
-  // -------- 35. CF: Optimal XI --------
-  const { w: optW, optGw } = S.cfOptimal();
-  // Find biggest bench leaver
-  const benchDiffs = MANAGERS.map(m => {
-    let opt = 0, act = 0;
-    for (let g = 1; g <= MAX_GW; g++) { opt += optGw[g][m.le]; act += S.gwPts[g][m.le]; }
-    return { le: m.le, diff: opt - act };
-  }).sort((a, b) => b.diff - a.diff);
-  cfTable({
-    title: 'Optimal XI Every Week',
-    desc: 'If everyone fielded their best possible eleven each week. No more bench points lost.',
-    w: optW,
-    takeaway: `${MGR_BY_LE[benchDiffs[0].le].first} left ${benchDiffs[0].diff} points on the bench. The most in the league.`,
-    bg: 'var(--paper)', dark: false
-  });
-
-  // -------- 36. CF: No Transfers --------
-  cfTable({
-    title: 'No Transfers Ever',
-    desc: 'Everyone\'s GW1 draft squad plays every week. No waivers, no trades, no second chances.',
-    w: S.cfNoTransfer(),
-    takeaway: 'Mark drafts a title. Geraint drops to 5th. The waiver wire actually mattered.',
-    bg: 'var(--pink)', dark: true, takeawayColor: 'var(--yellow)'
-  });
-
-  // -------- 37. INTERSTITIAL --------
-  intro('By the numbers.', 'var(--ink)', 'var(--paper)');
-
-  // -------- 38. AGGREGATE STATS --------
-  add('c-agg', {}, (n) => {
-    n.appendChild(el('div', { class: 'caption anim fade' }, 'Season in numbers'));
-    n.appendChild(el('div', { class: 'head anim up' }, 'For the Books'));
-    const totalAccepted = S.accepted.length;
-    const totalTrades = S.d.trades.trades.length;
-    const totalWaivers = S.d.trans.transactions.filter(t => t.kind === 'w').length;
-    const totalFA = S.d.trans.transactions.filter(t => t.kind === 'f').length;
-    // most owned (across GWs)
-    const ownerSets = {};
-    for (const pid in S.ownByGw) ownerSets[pid] = new Set(Object.values(S.ownByGw[pid]));
-    let hot = { pid: null, n: 0 };
-    for (const pid in ownerSets) if (ownerSets[pid].size > hot.n) hot = { pid: +pid, n: ownerSets[pid].size };
-    // high score
-    let high = { p: 0, g: 0, le: 0 };
-    for (let g = 1; g <= MAX_GW; g++) for (const m of MANAGERS) {
-      if (S.gwPts[g][m.le] > high.p) high = { p: S.gwPts[g][m.le], g, le: m.le };
-    }
-    // GW average for Geraint
-    const gAvg = (S.standings[0].points_for / 37).toFixed(1);
-
-    const grid = el('div', { class: 'grid' });
-    grid.appendChild(el('div', { class: 'cell c1 anim scale' },
-      el('b', {}, String(totalAccepted)),
-      el('s', {}, 'Accepted transfers')
-    ));
-    grid.appendChild(el('div', { class: 'cell c2 anim scale' },
-      el('b', {}, String(totalWaivers)),
-      el('s', {}, 'Waiver claims submitted')
-    ));
-    grid.appendChild(el('div', { class: 'cell c3 anim scale' },
-      el('b', {}, String(totalTrades)),
-      el('s', {}, 'Trades completed')
-    ));
-    grid.appendChild(el('div', { class: 'cell c4 anim scale' },
-      el('b', {}, hot.pid ? S.pname(hot.pid) : '—'),
-      el('s', {}, `Owned by ${hot.n} different managers (most-travelled)`)
-    ));
-    grid.appendChild(el('div', { class: 'cell c5 anim scale' },
-      el('b', {}, String(high.p)),
-      el('s', {}, `Highest GW · ${MGR_BY_LE[high.le].first} GW${high.g}`)
-    ));
-    grid.appendChild(el('div', { class: 'cell c6 anim scale' },
-      el('b', {}, gAvg),
-      el('s', {}, 'Geraint\'s points per GW average')
-    ));
-    n.appendChild(grid);
-  });
-
-  // -------- 39. CLOSING --------
-  add('c-close', {}, (n) => {
-    n.appendChild(el('div', { class: 'top' }, 'Craig/McDowell/Hopkins Cup · End of season 2025/26'));
-    n.appendChild(el('div', { class: 'stack' },
-      el('div', { class: 'line l1' }, 'See'),
-      el('div', { class: 'line l2', style: 'color: var(--yellow);' }, 'you'),
-      el('div', { class: 'line l3' }, 'in August.'),
-    ));
-    n.appendChild(el('div', { class: 'sub' }, 'GW38 never happened. Neither did half the trades we approved. Good year, lads.'));
-  }, true);
-
-  // Setup nav dots
-  const nav = document.getElementById('nav');
-  cards.forEach((c, i) => {
-    const dot = el('div', { class: 'nav-dot' + (i === 0 ? ' active' : '') });
-    if (!c.isDark) dot.classList.add('dark');
-    nav.appendChild(dot);
-  });
-
-  return cards;
-}
-
-// ============================================================
-// SCROLL OBSERVER + ANIMATIONS
-// ============================================================
-function setupObserver(cards) {
-  const cardEls = cards.map(c => c.el);
-  const dots = document.querySelectorAll('.nav-dot');
-  const seen = new Set();
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      const i = cardEls.indexOf(en.target);
-      if (en.isIntersecting && en.intersectionRatio > 0.55) {
-        if (!seen.has(en.target)) {
-          en.target.classList.add('in');
-          seen.add(en.target);
-          // run counters and per-card on-enter triggers
-          en.target.querySelectorAll('[data-count]').forEach(node => {
-            const final = node.getAttribute('data-count');
-            animateCounter(node, final);
-          });
-          // Trigger race chart endpoint reveals after lines finish
-          const race = en.target.querySelector('.race-svg');
-          if (race) {
-            const endpoints = race.querySelectorAll('.endpoint');
-            endpoints.forEach((ep, idx) => setTimeout(() => ep.classList.add('in'), 400 * idx + 600));
-          }
-          // Trigger timeline event pops
-          const tl = en.target.querySelector('.tl-svg');
-          if (tl) {
-            const evs = tl.querySelectorAll('.ev');
-            evs.forEach((e, idx) => setTimeout(() => e.classList.add('in'), 1700 + idx * 55));
-          }
-        }
-        dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
-      }
-    });
-  }, { threshold: [0, 0.3, 0.55, 0.85, 1] });
-  cardEls.forEach(c => io.observe(c));
-  // Activate first card immediately
-  if (cardEls[0]) {
-    cardEls[0].classList.add('in');
-    seen.add(cardEls[0]);
-    cardEls[0].querySelectorAll('[data-count]').forEach(node => animateCounter(node, node.getAttribute('data-count')));
-  }
-}
-
-function animateCounter(node, finalStr) {
-  // Detect prefix and number
-  const m = /^([+-]?)(\d+)(.*)$/.exec(finalStr);
-  if (!m) { node.textContent = finalStr; return; }
-  const sign = m[1], target = parseInt(m[2], 10), suffix = m[3] || '';
-  // For very small numbers, count slowly. Larger numbers, faster.
-  let duration;
-  if (target <= 20) duration = 1500 + target * 100;
-  else duration = 1800;
+// ==== Manager data and constants ====
+const MGR = {
+  73788:{first:"Mark",     team:"Carrying Timber",       short:"Mark"},
+  73822:{first:"Peter",    team:"MaxPoints",             short:"Peter"},
+  73827:{first:"Steven",   team:"✨",                short:"Steven"},
+  73835:{first:"Geraint",  team:"\u{1F3F4}\u{E0067}\u{E0062}\u{E0077}\u{E006C}\u{E0073}\u{E007F}", short:"Geraint"},
+  73847:{first:"Michael",  team:"Jota win again *20",     short:"Michael"},
+  73858:{first:"christopher",team:"The Masterplan",       short:"christopher"}
+};
+const COL = {
+  73788:"var(--cyan)",
+  73822:"var(--purple)",
+  73827:"var(--pink)",
+  73835:"var(--yellow)",
+  73847:"var(--orange)",
+  73858:"var(--lime)"
+};
+const HEX = {
+  73788:"#00BCD4",
+  73822:"#6A1B9A",
+  73827:"#FF1493",
+  73835:"#FFEB3B",
+  73847:"#FF6F00",
+  73858:"#C6FF00"
+};
+
+// ==== Animate count up ====
+function countUp(el, to, duration=2200, suffix=""){
+  to = Number(to);
   const start = performance.now();
-  function tick(now) {
-    const t = Math.min(1, (now - start) / duration);
-    const eased = 1 - Math.pow(1 - t, 3);
-    const val = Math.round(target * eased);
-    node.textContent = (sign || '') + val + suffix;
-    if (t < 1) requestAnimationFrame(tick);
-    else node.textContent = finalStr;
+  const from = 0;
+  function frame(t){
+    const k = Math.min(1,(t-start)/duration);
+    const eased = 1 - Math.pow(1-k, 3); // ease-out cubic
+    const v = Math.round(from + (to-from)*eased);
+    el.textContent = v + suffix;
+    if(k<1) requestAnimationFrame(frame);
+    else el.textContent = to + suffix;
   }
-  requestAnimationFrame(tick);
+  requestAnimationFrame(frame);
 }
 
-function setupKeyboard() {
-  const sc = document.getElementById('scroller');
-  let busy = false;
-  document.addEventListener('keydown', e => {
-    if (busy) return;
-    const h = window.innerHeight;
-    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-      busy = true; sc.scrollBy({ top: h, behavior: 'smooth' }); e.preventDefault();
-      setTimeout(() => busy = false, 600);
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-      busy = true; sc.scrollBy({ top: -h, behavior: 'smooth' }); e.preventDefault();
-      setTimeout(() => busy = false, 600);
-    }
+// ==== Build cards ====
+let A = null; // analysis data, fetched
+
+function mgrName(le){return MGR[le].first}
+function mgrTeam(le){return MGR[le].team}
+function mgrFull(le){return MGR[le].first + " · " + MGR[le].team}
+
+// Card factory creates a card element
+function card(opts){
+  const el = document.createElement('section');
+  el.className = 'card ' + (opts.cls||'');
+  if(opts.id) el.id = opts.id;
+  el.innerHTML = `<div class="card-inner">${opts.html}</div>`;
+  return el;
+}
+
+// Build the entire deck
+function buildDeck(){
+  const deck = document.getElementById('deck');
+  deck.innerHTML = '';
+  CARDS.forEach(fn => {
+    const el = fn();
+    if(el) deck.appendChild(el);
   });
+  setupObserver(deck);
 }
 
-// ============================================================
-// MAIN
-// ============================================================
-(async () => {
-  try {
-    const d = await loadAll();
-    const S = compute(d);
-    const cards = buildAll(S);
-    setupObserver(cards);
-    setupKeyboard();
-    document.getElementById('loading').classList.add('gone');
-    setTimeout(() => document.getElementById('loading').remove(), 500);
-  } catch (e) {
-    console.error(e);
-    document.getElementById('loading').innerHTML = '<div class="lt">Couldn\'t load. Check the console.</div>';
+const CARDS = []; // populated below in card definitions
+
+// ==== Observer ====
+function setupObserver(deck){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && entry.intersectionRatio >= 0.35){
+        if(!entry.target.classList.contains('in-view')){
+          entry.target.classList.add('in-view');
+          entry.target.dispatchEvent(new CustomEvent('cardEnter'));
+        }
+      }
+    });
+  }, {threshold: [0, 0.35, 0.6, 1], rootMargin: '0px'});
+  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+  // Trigger first card manually since it's already in view
+  setTimeout(() => {
+    const first = document.querySelector('.card');
+    if(first && !first.classList.contains('in-view')){
+      first.classList.add('in-view');
+      first.dispatchEvent(new CustomEvent('cardEnter'));
+    }
+  }, 60);
+}
+
+// ==== Fetch and init ====
+fetch('./data/analysis.json').then(r=>r.json()).then(data => {
+  A = data;
+  buildDeck();
+  setTimeout(()=>{document.getElementById('loader').classList.add('hide');}, 250);
+  setTimeout(()=>{document.getElementById('loader').remove();}, 800);
+}).catch(err => {
+  document.getElementById('loader').innerHTML = '<div class="l1">Could not load data</div><div class="l2">'+err.message+'</div>';
+});
+
+// ===== Card definitions appended via push =====
+
+// 1. Cold open
+CARDS.push(() => card({
+  cls:'cold-open bg-grad-po',
+  html:`
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center">
+      <div class="cup">
+        <span class="ani ani-up d1">CRAIG</span>
+        <span class="ani ani-up d3" style="display:block">CUP</span>
+      </div>
+      <div class="sub ani ani-fade d6">END OF SEASON · 2025/26</div>
+    </div>`
+}));
+
+// 2. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-black',
+  html:`<div class="text ani ani-up d1">Right. The final table.</div>`
+}));
+
+// 3. Final table
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="caption ani ani-fade d1">FINAL STANDINGS · 38 GAMEWEEKS</div>
+      <div class="scoreboard mt-md" id="scoreboard"></div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const sb = el.querySelector('#scoreboard');
+    sb.innerHTML = '';
+    A.standings.forEach((s, idx) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'row row-anim';
+      wrap.style.animationDelay = (idx * 0.13 + 0.15) + 's';
+      wrap.style.display = 'contents';
+      wrap.innerHTML = `
+        <div class="rank">${s.rank}</div>
+        <div>
+          <div class="name">${MGR[s.le].first}</div>
+          <div class="team">${MGR[s.le].team}</div>
+        </div>
+        <div class="wdl">W${s.w}–D${s.d}–L${s.l}<br>PF ${s.pf}</div>
+        <div class="pts" data-target="${s.total}">0</div>`;
+      sb.appendChild(wrap);
+      if(idx < A.standings.length-1){
+        const sep = document.createElement('div');
+        sep.className = 'sep';
+        sb.appendChild(sep);
+      }
+    });
+    // Animate the totals after row stagger
+    setTimeout(() => {
+      el.querySelectorAll('.pts[data-target]').forEach((p,i) => {
+        setTimeout(()=>countUp(p, +p.dataset.target, 1200), i*100);
+      });
+    }, 1200);
+  });
+  return el;
+});
+
+// 4. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-yellow',
+  html:`<div class="text ani ani-up d1">How we got here.</div>`
+}));
+
+// 5. Race chart
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="caption ani ani-fade d1">THE SEASON RACE · LEAGUE POSITION BY GAMEWEEK</div>
+      <div class="race-wrap">
+        <svg class="race-svg" id="race-svg" viewBox="0 0 1000 540" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="caption ani ani-fade" id="race-caption" style="opacity:0">Geraint took control by GW17 and never gave it back.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    drawRaceChart(el.querySelector('#race-svg'), el.querySelector('#race-caption'));
+  });
+  return el;
+});
+
+function drawRaceChart(svg, caption){
+  const W = 1000, H = 540;
+  const PADL=50, PADR=130, PADT=30, PADB=44;
+  const xs = (gw) => PADL + (W-PADL-PADR) * (gw-1) / 37;
+  const ys = (pos) => PADT + (H-PADT-PADB) * (pos-1) / 5;
+  svg.innerHTML = '';
+  // Axes / grid
+  for(let p=1; p<=6; p++){
+    const y = ys(p);
+    const ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1',PADL); ln.setAttribute('x2',W-PADR);
+    ln.setAttribute('y1',y); ln.setAttribute('y2',y);
+    ln.setAttribute('stroke','rgba(244,241,234,.08)'); ln.setAttribute('stroke-width','1');
+    svg.appendChild(ln);
+    const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lab.setAttribute('x', PADL-10); lab.setAttribute('y', y+5);
+    lab.setAttribute('fill','rgba(244,241,234,.5)');
+    lab.setAttribute('font-family','Anton');
+    lab.setAttribute('font-size','15');
+    lab.setAttribute('text-anchor','end');
+    lab.textContent = '#'+p;
+    svg.appendChild(lab);
   }
-})();
+  // GW labels (every 5)
+  for(let g=1; g<=38; g+=5){
+    const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lab.setAttribute('x', xs(g)); lab.setAttribute('y', H-PADB+22);
+    lab.setAttribute('fill','rgba(244,241,234,.45)');
+    lab.setAttribute('font-family','Space Grotesk');
+    lab.setAttribute('font-size','12');
+    lab.setAttribute('text-anchor','middle');
+    lab.textContent = 'GW'+g;
+    svg.appendChild(lab);
+  }
+  // Build lines per manager
+  const order = [73822, 73847, 73858, 73827, 73788, 73835]; // Peter first, Geraint last
+  const lines = {};
+  order.forEach(le => {
+    const pts = [];
+    for(let gw=1; gw<=38; gw++){
+      pts.push([xs(gw), ys(A.pos_by_gw[le][gw])]);
+    }
+    const d = 'M ' + pts.map(p=>p[0]+' '+p[1]).join(' L ');
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', d);
+    path.setAttribute('class','race-line');
+    path.setAttribute('stroke', HEX[le]);
+    path.setAttribute('stroke-width','6');
+    path.setAttribute('stroke-linecap','round');
+    path.setAttribute('stroke-linejoin','round');
+    path.setAttribute('opacity','0');
+    const length = path.getTotalLength ? 4000 : 4000; // dummy until appended
+    svg.appendChild(path);
+    const realLen = path.getTotalLength();
+    path.style.strokeDasharray = realLen;
+    path.style.strokeDashoffset = realLen;
+    lines[le] = {path, length: realLen};
+  });
+  // Animate each in turn
+  let t = 200;
+  order.forEach((le, idx) => {
+    setTimeout(() => {
+      const {path, length} = lines[le];
+      path.setAttribute('opacity','1');
+      path.style.transition = `stroke-dashoffset 750ms cubic-bezier(.22,.7,.32,1), opacity .3s`;
+      requestAnimationFrame(()=>{ path.style.strokeDashoffset = 0; });
+      // Dim previous lines
+      Object.keys(lines).forEach(k => {
+        if(+k !== le) {
+          lines[k].path.setAttribute('stroke-width','3');
+          lines[k].path.style.opacity = '0.32';
+        } else {
+          lines[k].path.setAttribute('stroke-width','6');
+          lines[k].path.style.opacity = '1';
+        }
+      });
+      // Place endpoint label after line completes
+      setTimeout(() => {
+        const pos = A.pos_by_gw[le][38];
+        const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+        lab.setAttribute('x', xs(38)+10); lab.setAttribute('y', ys(pos)+5);
+        lab.setAttribute('fill', HEX[le]);
+        lab.setAttribute('font-family','Anton');
+        lab.setAttribute('font-size','17');
+        lab.setAttribute('text-anchor','start');
+        lab.style.opacity = '0';
+        lab.textContent = `${MGR[le].first} · #${pos}`;
+        svg.appendChild(lab);
+        requestAnimationFrame(()=>{ lab.style.transition='opacity .35s ease'; lab.style.opacity='1'; });
+      }, 700);
+    }, t);
+    t += 700;
+  });
+  // Settle: all lines uniform
+  setTimeout(() => {
+    Object.values(lines).forEach(l => {
+      l.path.setAttribute('stroke-width','4');
+      l.path.style.opacity = '0.78';
+    });
+    if(caption){ caption.style.opacity='1'; caption.style.transition='opacity .6s ease'; }
+  }, t + 200);
+}
+
+// 6. Key moments
+CARDS.push(() => {
+  const moments = [
+    {gw:'GW7',  text:'Peter loses his seventh in a row. Last place is already a vibe.'},
+    {gw:'GW9',  text:'Christopher and Michael run a three-for-three trade. Eze, Palmer & Ekitiké go one way; Sarr, Bruno & Evanilson the other.'},
+    {gw:'GW15', text:'Christopher drops 93 — the highest score of the season — putting 55 past Peter.'},
+    {gw:'GW16', text:'Mark holds first place for the last time. Geraint takes over the next week.'},
+    {gw:'GW18', text:'Mark prises Evanilson off Michael in exchange for Isak. Michael will rue this.'},
+    {gw:'GW28', text:'Peter stops transacting for nine weeks. The title race up top is essentially over.'}
+  ];
+  const html = `
+    <div class="caption ani ani-fade d1">KEY MOMENTS</div>
+    <div class="headline ani ani-up d2" style="font-size:clamp(34px,5.5vw,68px)">A few flashpoints.</div>
+    <div class="km-list mt-md">
+      ${moments.map((m,i)=>`<div class="km-item ani ani-fade" style="animation-delay:${0.5+i*0.18}s">
+        <div class="km-gw">${m.gw}</div><div class="km-text">${m.text}</div>
+      </div>`).join('')}
+    </div>`;
+  return card({cls:'bg-off', html});
+});
+
+// 7. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-purple',
+  html:`<div class="text ani ani-up d1">The hands-off champion.</div>`
+}));
+
+// 8. Geraint's title narrative — three numbers
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-green',
+    html:`
+      <div class="caption ani ani-fade d1">GERAINT · 🏴󠁧󠁢󠁷󠁬󠁳󠁿</div>
+      <div class="headline ani ani-up d2" style="font-size:clamp(38px,6vw,80px)">Barely looked at his team. Still won by a mile.</div>
+      <div class="threestats mt-lg">
+        <div class="ani ani-up d4">
+          <div class="ts-num counter" data-target="32">0</div>
+          <div class="ts-label">Total accepted transactions</div>
+        </div>
+        <div class="ani ani-up d5">
+          <div class="ts-num counter" data-target="78">0</div>
+          <div class="ts-label">League points</div>
+        </div>
+        <div class="ani ani-up d6">
+          <div class="ts-num counter" data-target="13" data-prefix="+">0</div>
+          <div class="ts-label">Margin over 2nd</div>
+        </div>
+      </div>
+      <div class="zinger ani ani-fade d8 mt-lg">Second-lightest in transactions. First in everything else.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(() => {
+      el.querySelectorAll('.counter[data-target]').forEach((c,i) => {
+        setTimeout(()=>{
+          const pre = c.dataset.prefix || '';
+          const tgt = +c.dataset.target;
+          const dur = tgt < 30 ? 1500 : 2000;
+          const start = performance.now();
+          function f(t){
+            const k = Math.min(1,(t-start)/dur);
+            const e = 1-Math.pow(1-k,3);
+            c.textContent = pre + Math.round(tgt*e);
+            if(k<1) requestAnimationFrame(f); else c.textContent = pre + tgt;
+          }
+          requestAnimationFrame(f);
+        }, i*350);
+      });
+    }, 900);
+  });
+  return el;
+});
+
+// 9. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-cyan',
+  html:`<div class="text ani ani-up d1">The trades. All three of them.</div>`
+}));
+
+// 10. Trade 1: Marmoush <-> Grealish (christopher offered, peter received)
+CARDS.push(() => {
+  const t = A.trades[0]; // GW4
+  return card({
+    cls:'bg-pink',
+    html:`
+      <div class="caption ani ani-fade d1">TRADE 01 · GAMEWEEK ${t.gw}</div>
+      <div class="award-name ani ani-up d2">Marmoush, meet Grealish.</div>
+      <div class="swap mt-md">
+        <div class="swap-side ani ani-left d3">
+          <div class="who">${MGR[t.received_le].first} gave</div>
+          <div class="players">${t.offered_got.join(' · ')}</div>
+          <div class="delta">→ ${t.offered_gain} pts for ${MGR[t.offered_le].first}</div>
+        </div>
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
+          <div class="who">${MGR[t.offered_le].first} gave</div>
+          <div class="players">${t.offered_gave.join(' · ')}</div>
+          <div class="delta">→ ${t.received_gain} pts for ${MGR[t.received_le].first}</div>
+        </div>
+      </div>
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Much ado about nothing</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Christopher swapped a Grealish off Peter for a Marmoush that never landed. Neither of them benefited.</div>`
+  });
+});
+
+// 11. Trade 2: 3-for-3
+CARDS.push(() => {
+  const t = A.trades[1]; // GW9
+  return card({
+    cls:'bg-orange',
+    html:`
+      <div class="caption ani ani-fade d1">TRADE 02 · GAMEWEEK ${t.gw}</div>
+      <div class="award-name ani ani-up d2">The three-for-three.</div>
+      <div class="swap mt-md">
+        <div class="swap-side ani ani-left d3">
+          <div class="who">${MGR[t.received_le].first} gave</div>
+          <div class="players">${t.offered_got.join(' · ')}</div>
+          <div class="delta">→ ${t.offered_gain} pts for ${MGR[t.offered_le].first}</div>
+        </div>
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
+          <div class="who">${MGR[t.offered_le].first} gave</div>
+          <div class="players">${t.offered_gave.join(' · ')}</div>
+          <div class="delta">→ ${t.received_gain} pts for ${MGR[t.received_le].first}</div>
+        </div>
+      </div>
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Fair</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Six players changed hands. Both managers landed within 13 points of each other. The fairest trade in the league.</div>`
+  });
+});
+
+// 12. Trade 3: Evanilson <-> Isak (michael offered, mark received)
+CARDS.push(() => {
+  const t = A.trades[2]; // GW18
+  return card({
+    cls:'bg-purple',
+    html:`
+      <div class="caption ani ani-fade d1">TRADE 03 · GAMEWEEK ${t.gw}</div>
+      <div class="award-name ani ani-up d2">Isak for Evanilson.</div>
+      <div class="swap mt-md">
+        <div class="swap-side ani ani-left d3">
+          <div class="who">${MGR[t.received_le].first} gave</div>
+          <div class="players">${t.offered_got.join(' · ')}</div>
+          <div class="delta">→ ${t.offered_gain} pts for ${MGR[t.offered_le].first}</div>
+        </div>
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
+          <div class="who">${MGR[t.offered_le].first} gave</div>
+          <div class="players">${t.offered_gave.join(' · ')}</div>
+          <div class="delta">→ ${t.received_gain} pts for ${MGR[t.received_le].first}</div>
+        </div>
+      </div>
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict" style="color:var(--yellow);border-color:var(--yellow)">Steal</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Mark walked away with Evanilson. Michael got an Isak who managed 12 points before the season ran out.</div>`
+  });
+});
+
+// 13. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-off',
+  html:`<div class="text ani ani-up d1" style="color:var(--black)">Meet the managers.</div>`
+}));
+
+// 14–19. Manager cards (reverse finishing order)
+const MGR_ORDER = [73822, 73847, 73858, 73827, 73788, 73835]; // 6 → 1
+const MGR_BG = {
+  73822: 'bg-purple',
+  73847: 'bg-orange',
+  73858: 'bg-lime',
+  73827: 'bg-pink',
+  73788: 'bg-cyan',
+  73835: 'bg-yellow'
+};
+const MGR_VERDICT = {
+  73822: 'Made a strong opening case for the bottom and stuck to it for thirty-eight weeks.',
+  73847: 'Made 103 transactions trying to win the league. Finished 5th.',
+  73858: 'Top form too late, top transfers nowhere to be seen.',
+  73827: 'Won six on the bounce, then lost five on the bounce. Settled comfortably in between.',
+  73788: 'Held second place for nearly the whole season without ever closing the gap.',
+  73835: 'Won the league by barely looking. The trick is not to care.'
+};
+
+MGR_ORDER.forEach(le => {
+  CARDS.push(() => {
+    const s = A.standings.find(x => x.le === le);
+    const hl = A.high_low[le];
+    const best = A.best_txn_per_le[le] || A.best_draft_per_le[le];
+    const worst = A.worst_txn_per_le[le] || A.worst_draft_per_le[le];
+    const nem = A.nemesis[le];
+    const txns = A.txns_total[le];
+    return card({
+      cls: MGR_BG[le] + ' mgr-card',
+      html: `
+        <div class="mgr-pos ani ani-pop d1">#${s.rank}</div>
+        <div class="mgr-content" style="grid-column:1/2">
+          <div class="caption ani ani-fade d1">FINISHED ${s.rank}${s.rank===1?'ST':s.rank===2?'ND':s.rank===3?'RD':'TH'}</div>
+          <div class="mgr-name ani ani-left d2">${MGR[le].first}</div>
+          <div class="mgr-team ani ani-fade d3">${MGR[le].team}</div>
+          <div class="mgr-verdict ani ani-fade d9">${MGR_VERDICT[le]}</div>
+        </div>
+        <div class="mgr-stats" style="grid-column:2/3">
+          <div class="mgr-stat ani ani-left d4"><div class="mgr-stat-label">W–D–L</div><div class="mgr-stat-val">${s.w}–${s.d}–${s.l}</div></div>
+          <div class="mgr-stat ani ani-left d5"><div class="mgr-stat-label">Points for</div><div class="mgr-stat-val">${s.pf}</div></div>
+          <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">High score</div><div class="mgr-stat-val">${hl.high_pts} (GW${hl.high_gw})</div></div>
+          <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">Low score</div><div class="mgr-stat-val">${hl.low_pts} (GW${hl.low_gw})</div></div>
+          <div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Transactions</div><div class="mgr-stat-val">${txns}</div></div>
+          ${best ? `<div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Best move</div><div class="mgr-stat-val">${best.name} · ${best.pts} pts</div></div>`:''}
+          ${worst ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Worst move</div><div class="mgr-stat-val">${worst.name} · ${worst.pts} pts</div></div>`:''}
+          ${nem ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Nemesis</div><div class="mgr-stat-val">${MGR[nem.opp].first} (${nem.count}× — GW${nem.gws.join(', GW')})</div></div>`:''}
+        </div>`
+    });
+  });
+});
+
+// 20. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-pink',
+  html:`<div class="text ani ani-up d1">The awards.</div>`
+}));
+
+// 21. Champion — victory lap for Geraint
+CARDS.push(() => card({
+  cls:'bg-yellow',
+  html: `
+    <div class="caption ani ani-fade d1">AWARD · CHAMPION</div>
+    <div class="award-name ani ani-up d2">Champion of the Craig Cup.</div>
+    <div class="explainer ani ani-fade d3">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:18px;gap:6px">
+      <div class="hero-name ani ani-up d4" style="font-size:clamp(80px,16vw,200px);">Geraint</div>
+      <div class="recipient ani ani-fade d5">🏴󠁧󠁢󠁷󠁬󠁳󠁿 &nbsp; · &nbsp; 78 league pts &nbsp;·&nbsp; +13 on second</div>
+    </div>
+    <div class="zinger ani ani-fade d8 mt-lg">Took the trophy with his feet up. Lap of honour optional.</div>`
+}));
+
+// 22. Best Trade — Mark steals Evanilson
+CARDS.push(() => card({
+  cls:'bg-grad-po',
+  html:`
+    <div class="caption ani ani-fade d1">AWARD · BEST TRADE</div>
+    <div class="award-name ani ani-up d2">The Evanilson heist.</div>
+    <div class="explainer ani ani-fade d3">Net points after the swap, while held by each side. The bigger the gap, the bigger the win.</div>
+    <div class="swap mt-md">
+      <div class="swap-side ani ani-left d4">
+        <div class="who">Mark received</div>
+        <div class="players" style="font-size:clamp(34px,5.5vw,72px)">Evanilson</div>
+        <div class="delta">→ 59 pts in 20 weeks</div>
+      </div>
+      <div class="swap-arrow ani ani-fade d5">↔</div>
+      <div class="swap-side ani ani-right d6">
+        <div class="who">Michael received</div>
+        <div class="players" style="font-size:clamp(34px,5.5vw,72px)">Isak</div>
+        <div class="delta">→ 12 pts in 20 weeks</div>
+      </div>
+    </div>
+    <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Steal · +47</span></div>
+    <div class="zinger ani ani-fade d9 mt-md">Mark · Carrying Timber. He saw a striker, he got a striker, and the other striker forgot to score.</div>`
+}));
+
+// 23. Best Draft Pick — Geraint's Haaland at #1
+CARDS.push(() => {
+  const b = A.best_draft_league;
+  return card({
+    cls:'bg-cyan',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · BEST DRAFT PICK</div>
+      <div class="award-name ani ani-up d2">First overall. First everything.</div>
+      <div class="explainer ani ani-fade d3">Most points scored by a draftee while still owned by the manager who drafted them.</div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;margin-top:14px">
+        <div class="hero-numeral ani ani-pop d4" style="color:var(--black);font-size:clamp(110px,22vh,260px)">#${b.pick}</div>
+        <div>
+          <div class="hero-name ani ani-up d5" style="font-size:clamp(56px,11vw,140px);line-height:.95">${b.name}</div>
+          <div class="recipient ani ani-fade d6 mt-sm">Drafted by ${MGR[b.le].first} · ${MGR[b.le].team}</div>
+          <div class="recipient ani ani-fade d7" style="margin-top:8px;opacity:.8">${b.pts} pts in ${b.held} GWs</div>
+        </div>
+      </div>
+      <div class="zinger ani ani-fade d9 mt-lg">First pick of the draft. Best pick of the draft. Sometimes there's no twist.</div>`
+  });
+});
+
+// 24. Most Influential Transfer — MADUEKE / 1 PT for christopher
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-grad-po',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · MOST INFLUENTIAL TRANSFER</div>
+      <div class="award-name ani ani-up d2" style="word-break:normal">The transfer that changed the league.</div>
+      <div class="explainer ani ani-fade d3">Picked by christopher · The Masterplan · GW16</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:36px;gap:18px">
+        <div class="hero-name ani ani-pop d6" id="madueke-name" style="font-size:clamp(70px,14vw,180px);opacity:0">MADUEKE</div>
+        <div style="display:flex;align-items:baseline;gap:14px">
+          <div class="counter ani ani-fade" id="madueke-pts" style="opacity:0;font-size:clamp(80px,14vw,180px)">0</div>
+          <div class="caption ani ani-fade" id="madueke-unit" style="opacity:0;font-size:clamp(16px,2.4vw,28px);letter-spacing:.1em">PT</div>
+        </div>
+        <div class="zinger ani" id="madueke-italic" style="opacity:0;font-size:clamp(13px,1.5vw,18px)"><em>while held by christopher</em></div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const name = el.querySelector('#madueke-name');
+    const pts  = el.querySelector('#madueke-pts');
+    const unit = el.querySelector('#madueke-unit');
+    const ital = el.querySelector('#madueke-italic');
+    // Big name appears after delay (theatrical)
+    setTimeout(() => {
+      name.style.animation = 'popIn .6s cubic-bezier(.18,.8,.25,1) forwards';
+    }, 2100);
+    // Long hold, then 0 PTS counter
+    setTimeout(() => {
+      pts.style.animation = 'fadeUp .5s ease-out forwards';
+      unit.style.animation = 'fadeUp .5s ease-out forwards';
+      unit.style.animationDelay = '.2s';
+      // counter ticks 0 to 1
+      setTimeout(() => {
+        let v = 0;
+        const interval = setInterval(() => { v++; pts.textContent = v; if(v>=1) clearInterval(interval); }, 800);
+        unit.textContent = 'PT';
+      }, 300);
+    }, 4100);
+    setTimeout(() => {
+      ital.style.animation = 'fadeUp .6s ease-out forwards';
+    }, 5700);
+  });
+  return el;
+});
+
+// 25. Asleep at the Wheel — Peter
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--yellow)">AWARD · ASLEEP AT THE WHEEL</div>
+      <div class="award-name ani ani-up d2">Asleep at the wheel.</div>
+      <div class="explainer ani ani-fade d3">Longest consecutive run of gameweeks without a single accepted transaction.</div>
+      <div class="recipient ani ani-fade d4 mt-md">Peter · MaxPoints</div>
+      <div style="display:flex;align-items:baseline;gap:18px;margin-top:30px">
+        <div class="counter ani ani-fade" id="asleep-num" style="font-size:clamp(160px,28vh,360px);color:var(--yellow);opacity:0">0</div>
+        <div class="caption ani ani-fade" id="asleep-unit" style="opacity:0;font-size:clamp(20px,3vw,36px);letter-spacing:.1em">GAMEWEEKS</div>
+      </div>
+      <div class="zinger ani ani-fade" id="asleep-zing" style="opacity:0">GW29 to GW37. He's still online. He's just choosing not to be.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(() => {
+      const n = el.querySelector('#asleep-num');
+      const u = el.querySelector('#asleep-unit');
+      const z = el.querySelector('#asleep-zing');
+      n.style.animation = 'fadeUp .6s ease-out forwards';
+      u.style.animation = 'fadeUp .6s ease-out forwards';
+      u.style.animationDelay = '.2s';
+      setTimeout(()=>{
+        let v=0; const t = setInterval(()=>{ v++; n.textContent = v; if(v>=9) clearInterval(t); }, 280);
+      }, 300);
+      setTimeout(()=>{ z.style.animation = 'fadeUp .6s ease-out forwards'; }, 3800);
+    }, 2500);
+  });
+  return el;
+});
+
+// 26. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-orange',
+  html:`<div class="text ani ani-up d1">And now the bits nobody asked for.</div>`
+}));
+
+// 27. Revolving Door — Michael
+CARDS.push(() => {
+  const items = A.revolving_by_le['73847'].filter(x => x.count >= 2).slice(0, 8);
+  return card({
+    cls:'bg-orange',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · REVOLVING DOOR</div>
+      <div class="award-name ani ani-up d2">Couldn't make his mind up.</div>
+      <div class="explainer ani ani-fade d3">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
+      <div class="recipient ani ani-fade d4 mt-md">Michael · Jota win again *20</div>
+      <div class="mt-md flex-col gap-sm">
+        ${items.map((p,i)=>`<div class="ani ani-left" style="animation-delay:${1+i*0.12}s;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:14px;border-top:1px solid currentColor;padding-top:6px;${i===0?'border-top:none;padding-top:0;':''}">
+          <div style="font-family:'Anton';font-size:clamp(20px,2.8vw,34px);text-transform:uppercase;line-height:1">${p.name}</div>
+          <div style="font-family:'Anton';font-size:clamp(22px,3vw,36px);line-height:1">× ${p.count}</div>
+        </div>`).join('')}
+      </div>
+      <div class="zinger ani ani-fade" style="animation-delay:2.6s;margin-top:14px">Made 103 transactions chasing the perfect XI. Never found it.</div>`
+  });
+});
+
+// 28. Goalkeeping Howler — Steven
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-cyan',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · GOALKEEPING HOWLER</div>
+      <div class="award-name ani ani-up d2">Goalkeeping howler.</div>
+      <div class="explainer ani ani-fade d3">Started the lower-scoring of his two keepers. Across the whole season.</div>
+      <div class="recipient ani ani-fade d4 mt-md">Steven · ✨</div>
+      <div class="gk-row ani ani-fade d5">
+        <div class="gk-icon good"><span class="gk-mark">✓</span></div>
+        <div class="gk-icon bad"><span class="gk-mark">✗</span></div>
+      </div>
+      <div style="display:flex;align-items:baseline;margin-top:14px">
+        <div class="gk-howl-num ani ani-fade" id="gk-num" style="opacity:0">0</div>
+        <div class="gk-howl-unit ani ani-fade" id="gk-unit" style="opacity:0">TIMES</div>
+      </div>
+      <div class="zinger ani ani-fade" id="gk-zing" style="opacity:0">There were only two options.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(() => {
+      const n = el.querySelector('#gk-num');
+      const u = el.querySelector('#gk-unit');
+      const z = el.querySelector('#gk-zing');
+      n.style.animation = 'fadeUp .5s ease-out forwards';
+      u.style.animation = 'fadeUp .5s ease-out forwards';
+      u.style.animationDelay = '.2s';
+      setTimeout(()=>{
+        let v=0; const t = setInterval(()=>{ v++; n.textContent = v; if(v>=14) clearInterval(t); }, 220);
+      }, 350);
+      setTimeout(()=>{ z.style.animation = 'fadeUp .6s ease-out forwards'; }, 4200);
+    }, 2400);
+  });
+  return el;
+});
+
+// 29. Hot Potato — Lacroix
+CARDS.push(() => {
+  const lac = A.lacroix || [];
+  // Render as a sequence of signings
+  return card({
+    cls:'bg-purple',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · THE HOT POTATO</div>
+      <div class="award-name ani ani-up d2">Three managers. Seven signings.</div>
+      <div class="explainer ani ani-fade d3">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+      <div class="hp-center ani ani-pop d4" style="margin-top:18px">Lacroix</div>
+      <div class="hp-arrows ani ani-fade d6">
+        ${lac.map(([le,gw],i)=>`<span class="hp-step" style="background:${HEX[le]}33;border-color:${HEX[le]}">GW${gw} · ${MGR[le].first}</span>`).join('<span style="opacity:.5">→</span>')}
+      </div>
+      <div class="zinger ani ani-fade d8 mt-lg">Eventually they all let him go. Eventually they all bought him back.</div>`
+  });
+});
+
+// 30. Welcome and Goodbye — Michael / Lacroix GW32→GW33
+CARDS.push(() => card({
+  cls:'bg-lime',
+  html:`
+    <div class="caption ani ani-fade d1">AWARD · WELCOME, AND GOODBYE</div>
+    <div class="award-name ani ani-up d2">In on Tuesday. Out by Saturday.</div>
+    <div class="explainer ani ani-fade d3">Signed a player, never started them, dropped them within three gameweeks.</div>
+    <div class="recipient ani ani-fade d4 mt-md">Michael · Jota win again *20</div>
+    <div class="wg-box mt-md">
+      <div class="wg-cell ani ani-pop d5">
+        <div class="wg-tag">Arrived</div>
+        <div class="wg-gw">GW32</div>
+      </div>
+      <div class="wg-cell ani ani-pop d6">
+        <div class="wg-tag">Departed</div>
+        <div class="wg-gw">GW33</div>
+      </div>
+    </div>
+    <div class="hero-name ani ani-up d7 mt-md" style="font-size:clamp(54px,10vw,120px)">Lacroix</div>
+    <div class="zinger ani ani-fade d9 mt-md">He left before he ever started.</div>`
+}));
+
+// 31. The Beating — christopher 93–38 Peter
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-pink',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · THE BEATING</div>
+      <div class="award-name ani ani-up d2">A 55-point hiding.</div>
+      <div class="explainer ani ani-fade d3">Biggest H2H margin of the season · GW15</div>
+      <div class="scoreline mt-md">
+        <div class="side">
+          <div class="side-name ani ani-up d4">christopher</div>
+          <div class="side-score counter" id="beat-a" data-target="93">0</div>
+        </div>
+        <div class="dash ani ani-fade d5">–</div>
+        <div class="side">
+          <div class="side-name ani ani-up d4">Peter</div>
+          <div class="side-score counter" id="beat-b" data-target="38">0</div>
+        </div>
+      </div>
+      <div class="zinger ani ani-fade d9 mt-md">Football's equivalent of taking your nephew's lunch money.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(() => {
+      const a = el.querySelector('#beat-a');
+      const b = el.querySelector('#beat-b');
+      countUp(a, 93, 2200);
+      countUp(b, 38, 2200);
+    }, 1800);
+  });
+  return el;
+});
+
+// 32. Phantom XI — Steven GW34
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--cyan)">AWARD · PHANTOM XI</div>
+      <div class="award-name ani ani-up d2">Five players, zero minutes.</div>
+      <div class="explainer ani ani-fade d3">Five of his eleven starters didn't see the pitch that gameweek.</div>
+      <div class="recipient ani ani-fade d4 mt-md">Steven · ✨ &nbsp;·&nbsp; GW34</div>
+      <div class="phantom-grid mt-md" id="phantom-grid"></div>
+      <div class="zinger ani ani-fade" id="phantom-zing" style="opacity:0">Final score that week: 16. Lowest in the league all season.</div>`
+  });
+  // Build XI grid: 1 GK, 4 DEF, 4 MID, 2 FWD — mark 5 as zero
+  el.addEventListener('cardEnter', () => {
+    const g = el.querySelector('#phantom-grid');
+    const players = ['GK','DEF','DEF','DEF','DEF','MID','MID','MID','MID','FWD','FWD'];
+    // GW34 actual starters from data — to render names. Use the ones from analysis (Gusto, Doku, Gordon, Beto, Flemming were zero-min)
+    const zeroNames = ['Gusto','Doku','Gordon','Beto','Flemming'];
+    g.innerHTML = '';
+    players.forEach((p,i)=>{
+      const div = document.createElement('div');
+      div.className = 'phantom-pos';
+      div.textContent = p;
+      div.style.opacity = '0';
+      g.appendChild(div);
+    });
+    // First: arrival of all positions
+    setTimeout(() => {
+      g.querySelectorAll('.phantom-pos').forEach((d,i)=>{
+        setTimeout(()=>{ d.style.opacity = '1'; d.style.transition = 'opacity .35s ease'; }, i*60);
+      });
+    }, 1800);
+    // Then mark 5 as zero one at a time
+    setTimeout(() => {
+      const zeroIdxs = [1,5,9,4,7]; // any 5 indexes that look reasonable across positions
+      zeroIdxs.forEach((idx,i)=>{
+        setTimeout(()=>{
+          const pos = g.children[idx];
+          pos.classList.add('zero');
+          pos.textContent = zeroNames[i] || '0 MIN';
+        }, i*450);
+      });
+      setTimeout(()=>{
+        el.querySelector('#phantom-zing').style.animation = 'fadeUp .6s ease-out forwards';
+      }, 5*450 + 600);
+    }, 3500);
+  });
+  return el;
+});
+
+// 33. Three Strikes — Mark / Amad
+CARDS.push(() => card({
+  cls:'bg-cyan',
+  html:`
+    <div class="caption ani ani-fade d1">AWARD · THREE STRIKES</div>
+    <div class="award-name ani ani-up d2">Three goes at the same player.</div>
+    <div class="explainer ani ani-fade d3">Signed, dropped, signed, dropped, signed. By the same manager. In one season.</div>
+    <div class="recipient ani ani-fade d4 mt-md">Mark · Carrying Timber</div>
+    <div class="hp-center ani ani-pop d5" style="margin-top:14px;color:var(--black)">Amad</div>
+    <div class="hp-arrows ani ani-fade d7" style="font-size:clamp(15px,2vw,22px)">
+      <span class="hp-step">✓ Signed GW24</span>
+      <span style="opacity:.5">→</span>
+      <span class="hp-step">✗ Dropped</span>
+      <span style="opacity:.5">→</span>
+      <span class="hp-step">✓ Signed GW32</span>
+      <span style="opacity:.5">→</span>
+      <span class="hp-step">✗ Dropped</span>
+      <span style="opacity:.5">→</span>
+      <span class="hp-step">✓ Signed GW34</span>
+    </div>
+    <div class="zinger ani ani-fade d9 mt-md">Each time was going to be the last time.</div>`
+}));
+
+// 34. Anchored — Peter held #6 for 37 weeks
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-purple',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--yellow)">AWARD · ANCHORED</div>
+      <div class="award-name ani ani-up d2">Last place by gameweek 3.</div>
+      <div class="explainer ani ani-fade d3">Number of gameweeks spent at the bottom of the table.</div>
+      <div class="recipient ani ani-fade d4 mt-md">Peter · MaxPoints</div>
+      <div style="display:flex;align-items:baseline;gap:14px;margin-top:24px">
+        <div class="counter ani ani-fade" id="anchor-num" style="opacity:0;font-size:clamp(160px,28vh,340px);color:var(--yellow)">0</div>
+        <div class="caption ani ani-fade" id="anchor-unit" style="opacity:0;font-size:clamp(18px,2.6vw,30px);letter-spacing:.1em">OF 38 GAMEWEEKS</div>
+      </div>
+      <div class="zinger ani ani-fade" id="anchor-zing" style="opacity:0">Never anchored down. Just stuck.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(()=>{
+      const n = el.querySelector('#anchor-num');
+      const u = el.querySelector('#anchor-unit');
+      const z = el.querySelector('#anchor-zing');
+      n.style.animation = 'fadeUp .5s ease-out forwards';
+      u.style.animation = 'fadeUp .5s ease-out forwards';
+      u.style.animationDelay = '.2s';
+      setTimeout(()=>{
+        let v=0; const target=37; const dur=2400;
+        const start = performance.now();
+        function f(t){const k=Math.min(1,(t-start)/dur);const e=1-Math.pow(1-k,3);n.textContent=Math.round(target*e);if(k<1)requestAnimationFrame(f);else n.textContent=target}
+        requestAnimationFrame(f);
+      }, 300);
+      setTimeout(()=>{ z.style.animation = 'fadeUp .6s ease-out forwards'; }, 3600);
+    }, 2300);
+  });
+  return el;
+});
+
+// 35. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-green',
+  html:`<div class="text ani ani-up d1">But what if…</div>`
+}));
+
+// Counterfactual table renderer
+function cfTable(rows, highlightLe){
+  return `
+    <table class="cf-table">
+      <thead><tr><th></th><th>Manager</th><th>W–D–L</th><th>Pts</th></tr></thead>
+      <tbody>
+        ${rows.map(r=>{
+          const cls = (r.le === highlightLe) ? 'style="background:rgba(255,235,59,.12)"' : '';
+          return `<tr ${cls}><td class="rank">${rows.indexOf(r)+1}</td><td>${MGR[r.le].first}</td><td>${r.w}–${r.d}–${r.l}</td><td><strong>${r.total}</strong></td></tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+}
+
+// 36. Counterfactual 1: Everyone Plays Pete
+CARDS.push(() => {
+  const cf = A.cf_pete;
+  return card({
+    cls:'bg-off',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--purple)">COUNTERFACTUAL · EVERYONE PLAYS PETE</div>
+      <div class="award-name ani ani-up d2" style="font-size:clamp(36px,5.5vw,72px)">If everyone only played Peter…</div>
+      <div class="explainer ani ani-fade d3">Each manager's actual score every GW, vs Peter's actual score that GW. Peter plays the average of the other five.</div>
+      <div class="cf-grid mt-md">
+        <div class="cf-card ani ani-left d4">
+          <div class="cf-title">Actual table</div>
+          ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
+        </div>
+        <div class="cf-card ani ani-right d6">
+          <div class="cf-title" style="color:var(--purple)">Everyone plays Pete</div>
+          ${cfTable(cf, 73858)}
+        </div>
+      </div>
+      <div class="zinger ani ani-fade d8 mt-md">Christopher jumps to 2nd. Steven slips to 5th. The whole second-tier reshuffles. Geraint still wins.</div>`
+  });
+});
+
+// 37. Counterfactual 2: Optimal XI
+CARDS.push(() => {
+  const cf = A.cf_optimal;
+  return card({
+    cls:'bg-off',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--pink)">COUNTERFACTUAL · OPTIMAL XI EVERY WEEK</div>
+      <div class="award-name ani ani-up d2" style="font-size:clamp(36px,5.5vw,72px)">If everyone picked their best XI…</div>
+      <div class="explainer ani ani-fade d3">For each manager each GW, the highest-scoring legal XI from their 15-man squad. Recompute the H2H matches.</div>
+      <div class="cf-grid mt-md">
+        <div class="cf-card ani ani-left d4">
+          <div class="cf-title">Actual table</div>
+          ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
+        </div>
+        <div class="cf-card ani ani-right d6">
+          <div class="cf-title" style="color:var(--pink)">Hindsight XI</div>
+          ${cfTable(cf, 73835)}
+        </div>
+      </div>
+      <div class="zinger ani ani-fade d8 mt-md">Geraint wins by less. Michael and Steven swap places. Peter still last.</div>`
+  });
+});
+
+// 38. Counterfactual 3: No transfers ever
+CARDS.push(() => {
+  const cf = A.cf_no_txns;
+  return card({
+    cls:'bg-off',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--orange)">COUNTERFACTUAL · NO TRANSFERS</div>
+      <div class="award-name ani ani-up d2" style="font-size:clamp(36px,5.5vw,72px)">If nobody ever transferred…</div>
+      <div class="explainer ani ani-fade d3">Each manager's GW1 starting XI, scoring every week, every week, for 38 weeks. Recompute the table.</div>
+      <div class="cf-grid mt-md">
+        <div class="cf-card ani ani-left d4">
+          <div class="cf-title">Actual table</div>
+          ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
+        </div>
+        <div class="cf-card ani ani-right d6">
+          <div class="cf-title" style="color:var(--orange)">If nobody had moved</div>
+          ${cfTable(cf, 73847)}
+        </div>
+      </div>
+      <div class="zinger ani ani-fade d8 mt-md">Michael, who ran 103 transactions in real life, would have finished first by leaving his GW1 team alone.</div>`
+  });
+});
+
+// 39. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-off',
+  html:`<div class="text ani ani-up d1" style="color:var(--black)">Stories of the season.</div>`
+}));
+
+// === Stories of the season ===
+// Each card uses .story-grid
+
+// 40. Story 1: Six in a row, then five — Steven
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-off',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1" style="color:var(--pink)">STORY · 01</div>
+          <div class="story-title ani ani-up d2">Six in a row, then five.</div>
+          <div class="story-tag ani ani-fade d3">Steven · ✨</div>
+          <div class="story-body ani ani-fade d4">
+            <p>From GW12 to GW17, Steven won six H2H matches on the bounce. Climbed to third. Looked, briefly, like he might catch Geraint.</p>
+            <p>Then he lost five in a row. GW21 through GW25. By the time he'd stopped the bleeding he was back in third place and the chase was over.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 100" id="steven-spark"></svg>
+        </div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#steven-spark');
+    const seq = A.streaks['73827'].sequence; // WLLLL...
+    svg.innerHTML = '';
+    seq.split('').forEach((r, i) => {
+      const x = 10 + i * 9.5;
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', r==='W'?20:55);
+      rect.setAttribute('width','7');
+      rect.setAttribute('height',r==='W'?28:28);
+      rect.setAttribute('fill', r==='W'?'#00C853': r==='D'?'#777':'#FF1493');
+      rect.style.opacity = '0';
+      svg.appendChild(rect);
+      setTimeout(()=>{ rect.style.transition='opacity .15s ease'; rect.style.opacity = (i>=11 && i<=16)||(i>=20 && i<=24) ? '1' : '.35'; }, 1600 + i*40);
+    });
+    // GW labels
+    [12,17,21,25].forEach(gw => {
+      const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', 10 + (gw-1)*9.5 + 3);
+      lab.setAttribute('y', 12);
+      lab.setAttribute('text-anchor','middle');
+      lab.setAttribute('font-family','Space Grotesk');
+      lab.setAttribute('font-size','9');
+      lab.setAttribute('fill','#0A0A0A');
+      lab.textContent = 'GW'+gw;
+      svg.appendChild(lab);
+    });
+  });
+  return el;
+});
+
+// 41. Story 2: Late form — Christopher
+CARDS.push(() => card({
+  cls:'bg-black',
+  html:`
+    <div class="story-grid">
+      <div>
+        <div class="caption ani ani-fade d1" style="color:var(--lime)">STORY · 02</div>
+        <div class="story-title ani ani-up d2">The late form.</div>
+        <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
+        <div class="story-body ani ani-fade d4">
+          <p>Christopher's best run of the season came too late. Five wins on the bounce, GW32 to GW36. Demolished Geraint 71–53. Took 5 points off Mark.</p>
+          <p>By then the four ahead of him had pulled clear. The streak only confirmed how much had already been left on the table. He finished 4th by a single point.</p>
+        </div>
+      </div>
+      <div class="story-vis ani ani-fade d6">
+        <div style="text-align:center;font-family:'Anton',sans-serif;line-height:.95">
+          <div style="font-size:clamp(80px,16vw,200px);color:var(--lime)">5</div>
+          <div style="font-size:clamp(18px,2.4vw,28px);letter-spacing:.1em;opacity:.85">CONSECUTIVE WINS · GW32–36</div>
+          <div style="margin-top:14px;font-size:clamp(24px,3.5vw,42px);opacity:.55">…then lost GW37 and GW38.</div>
+        </div>
+      </div>
+    </div>`
+}));
+
+// 42. Story 3: Identity Crisis — Michael
+CARDS.push(() => card({
+  cls:'bg-orange',
+  html:`
+    <div class="story-grid">
+      <div>
+        <div class="caption ani ani-fade d1">STORY · 03</div>
+        <div class="story-title ani ani-up d2">The identity crisis.</div>
+        <div class="story-tag ani ani-fade d3">Michael · Jota win again *20</div>
+        <div class="story-body ani ani-fade d4">
+          <p>In GW7, five of Michael's fifteen-man squad were Liverpool players: Wirtz, Gakpo, Konaté, Kerkez, Mamardashvili. A third of his team from one club.</p>
+          <p>The experiment didn't last. Between GW9 and GW14 he made 20 transactions in six weeks. He never went all-in on a single club like that again.</p>
+        </div>
+      </div>
+      <div class="story-vis ani ani-fade d6">
+        <svg class="mini-svg" viewBox="0 0 380 140" id="michael-churn"></svg>
+      </div>
+    </div>`
+}));
+
+// 43. Story 4: Lacroix
+CARDS.push(() => {
+  const lac = A.lacroix || [];
+  return card({
+    cls:'bg-off',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1" style="color:var(--purple)">STORY · 04</div>
+          <div class="story-title ani ani-up d2">Lacroix.</div>
+          <div class="story-tag ani ani-fade d3">Peter, then Michael (three times), then Christopher, then Michael, then Christopher</div>
+          <div class="story-body ani ani-fade d4">
+            <p>Maxence Lacroix — Crystal Palace defender — was signed seven times this season by three different managers.</p>
+            <p>Peter started it in GW4. Michael picked him up in GW8 and dropped him a week later, signed him again GW10, again GW26. Christopher took him in GW31. Michael grabbed him back GW32. Christopher took him again GW36. Eventually they all let him go. Eventually they all bought him back.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+            ${lac.map(([le,gw])=>`<div style="display:grid;grid-template-columns:60px 1fr;gap:10px;font-family:'Anton';font-size:clamp(14px,1.8vw,20px);align-items:center">
+              <div style="text-align:right">GW${gw}</div>
+              <div style="background:${HEX[le]};color:#0A0A0A;padding:4px 12px;border-radius:4px;display:inline-block">${MGR[le].first}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>`
+  });
+});
+
+// 44. Story 5: The Cliff — Dewsbury-Hall
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1" style="color:var(--lime)">STORY · 05</div>
+          <div class="story-title ani ani-up d2">The cliff.</div>
+          <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
+          <div class="story-body ani ani-fade d4">
+            <p>In the four weeks before christopher signed Kieran Dewsbury-Hall in GW16, Dewsbury-Hall was averaging 9.8 points per game. Top defensive midfielder material.</p>
+            <p>In the four weeks <em>after</em>, he averaged 0.2. Worst-timed pickup of the season.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 200" id="dh-chart"></svg>
+        </div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#dh-chart');
+    const data = A.dewsbury_hall ? A.dewsbury_hall.history : [];
+    if(!data.length) return;
+    const maxv = Math.max(...data);
+    svg.innerHTML = '';
+    // signing line
+    const sx = 20 + 16/38 * 340;
+    const vline = document.createElementNS('http://www.w3.org/2000/svg','line');
+    vline.setAttribute('x1',sx); vline.setAttribute('x2',sx);
+    vline.setAttribute('y1',20); vline.setAttribute('y2',180);
+    vline.setAttribute('stroke','#FF1493'); vline.setAttribute('stroke-dasharray','3 3'); vline.setAttribute('stroke-width','2');
+    svg.appendChild(vline);
+    const slab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    slab.setAttribute('x', sx+4); slab.setAttribute('y', 32);
+    slab.setAttribute('fill','#FF1493'); slab.setAttribute('font-family','Space Grotesk'); slab.setAttribute('font-size','10');
+    slab.textContent = 'GW16 signed';
+    svg.appendChild(slab);
+    // line
+    const pts = data.map((v,i)=>[20 + i/37 * 340, 180 - (v/maxv * 150)]);
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d','M ' + pts.map(p=>p[0]+' '+p[1]).join(' L '));
+    path.setAttribute('stroke','#C6FF00'); path.setAttribute('stroke-width','3'); path.setAttribute('fill','none');
+    const len = 0;
+    svg.appendChild(path);
+    const total = path.getTotalLength();
+    path.style.strokeDasharray = total;
+    path.style.strokeDashoffset = total;
+    path.style.transition = 'stroke-dashoffset 2200ms ease-out';
+    setTimeout(()=>{ path.style.strokeDashoffset = 0; }, 800);
+  });
+  return el;
+});
+
+// 45. Story 6: The Late Panic — Geraint
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-yellow',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1">STORY · 06</div>
+          <div class="story-title ani ani-up d2">The late panic.</div>
+          <div class="story-tag ani ani-fade d3">Geraint · 🏴󠁧󠁢󠁷󠁬󠁳󠁿</div>
+          <div class="story-body ani ani-fade d4">
+            <p>Geraint won the league with the second-fewest transactions of any manager. 32 across the entire season.</p>
+            <p>But in GW31–GW33 he made nine of them. Three weeks of fiddling from a man who hadn't blinked in months. The title was mathematically safe. He still couldn't help himself.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 150" id="geraint-txns"></svg>
+        </div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#geraint-txns');
+    const data = [];
+    for(let gw=1; gw<=38; gw++) data.push(A.txns_per_gw['73835'][gw]);
+    const max = Math.max(...data, 1);
+    svg.innerHTML = '';
+    data.forEach((v,i)=>{
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      const x = 10 + i*9.5;
+      const h = v/max * 100;
+      rect.setAttribute('x', x); rect.setAttribute('y', 130-h);
+      rect.setAttribute('width','7'); rect.setAttribute('height', h);
+      const isHighlight = (i+1)>=31 && (i+1)<=33;
+      rect.setAttribute('fill', isHighlight ? '#0A0A0A' : 'rgba(10,10,10,.32)');
+      rect.style.opacity = '0';
+      svg.appendChild(rect);
+      setTimeout(()=>{ rect.style.transition='opacity .25s ease'; rect.style.opacity = '1'; }, 1500 + i*45);
+    });
+    const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lab.setAttribute('x', 10 + 30*9.5); lab.setAttribute('y', 18);
+    lab.setAttribute('fill','#0A0A0A'); lab.setAttribute('font-family','Anton'); lab.setAttribute('font-size','14');
+    lab.textContent = '9 in 3 weeks';
+    svg.appendChild(lab);
+  });
+  return el;
+});
+
+// 46. Story 7: The Senesi Loop
+CARDS.push(() => {
+  const sl = A.senesi_loop || [];
+  // GW4-IN, GW14-OUT, GW17-IN, GW19-OUT, GW21-IN, GW22-OUT, GW25-IN per spec
+  // We'll show all 7 moves
+  const moves = [
+    {gw:4,act:'IN'},{gw:14,act:'OUT'},{gw:17,act:'IN'},
+    {gw:19,act:'OUT'},{gw:21,act:'IN'},{gw:22,act:'OUT'},{gw:25,act:'IN'}
+  ];
+  return card({
+    cls:'bg-lime',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1">STORY · 07</div>
+          <div class="story-title ani ani-up d2">The Senesi loop.</div>
+          <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
+          <div class="story-body ani ani-fade d4">
+            <p>Bournemouth defender Marcos Senesi was signed by christopher four times this season. Dropped three times in between.</p>
+            <p>GW4 in. GW14 out. GW17 in. GW19 out. GW21 in. GW22 out. GW25 in. Could he commit? No. Could he let go? Also no.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center">
+            ${moves.map((m,i)=>`<div style="font-family:'Anton';font-size:clamp(14px,1.7vw,20px);padding:6px 12px;border:2px solid #0A0A0A;border-radius:4px;${m.act==='IN'?'background:#0A0A0A;color:#C6FF00':''}">GW${m.gw} ${m.act==='IN'?'↗':'↘'}</div>${i<moves.length-1?'<span style="opacity:.5">→</span>':''}`).join('')}
+          </div>
+        </div>
+      </div>`
+  });
+});
+
+// 47. Story 8: Decided in October
+CARDS.push(() => card({
+  cls:'bg-yellow',
+  html:`
+    <div class="story-grid">
+      <div>
+        <div class="caption ani ani-fade d1">STORY · 08</div>
+        <div class="story-title ani ani-up d2">Decided in October.</div>
+        <div class="story-tag ani ani-fade d3">The whole league</div>
+        <div class="story-body ani ani-fade d4">
+          <p>Geraint held first place for 34 of the 38 gameweeks. Mark briefly led — GW2, GW13, GW15, GW16 — and then never again.</p>
+          <p>After GW16, the leadership was settled. The rest of the season for everyone else was a fight for second.</p>
+        </div>
+      </div>
+      <div class="story-vis ani ani-fade d6">
+        <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:380px">
+          <div style="display:grid;grid-template-columns:80px 1fr 40px;align-items:center;gap:8px;font-family:'Inter';font-size:clamp(13px,1.7vw,17px)">Geraint
+            <div style="background:#0A0A0A;height:22px;width:89.5%"></div><div style="font-family:'Anton'">34</div></div>
+          <div style="display:grid;grid-template-columns:80px 1fr 40px;align-items:center;gap:8px;font-family:'Inter';font-size:clamp(13px,1.7vw,17px)">Mark
+            <div style="background:rgba(10,10,10,.55);height:22px;width:10.5%"></div><div style="font-family:'Anton'">4</div></div>
+          <div style="display:grid;grid-template-columns:80px 1fr 40px;align-items:center;gap:8px;font-family:'Inter';font-size:clamp(13px,1.7vw,17px)">Others
+            <div style="background:rgba(10,10,10,.2);height:22px;width:0%"></div><div style="font-family:'Anton'">0</div></div>
+        </div>
+      </div>
+    </div>`
+}));
+
+// 48. Story 9: Mukiele Migration
+CARDS.push(() => {
+  const muk = A.mukiele || [];
+  return card({
+    cls:'bg-off',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1" style="color:var(--orange)">STORY · 09</div>
+          <div class="story-title ani ani-up d2">The Mukiele migration.</div>
+          <div class="story-tag ani ani-fade d3">Michael, then christopher, then Geraint, then Mark</div>
+          <div class="story-body ani ani-fade d4">
+            <p>Sunderland defender Nordi Mukiele was signed by four different managers across the season. Less of a hot potato than Lacroix, more of a regifted Christmas present.</p>
+            <p>Four managers. Four signings. Presumably four different theories about whether Sunderland could keep a clean sheet.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            ${muk.map(([le,gw])=>`<div style="display:flex;align-items:center;gap:14px">
+              <div style="font-family:'Anton';font-size:clamp(22px,3vw,32px);min-width:60px">GW${gw}</div>
+              <div style="background:${HEX[le]};color:#0A0A0A;padding:6px 14px;font-family:'Anton';font-size:clamp(16px,2vw,22px);border-radius:4px">${MGR[le].first}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>`
+  });
+});
+
+// 49. Story 10: The Chase
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="caption ani ani-fade d1" style="color:var(--cyan)">STORY · 10</div>
+          <div class="story-title ani ani-up d2">The chase.</div>
+          <div class="story-tag ani ani-fade d3">Mark · Steven · christopher</div>
+          <div class="story-body ani ani-fade d4">
+            <p>A season-long, three-way scrap for second. Mark took the lead in the chasing pack at GW9 and never lost it — but never put it to bed either.</p>
+            <p>Mark sealed it on the final day. He beat christopher 46–42 while Steven lost to Geraint 29–58. Mark locked in 2nd, Steven slipped to 3rd, christopher to 4th by a single point.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 220" id="chase-chart"></svg>
+        </div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#chase-chart');
+    svg.innerHTML = '';
+    const chasers = [73788, 73827, 73858];
+    // Build cumulative league points per GW
+    function cumul(le){
+      const out = []; let pts = 0;
+      for(let gw=1; gw<=38; gw++){
+        const r = A.h2h_result[le][gw];
+        pts += (r==='W' ? 3 : r==='D'?1:0);
+        out.push(pts);
+      }
+      return out;
+    }
+    const series = chasers.map(le=>({le, data:cumul(le)}));
+    const maxV = Math.max(...series.flatMap(s=>s.data));
+    series.forEach((s, idx) => {
+      const pts = s.data.map((v,i)=>[10 + i/37 * 360, 200 - (v/maxV * 180)]);
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d','M ' + pts.map(p=>p[0]+' '+p[1]).join(' L '));
+      path.setAttribute('stroke', HEX[s.le]); path.setAttribute('stroke-width','3'); path.setAttribute('fill','none');
+      svg.appendChild(path);
+      const total = path.getTotalLength();
+      path.style.strokeDasharray = total; path.style.strokeDashoffset = total;
+      path.style.transition = 'stroke-dashoffset 1800ms ease-out';
+      setTimeout(()=>{ path.style.strokeDashoffset = 0; }, 600 + idx*350);
+    });
+    // labels at endpoints
+    chasers.forEach((le, idx) => {
+      const data = series[idx].data;
+      const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', 380); lab.setAttribute('y', 200 - (data[37]/maxV*180) + 4);
+      lab.setAttribute('text-anchor','end');
+      lab.setAttribute('fill', HEX[le]);
+      lab.setAttribute('font-family','Anton'); lab.setAttribute('font-size','12');
+      lab.style.opacity = '0';
+      lab.textContent = MGR[le].first + ' ' + data[37];
+      svg.appendChild(lab);
+      setTimeout(()=>{ lab.style.transition='opacity .4s ease'; lab.style.opacity='1'; }, 2400);
+    });
+  });
+  return el;
+});
+
+// 50. Interstitial
+CARDS.push(() => card({
+  cls:'interstitial bg-cyan',
+  html:`<div class="text ani ani-up d1">By the numbers.</div>`
+}));
+
+// 51. Aggregate stats
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-off',
+    html:`
+      <div class="caption ani ani-fade d1" style="color:var(--purple)">AGGREGATE · 38 GAMEWEEKS · 114 MATCHES</div>
+      <div class="award-name ani ani-up d2" style="font-size:clamp(40px,6.5vw,84px)">The whole season, in numbers.</div>
+      <div class="agg-grid mt-md">
+        <div class="agg-item ani ani-up d3"><div class="agg-num counter" data-target="367">0</div><div class="agg-label">accepted transactions</div></div>
+        <div class="agg-item ani ani-up d4"><div class="agg-num counter" data-target="3">0</div><div class="agg-label">manager-to-manager trades</div></div>
+        <div class="agg-item ani ani-up d5"><div class="agg-num counter" data-target="10253">0</div><div class="agg-label">total starting-XI points</div></div>
+        <div class="agg-item ani ani-up d6"><div class="agg-num counter" data-target="215">0</div><div class="agg-label">distinct players fielded</div></div>
+        <div class="agg-item ani ani-up d7"><div class="agg-num counter" data-target="32">0</div><div class="agg-label">matches decided by 5pts or fewer</div></div>
+        <div class="agg-item ani ani-up d8"><div class="agg-num counter" data-target="93">0</div><div class="agg-label">highest single-GW score (christopher, GW15)</div></div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(()=>{
+      el.querySelectorAll('.counter[data-target]').forEach((c,i)=>{
+        setTimeout(()=>{
+          const tgt = +c.dataset.target;
+          const dur = tgt > 1000 ? 2400 : (tgt > 100 ? 1800 : 1200);
+          const start = performance.now();
+          (function step(t){
+            const k = Math.min(1,(t-start)/dur);
+            const e = 1 - Math.pow(1-k, 3);
+            c.textContent = Math.round(tgt*e);
+            if(k<1) requestAnimationFrame(step); else c.textContent = tgt;
+          })(performance.now());
+        }, i*120);
+      });
+    }, 700);
+  });
+  return el;
+});
+
+// 52. Closing card
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black closing',
+    html:`
+      <div class="one-last ani ani-fade d1">One last thing.</div>
+      <div class="fact ani ani-up d3" id="closing-fact" style="opacity:0">
+        Christopher scored more points than every manager except Geraint, and finished fourth.
+      </div>
+      <div class="signoff ani ani-fade" id="closing-sign" style="opacity:0">Draw your own conclusions.</div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    setTimeout(()=>{
+      el.querySelector('#closing-fact').style.animation = 'slideUp .8s cubic-bezier(.18,.8,.25,1) forwards';
+    }, 1400);
+    setTimeout(()=>{
+      el.querySelector('#closing-sign').style.animation = 'fadeUp .8s ease-out forwards';
+    }, 4700);
+  });
+  return el;
+});
+
 </script>
 </body>
 </html>

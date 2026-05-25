@@ -553,8 +553,8 @@ interstitial('The hands-off champion.', 'bg-green');
 {
   const c = card('bg-yellow', '');
   const wrap = el('div', {style:'display:flex;flex-direction:column;gap:max(18px,3vmin);width:100%;align-items:center;justify-content:center;flex:1'});
-  wrap.appendChild(el('h2', {class:'gz-head fade-up'}, 'GERAINT WON THIS THING'));
-  wrap.appendChild(el('div', {class:'tag fade-up d-2', style:'text-align:center'}, 'WHILE BARELY LOOKING AT HIS TEAM'));
+  wrap.appendChild(el('h2', {class:'gz-head fade-up'}, 'HE BARELY LOOKED'));
+  wrap.appendChild(el('div', {class:'tag fade-up d-2', style:'text-align:center'}, 'GERAINT · 🏴\u{E0067}\u{E0062}\u{E0077}\u{E006C}\u{E0073}\u{E007F}'));
   const tri = el('div', {class:'three-numbers'});
   const cells = [
     {n: D.tx_total.geraint, lab:'TRANSACTIONS — 2ND-FEWEST'},
@@ -568,7 +568,7 @@ interstitial('The hands-off champion.', 'bg-green');
     tri.appendChild(cellEl);
   });
   wrap.appendChild(tri);
-  wrap.appendChild(el('div', {class:'gz-cap fade-up d-8'}, '34 weeks at #1. Twenty-eight transactions in 38 gameweeks. He just left it alone.'));
+  wrap.appendChild(el('div', {class:'gz-cap fade-up d-8'}, '34 weeks at #1. 32 transactions in 38 gameweeks. He just left it alone.'));
   c.appendChild(wrap);
 }
 
@@ -651,8 +651,8 @@ const MGR_VERDICT = {
   michael:     'Made the most signings in the league. Finished fifth.',
   christopher: 'Scored the most points outside the champion. Got nothing for it.',
   steven:      'Won six in a row, then lost five in a row, then went quiet.',
-  mark:        'Climbed to second by GW9 and held it to the final whistle.',
-  geraint:     'Twenty-eight transactions. Seventy-eight points. Champion.',
+  mark:        'Climbed to second by GW6 and held it to the final whistle.',
+  geraint:     'Thirty-two transactions. Seventy-eight points. Champion.',
 };
 const MGR_ORDER = ['peter','michael','christopher','steven','mark','geraint'];
 const RANKS = {peter:6, michael:5, christopher:4, steven:3, mark:2, geraint:1};
@@ -1357,7 +1357,7 @@ makeStory('bg-cyan', 'The cliff.', 'CHRISTOPHER · THE MASTERPLAN',
 // --- Story 6: The Late Panic (Geraint) ---
 makeStory('bg-yellow', 'The late panic.', 'GERAINT · 🏴\u{E0067}\u{E0062}\u{E0077}\u{E006C}\u{E0073}\u{E007F}',
   [
-    "Geraint won the league with twenty-eight transactions — the second-fewest of any manager.",
+    "Geraint won the league with thirty-two transactions — the second-fewest of any manager.",
     "But in GW31 to GW33, with the title already mathematically safe, he made nine transactions in three weeks.",
     "The unflappable champion who barely cared all year got the fear in the run-in.",
   ],
@@ -1429,7 +1429,7 @@ makeStory('bg-pink', 'The Mukiele migration.', 'MICHAEL → CHRISTOPHER → GERA
 // --- Story 10: The Chase ---
 makeStory('bg-black', 'The chase.', 'MARK · STEVEN · CHRISTOPHER',
   [
-    "A season-long three-way fight for second place. Mark took the lead in the chase at GW9 and never lost it — but never put it away either.",
+    "A season-long three-way fight for second place. Mark took the lead in the chase at GW6 and never lost it — but never put it away either.",
     "At GW32 he was 5 clear of Steven, 7 clear of Christopher. By GW37 the gaps were 2 and 4.",
     "Mark sealed it on the final day: beat Christopher 46-42 while Steven lost to Geraint. Second on the last whistle.",
   ],

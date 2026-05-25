@@ -22,16 +22,30 @@ body{font-family:'Inter',sans-serif}
 .deck{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none;}
 .deck::-webkit-scrollbar{display:none}
 .card{height:100vh;height:100dvh;width:100vw;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;padding:24px;isolation:isolate}
-/* Light sweep across each card on enter — adapts to bg via blend mode */
-.card::after{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:5;opacity:0;
-  background:linear-gradient(105deg, transparent 38%, rgba(255,255,255,.35) 50%, transparent 62%);
+/* Light sweep — applied only to special cards (Champion, Best Trade, Best Draft, Closing). */
+.card.special-shine::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:6;opacity:0;
+  background:linear-gradient(105deg, transparent 42%, rgba(255,255,255,.55) 50%, transparent 58%);
   transform:translateX(-110%);
   mix-blend-mode:overlay;
   will-change:transform,opacity;
 }
-.card.in-view::after{animation:cardShine 1.6s cubic-bezier(.22,.8,.32,1) .2s forwards}
+.card.special-shine.in-view::after{animation:cardShine 1.7s cubic-bezier(.22,.8,.32,1) .25s forwards}
 @keyframes cardShine{0%{transform:translateX(-110%);opacity:0}15%{opacity:1}100%{transform:translateX(110%);opacity:0}}
+
+/* Award cards: diagonal stripe corners (top-left + bottom-right) + centered text */
+.award-card .card-inner{align-items:center;text-align:center}
+.award-card .award-name,
+.award-card .explainer,
+.award-card .recipient,
+.award-card .zinger{max-width:46ch}
+.award-stripe-tl,.award-stripe-br{position:absolute;width:80px;height:80px;background:repeating-linear-gradient(-45deg, transparent 0 6px, currentColor 6px 7px);opacity:.5;pointer-events:none;z-index:1}
+.award-stripe-tl{top:0;left:0;clip-path:polygon(0 0, 100% 0, 0 100%)}
+.award-stripe-br{bottom:0;right:0;clip-path:polygon(100% 0, 100% 100%, 0 100%)}
+
+/* Story cards: hairline double border */
+.story-frame-outer{position:absolute;inset:10px;border:1px solid currentColor;opacity:.42;pointer-events:none;z-index:1}
+.story-frame-inner{position:absolute;inset:14px;border:1px solid currentColor;opacity:.20;pointer-events:none;z-index:1}
 .card-inner{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:2}
 @media (max-width: 480px){.card{padding:18px} .card-inner{gap:10px}}
 
@@ -374,12 +388,21 @@ function mgrName(le){return MGR[le].first}
 function mgrTeam(le){return MGR[le].team}
 function mgrFull(le){return MGR[le].first + " · " + MGR[le].team}
 
-// Card factory creates a card element
+// Card factory creates a card element. Ornament shells (stripes / double-border)
+// are injected based on the card's classes — so individual card builders just need
+// to add 'award-card' or 'story-card' and the corners come along automatically.
 function card(opts){
   const el = document.createElement('section');
   el.className = 'card ' + (opts.cls||'');
   if(opts.id) el.id = opts.id;
-  el.innerHTML = `<div class="card-inner">${opts.html}</div>`;
+  let ornaments = '';
+  const cls = el.classList;
+  if(cls.contains('award-card')){
+    ornaments = '<span class="award-stripe-tl"></span><span class="award-stripe-br"></span>';
+  } else if(cls.contains('story-card')){
+    ornaments = '<span class="story-frame-outer"></span><span class="story-frame-inner"></span>';
+  }
+  el.innerHTML = ornaments + `<div class="card-inner">${opts.html}</div>`;
   return el;
 }
 
@@ -896,7 +919,7 @@ CARDS.push(() => {
     return `<span class="confetti-piece" style="left:${left}%;width:${w}px;height:${h}px;background:${col};animation-delay:${delay}s;animation-duration:${dur}s;transform:rotate(${rot}deg) translateX(${sway}px)"></span>`;
   }).join('');
   return card({
-    cls:'bg-yellow',
+    cls:'bg-yellow award-card special-shine',
     html:`
       ${confettiPieces}
       <div class="award-name ani ani-up d1">Champion of the Craig Cup.</div>
@@ -935,7 +958,7 @@ CARDS.push(() => {
   const markGot = t3.received_got_detail[0]; // Evanilson
   const michGot = t3.offered_got_detail[0];  // Isak
   return card({
-    cls:'bg-grad-po',
+    cls:'bg-grad-po award-card special-shine',
     html:`
       <div class="award-name ani ani-up d1">The Evanilson heist.</div>
       <div class="explainer ani ani-fade d2">Net tenure-adjusted points across the three trades. The bigger the gap, the bigger the win.</div>
@@ -961,7 +984,7 @@ CARDS.push(() => {
 CARDS.push(() => {
   const b = A.best_draft_league;
   return card({
-    cls:'bg-cyan',
+    cls:'bg-cyan award-card special-shine',
     html:`
       <div class="award-name ani ani-up d1">First overall. First everything.</div>
       <div class="explainer ani ani-fade d2">Most points scored by a draftee while still owned by the manager who drafted them.</div>
@@ -980,7 +1003,7 @@ CARDS.push(() => {
 // 24. Most Influential Transfer — GITTENS / 0 PTS for christopher (hardcoded per spec)
 CARDS.push(() => {
   const el = card({
-    cls:'bg-grad-po',
+    cls:'bg-grad-po award-card',
     html:`
       <div class="award-name ani ani-up d1" style="word-break:normal">Most influential transfer.</div>
       <div class="explainer ani ani-fade d2">The transfer that changed the league. Picked by christopher · The Masterplan.</div>
@@ -1019,7 +1042,7 @@ CARDS.push(() => {
 // 25. Asleep at the Wheel — Peter
 CARDS.push(() => {
   const el = card({
-    cls:'bg-black',
+    cls:'bg-black award-card',
     html:`
       <div class="award-name ani ani-up d1">Asleep at the wheel.</div>
       <div class="explainer ani ani-fade d2">Longest consecutive run of gameweeks without a single accepted transaction.</div>
@@ -1055,7 +1078,7 @@ CARDS.push(() => card({
 CARDS.push(() => {
   const items = A.revolving_by_le['73847'].filter(x => x.count >= 2).slice(0, 6);
   return card({
-    cls:'bg-orange',
+    cls:'bg-orange award-card',
     html:`
       <div class="award-name ani ani-up d1">Couldn't make his mind up.</div>
       <div class="explainer ani ani-fade d2">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
@@ -1073,7 +1096,7 @@ CARDS.push(() => {
 // 28. Goalkeeping Howler — Steven
 CARDS.push(() => {
   const el = card({
-    cls:'bg-cyan',
+    cls:'bg-cyan award-card',
     html:`
       <div class="award-name ani ani-up d1">Goalkeeping howler.</div>
       <div class="explainer ani ani-fade d2">Started the lower-scoring of his two keepers. Across the whole season.</div>
@@ -1107,7 +1130,7 @@ CARDS.push(() => {
 CARDS.push(() => {
   const lac = A.lacroix || [];
   return card({
-    cls:'bg-purple',
+    cls:'bg-purple award-card',
     html:`
       <div class="award-name ani ani-up d1">Three managers. Seven signings.</div>
       <div class="explainer ani ani-fade d2">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
@@ -1121,7 +1144,7 @@ CARDS.push(() => {
 
 // 30. Welcome and Goodbye — Peter / Gravenberch GW28→GW30 (Lacroix moved out to avoid duplicating the Hot Potato + Lacroix Story)
 CARDS.push(() => card({
-  cls:'bg-lime',
+  cls:'bg-lime award-card',
   html:`
     <div class="award-name ani ani-up d1">In on Tuesday. Out by Saturday.</div>
     <div class="explainer ani ani-fade d2">Signed a player, never started them, dropped them within three gameweeks.</div>
@@ -1143,7 +1166,7 @@ CARDS.push(() => card({
 // 31. The Beating — christopher 93–38 Peter
 CARDS.push(() => {
   const el = card({
-    cls:'bg-pink',
+    cls:'bg-pink award-card',
     html:`
       <div class="award-name ani ani-up d1">A 55-point hiding.</div>
       <div class="explainer ani ani-fade d2">Biggest H2H margin of the season · GW15.</div>
@@ -1174,7 +1197,7 @@ CARDS.push(() => {
 // 32. Phantom XI — Steven GW34
 CARDS.push(() => {
   const el = card({
-    cls:'bg-black',
+    cls:'bg-black award-card',
     html:`
       <div class="award-name ani ani-up d1">Five players, zero minutes.</div>
       <div class="explainer ani ani-fade d2">Five of his eleven starters didn't see the pitch that gameweek.</div>
@@ -1222,7 +1245,7 @@ CARDS.push(() => {
 
 // 33. Three Strikes — Mark / Amad
 CARDS.push(() => card({
-  cls:'bg-cyan',
+  cls:'bg-cyan award-card',
   html:`
     <div class="award-name ani ani-up d1">Three goes at the same player.</div>
     <div class="explainer ani ani-fade d2">Signed, dropped, signed, dropped, signed. By the same manager. In one season.</div>
@@ -1245,7 +1268,7 @@ CARDS.push(() => card({
 // 34. Coin Flip — Geraint 51 — 52 Michael, GW7 (margin 1)
 CARDS.push(() => {
   const el = card({
-    cls:'bg-lime',
+    cls:'bg-lime award-card',
     html:`
       <div class="award-name ani ani-up d1">The coin flip.</div>
       <div class="explainer ani ani-fade d2">Closest H2H result of the season. Decided by a single point in GW7.</div>
@@ -1369,7 +1392,7 @@ CARDS.push(() => card({
 // 40. Story 1: Six in a row, then five — Steven
 CARDS.push(() => {
   const el = card({
-    cls:'bg-off',
+    cls:'bg-off story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1420,7 +1443,7 @@ CARDS.push(() => {
 // 41. Story 2: Late form — Christopher
 CARDS.push(() => {
   const el = card({
-    cls:'bg-black',
+    cls:'bg-black story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1496,7 +1519,7 @@ CARDS.push(() => {
 // 42. Story 3: Identity Crisis — Michael
 CARDS.push(() => {
   const el = card({
-    cls:'bg-orange',
+    cls:'bg-orange story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1574,7 +1597,7 @@ CARDS.push(() => {
 CARDS.push(() => {
   const lac = A.lacroix || [];
   return card({
-    cls:'bg-off',
+    cls:'bg-off story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1604,7 +1627,7 @@ CARDS.push(() => {
 // 44. Story 5: The Cliff — Dewsbury-Hall
 CARDS.push(() => {
   const el = card({
-    cls:'bg-black',
+    cls:'bg-black story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1657,7 +1680,7 @@ CARDS.push(() => {
 // 45. Story 6: The Late Panic — Geraint
 CARDS.push(() => {
   const el = card({
-    cls:'bg-yellow',
+    cls:'bg-yellow story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1710,7 +1733,7 @@ CARDS.push(() => {
     {gw:19,act:'OUT'},{gw:21,act:'IN'},{gw:22,act:'OUT'},{gw:25,act:'IN'}
   ];
   return card({
-    cls:'bg-lime',
+    cls:'bg-lime story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1732,7 +1755,7 @@ CARDS.push(() => {
 
 // 47. Story 8: Decided in October
 CARDS.push(() => card({
-  cls:'bg-yellow',
+  cls:'bg-yellow story-card',
   html:`
     <div class="story-grid">
       <div>
@@ -1760,7 +1783,7 @@ CARDS.push(() => card({
 CARDS.push(() => {
   const muk = A.mukiele || [];
   return card({
-    cls:'bg-off',
+    cls:'bg-off story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1786,7 +1809,7 @@ CARDS.push(() => {
 // 49. Story 10: The Chase
 CARDS.push(() => {
   const el = card({
-    cls:'bg-black',
+    cls:'bg-black story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1849,7 +1872,7 @@ CARDS.push(() => {
 // 49b. Story 11: Setting the tone — Peter
 CARDS.push(() => {
   const el = card({
-    cls:'bg-purple',
+    cls:'bg-purple story-card',
     html:`
       <div class="story-grid">
         <div>
@@ -1989,7 +2012,7 @@ CARDS.push(() => {
   const factText = "In a season where nobody had transferred, Michael's GW1 squad would have won the league. He ran 103 transactions instead and finished fifth.";
   const words = factText.split(' ');
   const el = card({
-    cls:'bg-black closing',
+    cls:'bg-black closing special-shine',
     html:`
       <div class="one-last ani ani-fade d1">One last thing.</div>
       <div class="fact" id="closing-fact">${words.map(w => `<span class="cf-word" style="display:inline-block;opacity:0;transform:translateY(14px)">${w}</span>`).join(' ')}</div>

@@ -255,17 +255,17 @@ Reference numbers for the build. Same JSON in → same numbers out.
 ## Best/worst transfers (tenure-adjusted)
 
 - Mark best txn: **Enzo** in GW3 — 144 pts in 36 weeks
-- Mark worst txn (3+ wks held): Udogie in GW6 — 4 pts in 3 weeks
+- Mark worst txn (3+ wks held): Lewis-Potter in GW27 — 1 pts in 2 weeks
 - Peter best txn: **Thiago** in GW1 — 168 pts in 37 weeks
-- Peter worst txn (3+ wks held): Isidor in GW22 — 2 pts in 3 weeks
+- Peter worst txn (3+ wks held): Rogers in GW38 — 0 pts in 1 weeks
 - Steven best txn: **O'Reilly** in GW6 — 147 pts in 33 weeks
-- Steven worst txn (3+ wks held): Matheus N. in GW1 — 3 pts in 3 weeks
+- Steven worst txn (3+ wks held): Mount in GW19 — 0 pts in 1 weeks
 - Geraint best txn: **James** in GW3 — 107 pts in 28 weeks
-- Geraint worst txn (3+ wks held): Kroupi.Jr in GW28 — 5 pts in 3 weeks
+- Geraint worst txn (3+ wks held): Szoboszlai in GW22 — 0 pts in 1 weeks
 - Michael best txn: **Donnarumma** in GW4 — 135 pts in 35 weeks
-- Michael worst txn (3+ wks held): Kolo Muani in GW4 — 5 pts in 5 weeks
+- Michael worst txn (3+ wks held): Andersen in GW36 — -2 pts in 1 weeks
 - christopher best txn: **Senesi** in GW4 — 123 pts in 27 weeks
-- christopher worst txn (3+ wks held): Madueke in GW16 — 1 pts in 4 weeks
+- christopher worst txn (3+ wks held): Garnacho in GW12 — 0 pts in 1 weeks
 
 ### Top 15 transfers league-wide (tenure-adjusted)
 

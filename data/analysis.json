@@ -1674,40 +1674,40 @@
  },
  "worst_txn_per_le": {
   "73788": {
-   "name": "Udogie",
-   "gw_in": 6,
-   "pts": 4,
-   "held": 3
+   "name": "Lewis-Potter",
+   "gw_in": 27,
+   "pts": 1,
+   "held": 2
   },
   "73822": {
-   "name": "Isidor",
-   "gw_in": 22,
-   "pts": 2,
-   "held": 3
+   "name": "Rogers",
+   "gw_in": 38,
+   "pts": 0,
+   "held": 1
   },
   "73827": {
-   "name": "Matheus N.",
-   "gw_in": 1,
-   "pts": 3,
-   "held": 3
+   "name": "Mount",
+   "gw_in": 19,
+   "pts": 0,
+   "held": 1
   },
   "73835": {
-   "name": "Kroupi.Jr",
-   "gw_in": 28,
-   "pts": 5,
-   "held": 3
+   "name": "Szoboszlai",
+   "gw_in": 22,
+   "pts": 0,
+   "held": 1
   },
   "73847": {
-   "name": "Kolo Muani",
-   "gw_in": 4,
-   "pts": 5,
-   "held": 5
+   "name": "Andersen",
+   "gw_in": 36,
+   "pts": -2,
+   "held": 1
   },
   "73858": {
-   "name": "Madueke",
-   "gw_in": 16,
-   "pts": 1,
-   "held": 4
+   "name": "Garnacho",
+   "gw_in": 12,
+   "pts": 0,
+   "held": 1
   }
  },
  "gk_howler": {

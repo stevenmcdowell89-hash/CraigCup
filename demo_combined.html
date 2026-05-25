@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Halftone + corner ornaments — combined demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#222;color:#fff}
+.wrap{display:grid;grid-template-columns:1fr;gap:32px;padding:24px;max-width:1200px;margin:0 auto}
+@media (min-width:880px){.wrap{grid-template-columns:1fr 1fr}}
+.row-label{grid-column:1/-1;font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:.06em;opacity:.85;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:8px;margin-top:24px}
+.row-label:first-child{margin-top:0}
+.row-label .desc{display:block;font-family:'Inter',sans-serif;font-size:13px;text-transform:none;letter-spacing:0;opacity:.65;margin-top:6px;font-weight:400;max-width:80ch}
+.card-demo{aspect-ratio:9/16;max-height:680px;width:100%;border-radius:6px;position:relative;display:flex;flex-direction:column;justify-content:center;padding:36px;overflow:hidden;font-family:'Inter',sans-serif}
+.tag{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;z-index:10;text-align:center;line-height:1.3}
+.bg-yellow{background:#FFEB3B;color:#0A0A0A}
+.bg-purple{background:#6A1B9A;color:#F4F1EA}
+.bg-orange{background:#FF6F00;color:#0A0A0A}
+.bg-cyan{background:#00BCD4;color:#0A0A0A}
+.bg-black{background:#0A0A0A;color:#F4F1EA}
+.bg-off{background:#F4F1EA;color:#0A0A0A}
+.bg-pink{background:#FF1493;color:#F4F1EA}
+.bg-lime{background:#C6FF00;color:#0A0A0A}
+.title{font-family:'Anton',sans-serif;font-size:46px;line-height:.95;text-transform:uppercase;margin-bottom:14px;position:relative;z-index:3}
+.body{font-size:15px;line-height:1.4;margin-bottom:14px;opacity:.92;max-width:32ch;position:relative;z-index:3}
+.hero{font-family:'Anton',sans-serif;font-size:84px;line-height:.9;position:relative;z-index:3}
+.zinger{font-family:'Space Grotesk',sans-serif;font-style:italic;font-size:15px;margin-top:auto;opacity:.92;position:relative;z-index:3}
+.kicker{position:relative;z-index:3;font-family:'Space Grotesk',sans-serif;font-size:13px;opacity:.7;margin-top:8px;letter-spacing:.04em}
+
+/* ======= HALFTONE LAYERS (use ::after for halftone) ======= */
+.ht-dots-fine::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:radial-gradient(currentColor 1px, transparent 1.4px);
+  background-size:8px 8px;opacity:.08;mix-blend-mode:multiply;
+}
+.bg-black.ht-dots-fine::after,.bg-purple.ht-dots-fine::after,.bg-pink.ht-dots-fine::after{mix-blend-mode:screen;opacity:.06}
+
+.ht-dots-soft::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:radial-gradient(currentColor 1px, transparent 1.5px);
+  background-size:10px 10px;opacity:.06;mix-blend-mode:multiply;
+}
+.bg-black.ht-dots-soft::after,.bg-purple.ht-dots-soft::after,.bg-pink.ht-dots-soft::after{mix-blend-mode:screen;opacity:.05}
+
+.ht-gradient::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:radial-gradient(currentColor 1px, transparent 1.5px);
+  background-size:9px 9px;opacity:.12;mix-blend-mode:multiply;
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+}
+.bg-black.ht-gradient::after,.bg-purple.ht-gradient::after,.bg-pink.ht-gradient::after{mix-blend-mode:screen;opacity:.10}
+
+/* ======= CORNER ORNAMENTS (use ::before for ornaments) ======= */
+.co-brackets::before{
+  content:'';position:absolute;inset:14px;pointer-events:none;z-index:2;
+  background:
+    linear-gradient(currentColor,currentColor) 0 0/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 0 0/3px 26px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 0/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 0/3px 26px no-repeat,
+    linear-gradient(currentColor,currentColor) 0 100%/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 0 100%/3px 26px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 100%/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 100%/3px 26px no-repeat;
+  opacity:.45;
+}
+.co-brackets-bold::before{
+  content:'';position:absolute;inset:14px;pointer-events:none;z-index:2;
+  background:
+    linear-gradient(currentColor,currentColor) 0 0/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 0 0/3px 26px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 0/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 0/3px 26px no-repeat,
+    linear-gradient(currentColor,currentColor) 0 100%/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 0 100%/3px 26px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 100%/26px 3px no-repeat,
+    linear-gradient(currentColor,currentColor) 100% 100%/3px 26px no-repeat;
+  opacity:.65;
+}
+.co-double{outline:1px solid currentColor;outline-offset:-10px}
+.co-double::before{
+  content:'';position:absolute;inset:14px;border:1px solid currentColor;opacity:.4;pointer-events:none;z-index:2;
+}
+.co-triangles-soft{}
+.co-triangles-soft .tri-tl,.co-triangles-soft .tri-br{position:absolute;width:0;height:0;border-style:solid;pointer-events:none;z-index:2;opacity:.13}
+.co-triangles-soft .tri-tl{top:0;left:0;border-width:48px 48px 0 0;border-color:currentColor transparent transparent transparent}
+.co-triangles-soft .tri-br{bottom:0;right:0;border-width:0 0 48px 48px;border-color:transparent transparent currentColor transparent}
+
+.co-glow::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:
+    radial-gradient(circle at 0% 0%, currentColor, transparent 22%),
+    radial-gradient(circle at 100% 100%, currentColor, transparent 22%);
+  opacity:.12;mix-blend-mode:overlay;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="row-label">A · Reference (no overlays, current site)
+    <span class="desc">For comparison.</span>
+  </div>
+  <div class="card-demo bg-yellow"><span class="tag">none</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple"><span class="tag">none</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">B · Subtle pair: fine halftone @ 8% + L-brackets @ 45%
+    <span class="desc">Both effects quiet. The dots add texture, the brackets frame, neither demands attention. Suggested default for every card.</span>
+  </div>
+  <div class="card-demo bg-yellow ht-dots-fine co-brackets"><span class="tag">B · subtle pair</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple ht-dots-fine co-brackets"><span class="tag">B · subtle pair</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">C · Editorial pair: softer halftone @ 6% + hairline double border
+    <span class="desc">Magazine / collectible feel. Both elements pull together — the framing reads first, the dot texture just adds depth.</span>
+  </div>
+  <div class="card-demo bg-yellow ht-dots-soft co-double"><span class="tag">C · editorial</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple ht-dots-soft co-double"><span class="tag">C · editorial</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">D · Atmospheric pair: gradient halftone (denser at bottom) + L-brackets
+    <span class="desc">Halftone fades from clean top → textured bottom, like print bleed. Brackets keep the cards feeling intentional.</span>
+  </div>
+  <div class="card-demo bg-yellow ht-gradient co-brackets"><span class="tag">D · atmospheric</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple ht-gradient co-brackets"><span class="tag">D · atmospheric</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">E · Sport-poster pair: fine halftone + soft filled triangles
+    <span class="desc">Triangles only on opposite corners, kept light at 13%. Halftone fine, 8%. More energy than B but still in control.</span>
+  </div>
+  <div class="card-demo bg-yellow ht-dots-fine co-triangles-soft"><span class="tag">E · sport poster</span>
+    <span class="tri-tl"></span><span class="tri-br"></span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple ht-dots-fine co-triangles-soft"><span class="tag">E · sport poster</span>
+    <span class="tri-tl"></span><span class="tri-br"></span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">F · The "pick-and-mix" strategy
+    <span class="desc">Different treatment per card TYPE rather than the same on all 53. Award cards get the full pair, interstitials get nothing, stories get just halftone (prose needs to breathe), tables/manager cards get just brackets. Cohesive without being uniform. Shown below: champion = full pair, interstitial = bare, story card = halftone only, manager card = brackets only.</span>
+  </div>
+  <div class="card-demo bg-yellow ht-dots-fine co-brackets-bold"><span class="tag">F · award<br>halftone + brackets</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-pink" style="display:flex;align-items:center;justify-content:center"><span class="tag">F · interstitial<br>no overlay</span>
+    <div style="font-family:'Anton';font-size:72px;text-transform:uppercase;text-align:center;line-height:.95">The awards.</div>
+  </div>
+  <div class="card-demo bg-off ht-dots-soft"><span class="tag">F · story<br>halftone only, no border</span>
+    <div class="title" style="font-size:52px">Setting the tone.</div>
+    <div class="kicker">Peter · MaxPoints</div>
+    <div class="body" style="margin-top:14px">Peter lost his opening seven games. GW1 through GW7. By the time he won his first, he was eight points off the next-worst team.</div>
+    <div class="body">Last place stuck. He held the bottom of the table for thirty-seven of the thirty-eight gameweeks.</div>
+  </div>
+  <div class="card-demo bg-cyan co-brackets"><span class="tag">F · manager card<br>brackets only, no halftone</span>
+    <div class="title" style="font-size:42px">Mark</div>
+    <div class="kicker">Carrying Timber</div>
+    <div class="body" style="margin-top:18px;font-size:14px;line-height:1.5">
+      <div>W–D–L · 21–2–15</div>
+      <div>Points for · 1712</div>
+      <div>Best move · Enzo · 144 pts in 36 wks</div>
+      <div>Worst move · Lewis-Potter · 1 pt in 2 wks</div>
+      <div>Nemesis · Geraint (5×)</div>
+    </div>
+    <div class="zinger" style="margin-top:auto">Held second place for nearly the whole season without ever closing the gap.</div>
+  </div>
+
+  <div class="row-label">G · Range check: spot-check the recommended pair on more cards
+    <span class="desc">If B (subtle pair: fine halftone + L-brackets) gets the green light, here's how it looks across other backgrounds and card types.</span>
+  </div>
+  <div class="card-demo bg-black ht-dots-fine co-brackets"><span class="tag">B on black</span>
+    <div class="title">Asleep at the wheel.</div>
+    <div class="body">Longest consecutive run of gameweeks without a single accepted transaction.</div>
+    <div class="hero" style="color:#FFEB3B">9</div>
+    <div class="zinger">GW29 to GW37. He's still online. He's just choosing not to be.</div>
+  </div>
+  <div class="card-demo bg-orange ht-dots-fine co-brackets"><span class="tag">B on orange</span>
+    <div class="title">Couldn't make his mind up.</div>
+    <div class="body">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
+    <div class="hero">Michael</div>
+    <div class="zinger">Made 103 transactions chasing the perfect XI. Never found it.</div>
+  </div>
+  <div class="card-demo bg-pink ht-dots-fine co-brackets"><span class="tag">B on pink</span>
+    <div class="title">A 55-point hiding.</div>
+    <div class="body">Biggest H2H margin of the season · GW15.</div>
+    <div class="hero">93–38</div>
+    <div class="zinger">Football's equivalent of taking your nephew's lunch money.</div>
+  </div>
+  <div class="card-demo bg-lime ht-dots-fine co-brackets"><span class="tag">B on lime</span>
+    <div class="title">The coin flip.</div>
+    <div class="body">Closest H2H result of the season. Decided by a single point in GW7.</div>
+    <div class="hero">51–52</div>
+    <div class="zinger">A point in it.</div>
+  </div>
+
+</div>
+</body>
+</html>

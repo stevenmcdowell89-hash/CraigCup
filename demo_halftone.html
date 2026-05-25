@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Halftone overlay demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#222;color:#fff}
+.wrap{display:grid;grid-template-columns:1fr;gap:32px;padding:24px;max-width:1200px;margin:0 auto}
+@media (min-width:880px){.wrap{grid-template-columns:1fr 1fr}}
+.row-label{grid-column:1/-1;font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:.06em;opacity:.7;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:8px;margin-top:24px}
+.row-label:first-child{margin-top:0}
+.card-demo{aspect-ratio:9/16;max-height:680px;width:100%;border-radius:6px;position:relative;display:flex;flex-direction:column;justify-content:center;padding:30px;overflow:hidden;font-family:'Inter',sans-serif}
+.tag{position:absolute;top:10px;left:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;z-index:5}
+.bg-yellow{background:#FFEB3B;color:#0A0A0A}
+.bg-purple{background:#6A1B9A;color:#F4F1EA}
+.bg-orange{background:#FF6F00;color:#0A0A0A}
+.bg-cyan{background:#00BCD4;color:#0A0A0A}
+.bg-black{background:#0A0A0A;color:#F4F1EA}
+.bg-off{background:#F4F1EA;color:#0A0A0A}
+.title{font-family:'Anton',sans-serif;font-size:46px;line-height:.95;text-transform:uppercase;margin-bottom:14px}
+.body{font-size:15px;line-height:1.4;margin-bottom:14px;opacity:.92;max-width:32ch}
+.hero{font-family:'Anton',sans-serif;font-size:84px;line-height:.9}
+.zinger{font-family:'Space Grotesk',sans-serif;font-style:italic;font-size:15px;margin-top:auto;opacity:.92}
+
+/* Halftone overlay v1 — dot pattern at low opacity */
+.halftone-dots::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(currentColor 1px, transparent 1.4px);
+  background-size:8px 8px;
+  opacity:.10;
+  mix-blend-mode:multiply;
+}
+.bg-black.halftone-dots::after,.bg-purple.halftone-dots::after{mix-blend-mode:screen;opacity:.07}
+
+/* Halftone overlay v2 — print dot pattern via SVG (larger, more obvious) */
+.halftone-print::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14'><circle cx='2' cy='2' r='1.4' fill='black'/></svg>");
+  background-size:14px 14px;
+  opacity:.12;
+  mix-blend-mode:multiply;
+}
+.bg-black.halftone-print::after,.bg-purple.halftone-print::after{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14'><circle cx='2' cy='2' r='1.4' fill='white'/></svg>");
+  mix-blend-mode:screen;opacity:.10;
+}
+
+/* Halftone overlay v3 — gradient halftone (denser bottom) */
+.halftone-gradient::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(currentColor 1px, transparent 1.5px);
+  background-size:9px 9px;
+  opacity:.14;
+  mix-blend-mode:multiply;
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+}
+.bg-black.halftone-gradient::after,.bg-purple.halftone-gradient::after{mix-blend-mode:screen;opacity:.12}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="row-label">No overlay · current site</div>
+  <div class="card-demo bg-yellow"><span class="tag">no overlay</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple"><span class="tag">no overlay</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">v1 · small fine dots @ 10% opacity</div>
+  <div class="card-demo bg-yellow halftone-dots"><span class="tag">v1 dots</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple halftone-dots"><span class="tag">v1 dots</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">v2 · print dot pattern @ 12% opacity (bolder)</div>
+  <div class="card-demo bg-yellow halftone-print"><span class="tag">v2 print</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple halftone-print"><span class="tag">v2 print</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">v3 · gradient halftone (denser at bottom) @ 14% opacity</div>
+  <div class="card-demo bg-yellow halftone-gradient"><span class="tag">v3 gradient</span>
+    <div class="title">Champion of the Craig Cup.</div>
+    <div class="body">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div class="hero">Geraint</div>
+    <div class="zinger">Took the trophy with his feet up. Lap of honour optional.</div>
+  </div>
+  <div class="card-demo bg-purple halftone-gradient"><span class="tag">v3 gradient</span>
+    <div class="title">Three managers. Seven signings.</div>
+    <div class="body">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+    <div class="hero">Lacroix</div>
+    <div class="zinger">Eventually they all let him go. Eventually they all bought him back.</div>
+  </div>
+
+  <div class="row-label">Also tested · on darker backgrounds</div>
+  <div class="card-demo bg-black halftone-dots"><span class="tag">v1 dots</span>
+    <div class="title">Asleep at the wheel.</div>
+    <div class="body">Longest consecutive run of gameweeks without a single accepted transaction.</div>
+    <div class="hero" style="color:#FFEB3B">9</div>
+    <div class="zinger">GW29 to GW37. He's still online. He's just choosing not to be.</div>
+  </div>
+  <div class="card-demo bg-orange halftone-print"><span class="tag">v2 print</span>
+    <div class="title">Couldn't make his mind up.</div>
+    <div class="body">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
+    <div class="hero">Michael</div>
+    <div class="zinger">Made 103 transactions chasing the perfect XI. Never found it.</div>
+  </div>
+</div>
+</body>
+</html>

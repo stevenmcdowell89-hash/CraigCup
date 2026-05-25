@@ -33,12 +33,12 @@ body{font-family:'Inter',sans-serif}
 .card.special-shine.in-view::after{animation:cardShine 1.7s cubic-bezier(.22,.8,.32,1) .25s forwards}
 @keyframes cardShine{0%{transform:translateX(-110%);opacity:0}15%{opacity:1}100%{transform:translateX(110%);opacity:0}}
 
-/* Award cards: diagonal stripe corners (top-left + bottom-right) + centered text */
-.award-card .card-inner{align-items:center;text-align:center}
-.award-card .award-name,
-.award-card .explainer,
-.award-card .recipient,
-.award-card .zinger{max-width:46ch}
+/* Award cards: diagonal stripe corners (top-left + bottom-right).
+   Text centring is handled by the global .award-name / .explainer / .zinger
+   rules above. Hero arrangements that use display:flex|grid get justify-content:center. */
+.award-card .award-hero{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;width:100%}
+.award-card .award-hero-col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.award-card .verdict{align-self:center;justify-self:center;margin-left:auto;margin-right:auto}
 .award-stripe-tl,.award-stripe-br{position:absolute;width:80px;height:80px;background:repeating-linear-gradient(-45deg, transparent 0 6px, currentColor 6px 7px);opacity:.5;pointer-events:none;z-index:1}
 .award-stripe-tl{top:0;left:0;clip-path:polygon(0 0, 100% 0, 0 100%)}
 .award-stripe-br{bottom:0;right:0;clip-path:polygon(100% 0, 100% 100%, 0 100%)}
@@ -50,18 +50,22 @@ body{font-family:'Inter',sans-serif}
 @media (max-width: 480px){.card{padding:18px} .card-inner{gap:10px}}
 
 /* Type — award-name is the dominant element on award cards (spec rule #7).
-   Hero numerals and hero names are deliberately kept SMALLER than award-name so
-   the reader's eye lands on the award name first. */
+   Headlines / award-names / explainers / zingers default to CENTRED — they're
+   poster-style elements on every card except stories and manager cards
+   (which use left-aligned editorial prose and override below). */
 .display{font-family:'Anton','Bebas Neue',sans-serif;letter-spacing:.01em;text-transform:uppercase;line-height:1}
-.headline{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,9vw,96px);line-height:1.0;letter-spacing:.005em;text-transform:uppercase;overflow-wrap:anywhere}
-.award-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(56px,10vw,148px);line-height:.98;text-transform:uppercase;letter-spacing:.005em;overflow-wrap:anywhere}
-.hero-numeral{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(70px,12vh,140px);line-height:.85;font-variant-numeric:tabular-nums}
-.hero-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,7vw,100px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
-.recipient{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2.6vw,28px);letter-spacing:.01em}
-.explainer{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(14px,1.9vw,20px);line-height:1.4;max-width:46ch;opacity:.92}
+.headline{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,9vw,96px);line-height:1.0;letter-spacing:.005em;text-transform:uppercase;overflow-wrap:anywhere;text-align:center}
+.award-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(56px,10vw,148px);line-height:.98;text-transform:uppercase;letter-spacing:.005em;overflow-wrap:anywhere;text-align:center}
+.hero-numeral{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(70px,12vh,140px);line-height:.85;font-variant-numeric:tabular-nums;text-align:center}
+.hero-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,7vw,100px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere;text-align:center}
+.recipient{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2.6vw,28px);letter-spacing:.01em;text-align:center}
+.explainer{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(14px,1.9vw,20px);line-height:1.4;max-width:48ch;opacity:.92;text-align:center;margin-left:auto;margin-right:auto}
 .body-text{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(15px,2vw,22px);line-height:1.45}
 .caption{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(11px,1.2vw,15px);letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-.zinger{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(14px,1.9vw,22px);line-height:1.35;font-style:italic;opacity:.95}
+.zinger{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(14px,1.9vw,22px);line-height:1.35;font-style:italic;opacity:.95;text-align:center}
+/* Manager cards and stories override the default centring — left-aligned editorial layouts */
+.mgr-card .award-name,.mgr-card .headline,.mgr-card .explainer,.mgr-card .zinger,.mgr-card .recipient,.mgr-card .caption{text-align:left;margin-left:0;margin-right:0}
+.story-card .award-name,.story-card .headline,.story-card .explainer,.story-card .zinger,.story-card .recipient,.story-card .caption{text-align:left;margin-left:0;margin-right:0}
 
 /* Animations: arrival = .ani-up, scale = .ani-pop, draw=.ani-draw */
 .ani{opacity:0;will-change:transform,opacity}
@@ -220,7 +224,7 @@ body{font-family:'Inter',sans-serif}
 .gk-howl-unit{font-family:'Anton',sans-serif;font-size:clamp(22px,3.2vw,44px);line-height:1;display:inline-block;margin-left:14px;text-transform:uppercase;vertical-align:top;margin-top:.6em}
 
 /* Phantom XI hero */
-.phantom-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,auto);gap:10px;width:100%;max-width:540px;margin:8px 0}
+.phantom-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,auto);gap:10px;width:100%;max-width:540px;margin:8px auto}
 .phantom-pos{display:flex;align-items:center;justify-content:center;padding:10px 6px;border:2px solid currentColor;border-radius:10px;font-family:'Anton',sans-serif;font-size:clamp(12px,1.5vw,16px);min-height:54px;text-align:center;text-transform:uppercase;line-height:1.05;transition:all .4s ease}
 .phantom-pos.zero{opacity:.3;background:rgba(244,241,234,.05);position:relative}
 .phantom-pos.zero::after{content:'×';position:absolute;font-size:60px;color:#FF1493;font-family:'Anton',sans-serif;line-height:1}
@@ -282,9 +286,9 @@ body{font-family:'Inter',sans-serif}
 .scoreline .dash{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,90px);line-height:.85;opacity:.7}
 
 /* Welcome and goodbye */
-.wg-box{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;width:100%}
-@media (max-width:600px){.wg-box{grid-template-columns:1fr}}
-.wg-cell{padding:14px 16px;border:2px solid currentColor;border-radius:8px}
+.wg-box{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;width:100%;max-width:520px;margin-left:auto;margin-right:auto}
+@media (max-width:600px){.wg-box{grid-template-columns:1fr;max-width:280px}}
+.wg-cell{padding:14px 16px;border:2px solid currentColor;border-radius:8px;text-align:center}
 .wg-tag{font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.3vw,14px);letter-spacing:.18em;text-transform:uppercase;opacity:.7}
 .wg-gw{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,90px);line-height:.95;margin-top:4px;text-transform:uppercase}
 
@@ -736,13 +740,7 @@ CARDS.push(() => {
         setTimeout(()=>{
           const pre = c.dataset.prefix || '';
           const tgt = +c.dataset.target;
-          if (tgt === 78) {
-            // Slot-machine roll for the headline number (78 league pts)
-            slotMachineRoll(c, tgt, 1900);
-          } else {
-            // Overshoot count for the supporting numbers (32 txns, +13 margin)
-            countUp(c, tgt, tgt < 30 ? 1600 : 2000, "", pre);
-          }
+          countUp(c, tgt, tgt < 30 ? 1600 : 2200, "", pre);
         }, i*350);
       });
     }, 900);
@@ -924,7 +922,7 @@ CARDS.push(() => {
       ${confettiPieces}
       <div class="award-name ani ani-up d1">Champion of the Craig Cup.</div>
       <div class="explainer ani ani-fade d2">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
-      <div style="display:flex;align-items:center;gap:24px;margin-top:18px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-top:18px;flex-wrap:wrap;text-align:left">
         <svg class="ani ani-pop d3" viewBox="0 0 100 130" style="width:clamp(80px,12vw,140px);height:auto;flex-shrink:0;filter:drop-shadow(0 4px 0 rgba(0,0,0,.18))" aria-hidden="true">
           <!-- Crown above the trophy -->
           <path d="M22 12 L30 4 L38 12 L50 0 L62 12 L70 4 L78 12 V18 H22 Z" fill="#0A0A0A"/>
@@ -988,13 +986,11 @@ CARDS.push(() => {
     html:`
       <div class="award-name ani ani-up d1">First overall. First everything.</div>
       <div class="explainer ani ani-fade d2">Most points scored by a draftee while still owned by the manager who drafted them.</div>
-      <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;margin-top:14px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:14px">
         <div class="hero-numeral ani ani-pop d3" style="color:var(--black)">#${b.pick}</div>
-        <div>
-          <div class="hero-name ani ani-up d4">${b.name}</div>
-          <div class="recipient ani ani-fade d5 mt-sm">Drafted by ${MGR[b.le].first} · ${MGR[b.le].team}</div>
-          <div class="recipient ani ani-fade d6" style="margin-top:8px;opacity:.85">${b.pts} pts across ${b.held} weeks held — every single GW</div>
-        </div>
+        <div class="hero-name ani ani-up d4">${b.name}</div>
+        <div class="recipient ani ani-fade d5" style="margin-top:4px">Drafted by ${MGR[b.le].first} · ${MGR[b.le].team}</div>
+        <div class="recipient ani ani-fade d6" style="margin-top:2px;opacity:.85">${b.pts} pts across ${b.held} weeks held — every single GW</div>
       </div>
       <div class="zinger ani ani-fade d8 mt-lg">First pick of the draft. Best pick of the draft. Sometimes there's no twist.</div>`
   });
@@ -1007,7 +1003,7 @@ CARDS.push(() => {
     html:`
       <div class="award-name ani ani-up d1" style="word-break:normal">Most influential transfer.</div>
       <div class="explainer ani ani-fade d2">The transfer that changed the league. Picked by christopher · The Masterplan.</div>
-      <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:30px;gap:14px">
+      <div style="display:flex;flex-direction:column;align-items:center;margin-top:30px;gap:14px">
         <div class="hero-name ani ani-pop d5" id="gittens-name" style="opacity:0">GITTENS</div>
         <div style="display:flex;align-items:baseline;gap:14px">
           <div class="counter ani ani-fade" id="gittens-pts" style="opacity:0;font-size:clamp(50px,9vw,118px)">0</div>
@@ -1047,7 +1043,7 @@ CARDS.push(() => {
       <div class="award-name ani ani-up d1">Asleep at the wheel.</div>
       <div class="explainer ani ani-fade d2">Longest consecutive run of gameweeks without a single accepted transaction.</div>
       <div class="recipient ani ani-fade d3 mt-md">Peter · MaxPoints</div>
-      <div style="display:flex;align-items:baseline;gap:18px;margin-top:24px">
+      <div style="display:flex;align-items:baseline;justify-content:center;gap:18px;margin-top:24px">
         <div class="counter ani ani-fade" id="asleep-num" style="font-size:clamp(80px,13vh,140px);color:var(--yellow);opacity:0">0</div>
         <div class="caption ani ani-fade" id="asleep-unit" style="opacity:0;font-size:clamp(18px,2.6vw,30px);letter-spacing:.1em">GAMEWEEKS</div>
       </div>
@@ -1061,7 +1057,7 @@ CARDS.push(() => {
       n.style.animation = 'fadeUp .6s ease-out forwards';
       u.style.animation = 'fadeUp .6s ease-out forwards';
       u.style.animationDelay = '.2s';
-      setTimeout(()=>{ slotMachineRoll(n, 9, 1900); }, 350);
+      setTimeout(()=>{ countUp(n, 9, 2200); }, 350);
       setTimeout(()=>{ z.style.animation = 'fadeUp .6s ease-out forwards'; }, 3500);
     }, 2500);
   });
@@ -1083,7 +1079,7 @@ CARDS.push(() => {
       <div class="award-name ani ani-up d1">Couldn't make his mind up.</div>
       <div class="explainer ani ani-fade d2">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
       <div class="recipient ani ani-fade d3 mt-md">Michael · Jota win again *20</div>
-      <div class="mt-md flex-col gap-sm">
+      <div class="mt-md flex-col gap-sm" style="max-width:460px;width:100%;margin-left:auto;margin-right:auto">
         ${items.map((p,i)=>`<div class="ani ani-left" style="animation-delay:${0.9+i*0.1}s;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:14px;border-top:1px solid currentColor;padding-top:6px;${i===0?'border-top:none;padding-top:0;':''}">
           <div style="font-family:'Anton';font-size:clamp(20px,2.6vw,32px);text-transform:uppercase;line-height:1">${p.name}</div>
           <div style="font-family:'Anton';font-size:clamp(22px,2.8vw,34px);line-height:1">× ${p.count}</div>
@@ -1105,7 +1101,7 @@ CARDS.push(() => {
         <div class="gk-icon good"><span class="gk-mark">✓</span></div>
         <div class="gk-icon bad"><span class="gk-mark">✗</span></div>
       </div>
-      <div style="display:flex;align-items:baseline;margin-top:14px">
+      <div style="display:flex;align-items:baseline;justify-content:center;margin-top:14px">
         <div class="gk-howl-num ani ani-fade" id="gk-num" style="opacity:0">0</div>
         <div class="gk-howl-unit ani ani-fade" id="gk-unit" style="opacity:0">TIMES</div>
       </div>
@@ -1119,7 +1115,7 @@ CARDS.push(() => {
       n.style.animation = 'fadeUp .5s ease-out forwards';
       u.style.animation = 'fadeUp .5s ease-out forwards';
       u.style.animationDelay = '.2s';
-      setTimeout(()=>{ slotMachineRoll(n, 14, 2100); }, 350);
+      setTimeout(()=>{ countUp(n, 14, 2600); }, 350);
       setTimeout(()=>{ z.style.animation = 'fadeUp .6s ease-out forwards'; }, 3600);
     }, 2400);
   });

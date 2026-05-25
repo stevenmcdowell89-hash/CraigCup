@@ -536,16 +536,17 @@ function drawRaceChart(svg, caption){
 // 6. Key moments
 CARDS.push(() => {
   const moments = [
+    {gw:'GW7',  text:'Peter loses his seventh in a row to open the season. Last place is already a vibe.'},
     {gw:'GW9',  text:'Christopher and Michael run a three-for-three trade. Eze, Palmer & Ekitiké go one way; Sarr, Bruno & Evanilson the other.'},
     {gw:'GW15', text:'Christopher drops 93 — the highest score of the season — putting 55 past Peter.'},
-    {gw:'GW16', text:'Mark holds first place for the last time. Geraint takes over the next week.'},
+    {gw:'GW17', text:'Geraint takes first place and never gives it back.'},
     {gw:'GW18', text:'Mark prises Evanilson off Michael in exchange for Isak. Michael will rue this.'},
     {gw:'GW28', text:'Peter stops transacting for nine weeks. The title race up top is essentially over.'}
   ];
   const html = `
     <div class="headline ani ani-up d1">Key moments.</div>
     <div class="km-list mt-md">
-      ${moments.map((m,i)=>`<div class="km-item ani ani-fade" style="animation-delay:${0.4+i*0.18}s">
+      ${moments.map((m,i)=>`<div class="km-item ani ani-fade" style="animation-delay:${0.4+i*0.16}s">
         <div class="km-gw">${m.gw}</div><div class="km-text">${m.text}</div>
       </div>`).join('')}
     </div>`;
@@ -1277,46 +1278,157 @@ CARDS.push(() => {
 });
 
 // 41. Story 2: Late form — Christopher
-CARDS.push(() => card({
-  cls:'bg-black',
-  html:`
-    <div class="story-grid">
-      <div>
-        <div class="story-title ani ani-up d2">The late form.</div>
-        <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
-        <div class="story-body ani ani-fade d4">
-          <p>Christopher's best run of the season came too late. Five wins on the bounce, GW32 to GW36. Demolished Geraint 71–53. Took 5 points off Mark.</p>
-          <p>By then the four ahead of him had pulled clear. The streak only confirmed how much had already been left on the table. He finished 4th by a single point.</p>
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-black',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="story-title ani ani-up d2">The late form.</div>
+          <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
+          <div class="story-body ani ani-fade d4">
+            <p>Christopher's best run of the season came too late. Five wins on the bounce, GW32 to GW36 — his best month of the year.</p>
+            <p>By then the four ahead of him had pulled clear. The streak only confirmed how much had already been left on the table. He lost the final two GWs and finished 4th by a single point.</p>
+          </div>
         </div>
-      </div>
-      <div class="story-vis ani ani-fade d6">
-        <div style="text-align:center;font-family:'Anton',sans-serif;line-height:.95">
-          <div style="font-size:clamp(80px,16vw,200px);color:var(--lime)">5</div>
-          <div style="font-size:clamp(18px,2.4vw,28px);letter-spacing:.1em;opacity:.85">CONSECUTIVE WINS · GW32–36</div>
-          <div style="margin-top:14px;font-size:clamp(24px,3.5vw,42px);opacity:.55">…then lost GW37 and GW38.</div>
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 110" id="chris-spark"></svg>
         </div>
-      </div>
-    </div>`
-}));
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#chris-spark');
+    const seq = A.streaks['73858'].sequence; // chris W/L sequence
+    svg.innerHTML = '';
+    // Title
+    const tlab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    tlab.setAttribute('x', 10); tlab.setAttribute('y', 14);
+    tlab.setAttribute('fill','#C6FF00'); tlab.setAttribute('font-family','Space Grotesk');
+    tlab.setAttribute('font-size','10'); tlab.setAttribute('letter-spacing','.06em');
+    tlab.textContent = 'H2H RESULTS · GW1 → GW38';
+    svg.appendChild(tlab);
+    seq.split('').forEach((r,i) => {
+      const x = 10 + i * 9.5;
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', r==='W' ? 30 : 70);
+      rect.setAttribute('width','7'); rect.setAttribute('height', 30);
+      const inStreak = i >= 31 && i <= 35; // GW32-36 (0-indexed 31-35)
+      rect.setAttribute('fill', r==='W' ? '#00C853' : (r==='D' ? '#777' : '#FF1493'));
+      rect.style.opacity = '0';
+      svg.appendChild(rect);
+      setTimeout(()=>{
+        rect.style.transition='opacity .15s ease';
+        rect.style.opacity = inStreak ? '1' : '.32';
+      }, 1500 + i*32);
+    });
+    // GW labels
+    [32, 36].forEach(gw => {
+      const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', 10 + (gw-1)*9.5 + 3); lab.setAttribute('y', 24);
+      lab.setAttribute('fill','#C6FF00'); lab.setAttribute('font-family','Space Grotesk');
+      lab.setAttribute('font-size','9'); lab.setAttribute('text-anchor','middle');
+      lab.textContent = 'GW'+gw;
+      svg.appendChild(lab);
+    });
+    // Highlight bracket
+    setTimeout(() => {
+      const br = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      br.setAttribute('x', 10 + 31*9.5 - 2); br.setAttribute('y', 26);
+      br.setAttribute('width', 5*9.5); br.setAttribute('height', 42);
+      br.setAttribute('fill','none'); br.setAttribute('stroke','#C6FF00');
+      br.setAttribute('stroke-width','1.5'); br.setAttribute('stroke-dasharray','3 3');
+      br.style.opacity = '0';
+      svg.appendChild(br);
+      br.style.transition = 'opacity .5s ease'; br.style.opacity = '1';
+      // GW37/38 callout
+      const llab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      llab.setAttribute('x', 10 + 36.5*9.5); llab.setAttribute('y', 100);
+      llab.setAttribute('fill','#FF1493'); llab.setAttribute('font-family','Anton');
+      llab.setAttribute('font-size','10'); llab.setAttribute('text-anchor','middle');
+      llab.textContent = '↓ GW37–38';
+      svg.appendChild(llab);
+    }, 3000);
+  });
+  return el;
+});
 
 // 42. Story 3: Identity Crisis — Michael
-CARDS.push(() => card({
-  cls:'bg-orange',
-  html:`
-    <div class="story-grid">
-      <div>
-        <div class="story-title ani ani-up d2">The identity crisis.</div>
-        <div class="story-tag ani ani-fade d3">Michael · Jota win again *20</div>
-        <div class="story-body ani ani-fade d4">
-          <p>In GW7, five of Michael's fifteen-man squad were Liverpool players: Wirtz, Gakpo, Konaté, Kerkez, Mamardashvili. A third of his team from one club.</p>
-          <p>The experiment didn't last. Between GW9 and GW14 he made 20 transactions in six weeks. He never went all-in on a single club like that again.</p>
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-orange',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="story-title ani ani-up d2">The identity crisis.</div>
+          <div class="story-tag ani ani-fade d3">Michael · Jota win again *20</div>
+          <div class="story-body ani ani-fade d4">
+            <p>In GW7, five of Michael's fifteen-man squad were Liverpool players: Wirtz, Gakpo, Konaté, Kerkez, Mamardashvili. A third of his team from one club.</p>
+            <p>The experiment didn't last. Between GW9 and GW14 he made 20 transactions in six weeks. He never went all-in on a single club like that again.</p>
+          </div>
         </div>
-      </div>
-      <div class="story-vis ani ani-fade d6">
-        <svg class="mini-svg" viewBox="0 0 380 140" id="michael-churn"></svg>
-      </div>
-    </div>`
-}));
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 200" id="michael-churn"></svg>
+        </div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#michael-churn');
+    const data = [];
+    for(let gw=2; gw<=38; gw++) data.push(A.squad_changes['73847'][gw] || 0);
+    const max = Math.max(...data, 1);
+    svg.innerHTML = '';
+    // Title above
+    const tlab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    tlab.setAttribute('x', 10); tlab.setAttribute('y', 14);
+    tlab.setAttribute('fill','#0A0A0A'); tlab.setAttribute('font-family','Space Grotesk');
+    tlab.setAttribute('font-size','11'); tlab.setAttribute('letter-spacing','.06em');
+    tlab.textContent = 'SQUAD CHANGES PER GAMEWEEK';
+    svg.appendChild(tlab);
+    data.forEach((v,i)=>{
+      const gw = i + 2;
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      const x = 12 + i * 9.5;
+      const h = v / max * 130;
+      rect.setAttribute('x', x); rect.setAttribute('y', 170 - h);
+      rect.setAttribute('width', 7); rect.setAttribute('height', h);
+      const highlight = gw >= 9 && gw <= 14;
+      rect.setAttribute('fill', highlight ? '#0A0A0A' : 'rgba(10,10,10,.32)');
+      rect.style.opacity = '0';
+      svg.appendChild(rect);
+      setTimeout(()=>{ rect.style.transition='opacity .25s ease'; rect.style.opacity = '1'; }, 1500 + i*40);
+    });
+    // GW axis labels (every 5)
+    [2, 9, 14, 20, 30, 38].forEach(gw => {
+      const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', 12 + (gw-2)*9.5 + 3.5); lab.setAttribute('y', 188);
+      lab.setAttribute('fill','rgba(10,10,10,.5)'); lab.setAttribute('font-family','Space Grotesk');
+      lab.setAttribute('font-size','9'); lab.setAttribute('text-anchor','middle');
+      lab.textContent = 'GW'+gw;
+      svg.appendChild(lab);
+    });
+    // Highlight callout
+    const cbox = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    cbox.setAttribute('x', 12 + 7*9.5 - 2); cbox.setAttribute('y', 36);
+    cbox.setAttribute('width', 6*9.5); cbox.setAttribute('height', 138);
+    cbox.setAttribute('fill','none'); cbox.setAttribute('stroke','#FF1493');
+    cbox.setAttribute('stroke-width','2'); cbox.setAttribute('stroke-dasharray','4 3');
+    cbox.style.opacity = '0';
+    svg.appendChild(cbox);
+    const clab = document.createElementNS('http://www.w3.org/2000/svg','text');
+    clab.setAttribute('x', 12 + 7*9.5 + 3*9.5); clab.setAttribute('y', 28);
+    clab.setAttribute('fill','#FF1493'); clab.setAttribute('font-family','Anton');
+    clab.setAttribute('font-size','13'); clab.setAttribute('text-anchor','middle');
+    clab.textContent = 'GW9–14 dismantle';
+    clab.style.opacity = '0';
+    svg.appendChild(clab);
+    setTimeout(()=>{
+      cbox.style.transition='opacity .5s ease'; cbox.style.opacity='1';
+      clab.style.transition='opacity .5s ease'; clab.style.opacity='1';
+    }, 3200);
+  });
+  return el;
+});
 
 // 43. Story 4: Lacroix
 CARDS.push(() => {
@@ -1594,6 +1706,102 @@ CARDS.push(() => {
   return el;
 });
 
+// 49b. Story 11: Setting the tone — Peter
+CARDS.push(() => {
+  const el = card({
+    cls:'bg-purple',
+    html:`
+      <div class="story-grid">
+        <div>
+          <div class="story-title ani ani-up d2">Setting the tone.</div>
+          <div class="story-tag ani ani-fade d3">Peter · MaxPoints</div>
+          <div class="story-body ani ani-fade d4">
+            <p>Peter lost his opening seven games. GW1 through GW7. By the time he won his first, he was eight points off the next-worst team.</p>
+            <p>Last place stuck. He held the bottom of the table for thirty-seven of the thirty-eight gameweeks. Won the final two against Michael and Steven anyway, just to keep us honest.</p>
+          </div>
+        </div>
+        <div class="story-vis ani ani-fade d6">
+          <svg class="mini-svg" viewBox="0 0 380 200" id="peter-tone"></svg>
+        </div>
+      </div>`
+  });
+  el.addEventListener('cardEnter', () => {
+    const svg = el.querySelector('#peter-tone');
+    const seq = A.streaks['73822'].sequence;
+    svg.innerHTML = '';
+    // Top label
+    const t1 = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t1.setAttribute('x', 10); t1.setAttribute('y', 14);
+    t1.setAttribute('fill','#FFEB3B'); t1.setAttribute('font-family','Space Grotesk');
+    t1.setAttribute('font-size','10'); t1.setAttribute('letter-spacing','.06em');
+    t1.textContent = 'H2H RESULTS · WEEKS AT #6';
+    svg.appendChild(t1);
+    // W/L bars row (top)
+    seq.split('').forEach((r,i) => {
+      const x = 10 + i * 9.5;
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', r==='W' ? 32 : 64);
+      rect.setAttribute('width','7'); rect.setAttribute('height', 24);
+      rect.setAttribute('fill', r==='W' ? '#00C853' : (r==='D' ? '#888' : '#FF1493'));
+      rect.style.opacity = '0';
+      const firstSeven = i < 7;
+      const finalTwo = i >= 36;
+      svg.appendChild(rect);
+      setTimeout(()=>{
+        rect.style.transition='opacity .15s ease';
+        rect.style.opacity = (firstSeven || finalTwo) ? '1' : '.34';
+      }, 1500 + i*30);
+    });
+    // Bracket over GW1-7
+    setTimeout(() => {
+      const br = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      br.setAttribute('x', 10 - 2); br.setAttribute('y', 60);
+      br.setAttribute('width', 7*9.5 + 2); br.setAttribute('height', 32);
+      br.setAttribute('fill','none'); br.setAttribute('stroke','#FF1493');
+      br.setAttribute('stroke-width','1.5'); br.setAttribute('stroke-dasharray','3 3');
+      br.style.opacity = '0';
+      svg.appendChild(br);
+      br.style.transition='opacity .4s ease'; br.style.opacity='1';
+      const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', 10 + 3.5*9.5); lab.setAttribute('y', 108);
+      lab.setAttribute('fill','#FF1493'); lab.setAttribute('font-family','Anton');
+      lab.setAttribute('font-size','12'); lab.setAttribute('text-anchor','middle');
+      lab.textContent = '7 losses to open the season';
+      svg.appendChild(lab);
+    }, 2900);
+    // Position-track row below: dots at #6 for 37/38 weeks
+    setTimeout(() => {
+      const t2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t2.setAttribute('x', 10); t2.setAttribute('y', 130);
+      t2.setAttribute('fill','#FFEB3B'); t2.setAttribute('font-family','Space Grotesk');
+      t2.setAttribute('font-size','9'); t2.setAttribute('letter-spacing','.06em');
+      t2.textContent = 'LEAGUE POSITION BY GW';
+      svg.appendChild(t2);
+      for(let gw=1; gw<=38; gw++){
+        const pos = A.pos_by_gw['73822'][gw];
+        const x = 10 + (gw-1)*9.5 + 3.5;
+        const y = 138 + (pos-1) * 8;
+        const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx', x); c.setAttribute('cy', y);
+        c.setAttribute('r', 2.5);
+        c.setAttribute('fill', pos === 6 ? '#FF1493' : '#0A0A0A');
+        c.style.opacity = '0';
+        svg.appendChild(c);
+        setTimeout(()=>{ c.style.transition='opacity .15s ease'; c.style.opacity = '1'; }, gw*15);
+      }
+      // 37/38 callout
+      const llab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      llab.setAttribute('x', 370); llab.setAttribute('y', 192);
+      llab.setAttribute('fill','#FF1493'); llab.setAttribute('font-family','Anton');
+      llab.setAttribute('font-size','12'); llab.setAttribute('text-anchor','end');
+      llab.textContent = '37 of 38 GWs at the bottom';
+      svg.appendChild(llab);
+    }, 3600);
+  });
+  return el;
+});
+
 // 50. Interstitial
 CARDS.push(() => card({
   cls:'interstitial bg-cyan',
@@ -1638,7 +1846,7 @@ CARDS.push(() => {
 
 // 52. Closing card — fact assembled word-by-word per spec
 CARDS.push(() => {
-  const factText = "Mikkel Damsgaard scored 113 points this season. No manager in the Craig Cup ever owned him.";
+  const factText = "Michael ran 103 transactions and finished fifth. If he had never transferred at all, he would have won the league.";
   const words = factText.split(' ');
   const el = card({
     cls:'bg-black closing',

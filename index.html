@@ -25,12 +25,14 @@ body{font-family:'Inter',sans-serif}
 .card-inner{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:2}
 @media (max-width: 480px){.card{padding:18px} .card-inner{gap:10px}}
 
-/* Type */
+/* Type — award-name is the dominant element on award cards (spec rule #7).
+   Hero numerals and hero names are deliberately kept SMALLER than award-name so
+   the reader's eye lands on the award name first. */
 .display{font-family:'Anton','Bebas Neue',sans-serif;letter-spacing:.01em;text-transform:uppercase;line-height:1}
 .headline{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,9vw,96px);line-height:1.0;letter-spacing:.005em;text-transform:uppercase;overflow-wrap:anywhere}
-.award-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(44px,7.5vw,108px);line-height:.98;text-transform:uppercase;letter-spacing:.005em;overflow-wrap:anywhere}
-.hero-numeral{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(120px,22vh,300px);line-height:.85}
-.hero-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(54px,11vw,140px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
+.award-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(56px,10vw,148px);line-height:.98;text-transform:uppercase;letter-spacing:.005em;overflow-wrap:anywhere}
+.hero-numeral{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(70px,12vh,140px);line-height:.85;font-variant-numeric:tabular-nums}
+.hero-name{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,7vw,100px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
 .recipient{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2.6vw,28px);letter-spacing:.01em}
 .explainer{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(14px,1.9vw,20px);line-height:1.4;max-width:46ch;opacity:.92}
 .body-text{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(15px,2vw,22px);line-height:1.45}
@@ -143,8 +145,8 @@ body{font-family:'Inter',sans-serif}
 .gk-icon.good{border-color:#00C853;color:#00C853}
 .gk-icon.bad{border-color:#FF1493;color:#FF1493}
 .gk-mark{position:absolute;font-size:clamp(36px,6vw,60px);font-family:'Anton',sans-serif;line-height:1}
-.gk-howl-num{font-family:'Anton',sans-serif;font-size:clamp(150px,28vh,360px);line-height:.85;font-variant-numeric:tabular-nums;display:inline-block}
-.gk-howl-unit{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);line-height:1;display:inline-block;margin-left:18px;text-transform:uppercase;vertical-align:top;margin-top:.5em}
+.gk-howl-num{font-family:'Anton',sans-serif;font-size:clamp(80px,13vh,140px);line-height:.85;font-variant-numeric:tabular-nums;display:inline-block}
+.gk-howl-unit{font-family:'Anton',sans-serif;font-size:clamp(22px,3.2vw,44px);line-height:1;display:inline-block;margin-left:14px;text-transform:uppercase;vertical-align:top;margin-top:.6em}
 
 /* Phantom XI hero */
 .phantom-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,auto);gap:10px;width:100%;max-width:540px;margin:8px 0}
@@ -193,17 +195,17 @@ body{font-family:'Inter',sans-serif}
 .closing .fact{font-family:'Anton',sans-serif;font-size:clamp(38px,6vw,80px);line-height:1.05;text-transform:uppercase}
 .closing .signoff{font-family:'Inter',sans-serif;font-style:italic;font-size:clamp(13px,1.6vw,18px);margin-top:30px;opacity:.7}
 
-/* Hot potato hero (centered name) */
-.hp-center{font-family:'Anton',sans-serif;font-size:clamp(70px,14vw,180px);text-transform:uppercase;line-height:.95;text-align:center;letter-spacing:.01em}
+/* Hot potato hero (centered name) — sized SMALLER than .award-name */
+.hp-center{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,110px);text-transform:uppercase;line-height:.95;text-align:center;letter-spacing:.01em}
 .hp-arrows{font-family:'Space Grotesk',sans-serif;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:clamp(13px,1.6vw,19px);margin-top:18px;opacity:.92}
 .hp-step{padding:4px 10px;border:1px solid currentColor;border-radius:4px;font-weight:500}
 
 /* Beating scoreline */
 .scoreline{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;width:100%}
 .scoreline .side{display:flex;flex-direction:column;align-items:center;gap:6px}
-.scoreline .side-name{font-family:'Anton',sans-serif;font-size:clamp(34px,5.5vw,72px);line-height:.95;text-transform:uppercase;text-align:center}
-.scoreline .side-score{font-family:'Anton',sans-serif;font-size:clamp(110px,20vw,260px);line-height:.85;font-variant-numeric:tabular-nums}
-.scoreline .dash{font-family:'Anton',sans-serif;font-size:clamp(70px,12vw,150px);line-height:.85;opacity:.7}
+.scoreline .side-name{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);line-height:.95;text-transform:uppercase;text-align:center}
+.scoreline .side-score{font-family:'Anton',sans-serif;font-size:clamp(64px,11vw,140px);line-height:.85;font-variant-numeric:tabular-nums}
+.scoreline .dash{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,90px);line-height:.85;opacity:.7}
 
 /* Welcome and goodbye */
 .wg-box{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;width:100%}
@@ -363,7 +365,7 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-black',
     html:`
-      <div class="caption ani ani-fade d1">FINAL STANDINGS · 38 GAMEWEEKS</div>
+      <div class="headline ani ani-up d1" style="font-size:clamp(32px,5vw,60px);margin-bottom:8px">The final table.</div>
       <div class="scoreboard mt-md" id="scoreboard"></div>`
   });
   el.addEventListener('cardEnter', () => {
@@ -410,7 +412,7 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-black',
     html:`
-      <div class="caption ani ani-fade d1">THE SEASON RACE · LEAGUE POSITION BY GAMEWEEK</div>
+      <div class="headline ani ani-up d1" style="font-size:clamp(28px,4.5vw,56px);margin-bottom:4px">The season race.</div>
       <div class="race-wrap">
         <svg class="race-svg" id="race-svg" viewBox="0 0 1000 540" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
@@ -528,7 +530,6 @@ function drawRaceChart(svg, caption){
 // 6. Key moments
 CARDS.push(() => {
   const moments = [
-    {gw:'GW7',  text:'Peter loses his seventh in a row. Last place is already a vibe.'},
     {gw:'GW9',  text:'Christopher and Michael run a three-for-three trade. Eze, Palmer & Ekitiké go one way; Sarr, Bruno & Evanilson the other.'},
     {gw:'GW15', text:'Christopher drops 93 — the highest score of the season — putting 55 past Peter.'},
     {gw:'GW16', text:'Mark holds first place for the last time. Geraint takes over the next week.'},
@@ -536,10 +537,9 @@ CARDS.push(() => {
     {gw:'GW28', text:'Peter stops transacting for nine weeks. The title race up top is essentially over.'}
   ];
   const html = `
-    <div class="caption ani ani-fade d1">KEY MOMENTS</div>
-    <div class="headline ani ani-up d2" style="font-size:clamp(34px,5.5vw,68px)">A few flashpoints.</div>
+    <div class="headline ani ani-up d1">Key moments.</div>
     <div class="km-list mt-md">
-      ${moments.map((m,i)=>`<div class="km-item ani ani-fade" style="animation-delay:${0.5+i*0.18}s">
+      ${moments.map((m,i)=>`<div class="km-item ani ani-fade" style="animation-delay:${0.4+i*0.18}s">
         <div class="km-gw">${m.gw}</div><div class="km-text">${m.text}</div>
       </div>`).join('')}
     </div>`;
@@ -557,8 +557,8 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-green',
     html:`
-      <div class="caption ani ani-fade d1">GERAINT · 🏴󠁧󠁢󠁷󠁬󠁳󠁿</div>
-      <div class="headline ani ani-up d2" style="font-size:clamp(38px,6vw,80px)">Barely looked at his team. Still won by a mile.</div>
+      <div class="headline ani ani-up d1">Barely looked at his team. Still won by a mile.</div>
+      <div class="recipient ani ani-fade d2">Geraint · 🏴󠁧󠁢󠁷󠁬󠁳󠁿</div>
       <div class="threestats mt-lg">
         <div class="ani ani-up d4">
           <div class="ts-num counter" data-target="32">0</div>
@@ -614,24 +614,23 @@ CARDS.push(() => {
   return card({
     cls:'bg-pink',
     html:`
-      <div class="caption ani ani-fade d1">TRADE 01 · GAMEWEEK ${t.gw}</div>
-      <div class="award-name ani ani-up d2">Marmoush, meet Grealish.</div>
-      <div class="explainer ani ani-fade d3">Points each side scored only during the weeks the recipient actually owned them.</div>
+      <div class="award-name ani ani-up d1">Marmoush, meet Grealish.</div>
+      <div class="explainer ani ani-fade d2">A GW${t.gw} trade. Points each side scored only during the weeks the recipient actually owned them.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d4">
+        <div class="swap-side ani ani-left d3">
           <div class="who">${MGR[t.offered_le].first} received</div>
           <div class="players">${tradeBreakdown(t.offered_got_detail)}</div>
           <div class="delta">Total: ${t.offered_gain} pts while held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d5">↔</div>
-        <div class="swap-side ani ani-right d6">
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
           <div class="who">${MGR[t.received_le].first} received</div>
           <div class="players">${tradeBreakdown(t.received_got_detail)}</div>
           <div class="delta">Total: ${t.received_gain} pts while held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Much ado about nothing</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Christopher took a Grealish off Peter for a Marmoush that never landed. Neither of them really benefited.</div>`
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Much ado about nothing</span></div>
+      <div class="zinger ani ani-fade d8 mt-md">Christopher took a Grealish off Peter for a Marmoush that never landed. Neither of them really benefited.</div>`
   });
 });
 
@@ -641,51 +640,49 @@ CARDS.push(() => {
   return card({
     cls:'bg-orange',
     html:`
-      <div class="caption ani ani-fade d1">TRADE 02 · GAMEWEEK ${t.gw}</div>
-      <div class="award-name ani ani-up d2">The three-for-three.</div>
-      <div class="explainer ani ani-fade d3">Points each side scored only during the weeks the recipient actually owned them.</div>
+      <div class="award-name ani ani-up d1">The three-for-three.</div>
+      <div class="explainer ani ani-fade d2">A GW${t.gw} trade. Points each side scored only during the weeks the recipient actually owned them.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d4">
+        <div class="swap-side ani ani-left d3">
           <div class="who">${MGR[t.offered_le].first} received</div>
-          <div class="players" style="font-size:clamp(22px,3vw,36px);line-height:1.2">${tradeBreakdown(t.offered_got_detail)}</div>
+          <div class="players" style="font-size:clamp(20px,2.6vw,30px);line-height:1.2">${tradeBreakdown(t.offered_got_detail)}</div>
           <div class="delta">Total: ${t.offered_gain} pts while held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d5">↔</div>
-        <div class="swap-side ani ani-right d6">
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
           <div class="who">${MGR[t.received_le].first} received</div>
-          <div class="players" style="font-size:clamp(22px,3vw,36px);line-height:1.2">${tradeBreakdown(t.received_got_detail)}</div>
+          <div class="players" style="font-size:clamp(20px,2.6vw,30px);line-height:1.2">${tradeBreakdown(t.received_got_detail)}</div>
           <div class="delta">Total: ${t.received_gain} pts while held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Fair</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Six players changed hands. Bruno carried christopher; Palmer carried Michael. Both sides finished within 13 points of each other. The fairest trade of the season.</div>`
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Fair</span></div>
+      <div class="zinger ani ani-fade d8 mt-md">Six players changed hands. Bruno carried christopher; Palmer carried Michael. Both sides finished within 13 points of each other. The fairest trade of the season.</div>`
   });
 });
 
 // 12. Trade 3: Evanilson <-> Isak (michael offered, mark received)
 CARDS.push(() => {
-  const t = A.trades[2]; // GW18
+  const t = A.trades[2]; // GW18 — gap is 47 pts → WIN (not STEAL: that needs 60+)
   return card({
     cls:'bg-purple',
     html:`
-      <div class="caption ani ani-fade d1">TRADE 03 · GAMEWEEK ${t.gw}</div>
-      <div class="award-name ani ani-up d2">Isak for Evanilson.</div>
-      <div class="explainer ani ani-fade d3">Points each side scored only during the weeks the recipient actually owned them.</div>
+      <div class="award-name ani ani-up d1">Isak for Evanilson.</div>
+      <div class="explainer ani ani-fade d2">A GW${t.gw} trade. Points each side scored only during the weeks the recipient actually owned them.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d4">
+        <div class="swap-side ani ani-left d3">
           <div class="who">${MGR[t.offered_le].first} received</div>
           <div class="players">${tradeBreakdown(t.offered_got_detail)}</div>
           <div class="delta">Total: ${t.offered_gain} pts while held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d5">↔</div>
-        <div class="swap-side ani ani-right d6">
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
           <div class="who">${MGR[t.received_le].first} received</div>
           <div class="players">${tradeBreakdown(t.received_got_detail)}</div>
           <div class="delta">Total: ${t.received_gain} pts while held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d8 mt-lg"><span class="verdict" style="color:var(--yellow);border-color:var(--yellow)">Steal</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Mark held Evanilson 16 weeks for 59 points. Michael held Isak 8 weeks for 12. The season's clearest trade win.</div>`
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict" style="color:var(--yellow);border-color:var(--yellow)">Win · +47</span></div>
+      <div class="zinger ani ani-fade d8 mt-md">Mark held Evanilson 16 weeks for 59 points. Michael held Isak 8 weeks for 12. A clean win for Mark — the season's most consequential trade.</div>`
   });
 });
 
@@ -727,7 +724,6 @@ MGR_ORDER.forEach(le => {
       html: `
         <div class="mgr-pos ani ani-pop d1">#${s.rank}</div>
         <div class="mgr-content" style="grid-column:1/2">
-          <div class="caption ani ani-fade d1">FINISHED ${s.rank}${s.rank===1?'ST':s.rank===2?'ND':s.rank===3?'RD':'TH'}</div>
           <div class="mgr-name ani ani-left d2">${MGR[le].first}</div>
           <div class="mgr-team ani ani-fade d3">${MGR[le].team}</div>
           <div class="mgr-verdict ani ani-fade d9">${MGR_VERDICT[le]}</div>
@@ -756,17 +752,31 @@ CARDS.push(() => card({
 CARDS.push(() => card({
   cls:'bg-yellow',
   html: `
-    <div class="caption ani ani-fade d1">AWARD · CHAMPION</div>
-    <div class="award-name ani ani-up d2">Champion of the Craig Cup.</div>
-    <div class="explainer ani ani-fade d3">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
-    <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:18px;gap:6px">
-      <div class="hero-name ani ani-up d4" style="font-size:clamp(80px,16vw,200px);">Geraint</div>
-      <div class="recipient ani ani-fade d5">🏴󠁧󠁢󠁷󠁬󠁳󠁿 &nbsp; · &nbsp; 78 league pts &nbsp;·&nbsp; +13 on second</div>
+    <div class="award-name ani ani-up d1">Champion of the Craig Cup.</div>
+    <div class="explainer ani ani-fade d2">Top of the table after 38 gameweeks. Held first place for thirty-four of them.</div>
+    <div style="display:flex;align-items:center;gap:24px;margin-top:18px;flex-wrap:wrap">
+      <svg class="ani ani-pop d3" viewBox="0 0 100 120" style="width:clamp(70px,11vw,130px);height:auto;flex-shrink:0" aria-hidden="true">
+        <!-- Trophy cup -->
+        <path d="M30 18 H70 V35 Q70 60 50 65 Q30 60 30 35 Z" fill="#0A0A0A"/>
+        <!-- Handles -->
+        <path d="M30 22 Q15 22 15 35 Q15 48 30 48" fill="none" stroke="#0A0A0A" stroke-width="5"/>
+        <path d="M70 22 Q85 22 85 35 Q85 48 70 48" fill="none" stroke="#0A0A0A" stroke-width="5"/>
+        <!-- Stem & base -->
+        <rect x="45" y="64" width="10" height="20" fill="#0A0A0A"/>
+        <rect x="32" y="84" width="36" height="8" fill="#0A0A0A"/>
+        <rect x="28" y="92" width="44" height="10" fill="#0A0A0A"/>
+        <!-- Number 1 carved into the cup -->
+        <text x="50" y="48" text-anchor="middle" font-family="Anton" font-size="28" fill="#FFEB3B">1</text>
+      </svg>
+      <div>
+        <div class="hero-name ani ani-up d4">Geraint</div>
+        <div class="recipient ani ani-fade d5" style="margin-top:6px">🏴󠁧󠁢󠁷󠁬󠁳󠁿 &nbsp; · &nbsp; 78 league pts &nbsp;·&nbsp; +13 on second</div>
+      </div>
     </div>
-    <div class="zinger ani ani-fade d8 mt-lg">Took the trophy with his feet up. Lap of honour optional.</div>`
+    <div class="zinger ani ani-fade d7 mt-lg">Took the trophy with his feet up. Lap of honour optional.</div>`
 }));
 
-// 22. Best Trade — Mark steals Evanilson
+// 22. Best Trade — Mark wins the Isak ↔ Evanilson swap (gap +47, so WIN not STEAL)
 CARDS.push(() => {
   const t3 = A.trades[2]; // GW18 trade
   const markGot = t3.received_got_detail[0]; // Evanilson
@@ -774,24 +784,23 @@ CARDS.push(() => {
   return card({
     cls:'bg-grad-po',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · BEST TRADE</div>
-      <div class="award-name ani ani-up d2">The Evanilson heist.</div>
-      <div class="explainer ani ani-fade d3">Net points after the swap, counting only the weeks each player was actually held by their new owner.</div>
+      <div class="award-name ani ani-up d1">The Evanilson heist.</div>
+      <div class="explainer ani ani-fade d2">Net tenure-adjusted points across the three trades. The bigger the gap, the bigger the win.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d4">
+        <div class="swap-side ani ani-left d3">
           <div class="who">Mark received</div>
-          <div class="players" style="font-size:clamp(34px,5.5vw,72px)">${markGot.name}</div>
+          <div class="players" style="font-size:clamp(28px,4.5vw,56px)">${markGot.name}</div>
           <div class="delta">${markGot.pts} pts in ${markGot.weeks} weeks held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d5">↔</div>
-        <div class="swap-side ani ani-right d6">
+        <div class="swap-arrow ani ani-fade d4">↔</div>
+        <div class="swap-side ani ani-right d5">
           <div class="who">Michael received</div>
-          <div class="players" style="font-size:clamp(34px,5.5vw,72px)">${michGot.name}</div>
+          <div class="players" style="font-size:clamp(28px,4.5vw,56px)">${michGot.name}</div>
           <div class="delta">${michGot.pts} pts in ${michGot.weeks} weeks held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Steal · +${markGot.pts - michGot.pts}</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Mark · Carrying Timber. He saw a striker, he got a striker, and the other striker forgot to score.</div>`
+      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Win · +${markGot.pts - michGot.pts}</span></div>
+      <div class="zinger ani ani-fade d8 mt-md">Mark · Carrying Timber. He saw a striker, he got a striker, and the other striker forgot to score.</div>`
   });
 });
 
@@ -801,18 +810,17 @@ CARDS.push(() => {
   return card({
     cls:'bg-cyan',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · BEST DRAFT PICK</div>
-      <div class="award-name ani ani-up d2">First overall. First everything.</div>
-      <div class="explainer ani ani-fade d3">Most points scored by a draftee while still owned by the manager who drafted them.</div>
+      <div class="award-name ani ani-up d1">First overall. First everything.</div>
+      <div class="explainer ani ani-fade d2">Most points scored by a draftee while still owned by the manager who drafted them.</div>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;margin-top:14px">
-        <div class="hero-numeral ani ani-pop d4" style="color:var(--black);font-size:clamp(110px,22vh,260px)">#${b.pick}</div>
+        <div class="hero-numeral ani ani-pop d3" style="color:var(--black)">#${b.pick}</div>
         <div>
-          <div class="hero-name ani ani-up d5" style="font-size:clamp(56px,11vw,140px);line-height:.95">${b.name}</div>
-          <div class="recipient ani ani-fade d6 mt-sm">Drafted by ${MGR[b.le].first} · ${MGR[b.le].team}</div>
-          <div class="recipient ani ani-fade d7" style="margin-top:8px;opacity:.85">${b.pts} pts across ${b.held} weeks held — every single GW</div>
+          <div class="hero-name ani ani-up d4">${b.name}</div>
+          <div class="recipient ani ani-fade d5 mt-sm">Drafted by ${MGR[b.le].first} · ${MGR[b.le].team}</div>
+          <div class="recipient ani ani-fade d6" style="margin-top:8px;opacity:.85">${b.pts} pts across ${b.held} weeks held — every single GW</div>
         </div>
       </div>
-      <div class="zinger ani ani-fade d9 mt-lg">First pick of the draft. Best pick of the draft. Sometimes there's no twist.</div>`
+      <div class="zinger ani ani-fade d8 mt-lg">First pick of the draft. Best pick of the draft. Sometimes there's no twist.</div>`
   });
 });
 
@@ -821,13 +829,12 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-grad-po',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · MOST INFLUENTIAL TRANSFER</div>
-      <div class="award-name ani ani-up d2" style="word-break:normal">The transfer that changed the league.</div>
-      <div class="explainer ani ani-fade d3">Picked by christopher · The Masterplan</div>
-      <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:36px;gap:18px">
-        <div class="hero-name ani ani-pop d6" id="gittens-name" style="font-size:clamp(70px,14vw,180px);opacity:0">GITTENS</div>
+      <div class="award-name ani ani-up d1" style="word-break:normal">Most influential transfer.</div>
+      <div class="explainer ani ani-fade d2">The transfer that changed the league. Picked by christopher · The Masterplan.</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:30px;gap:14px">
+        <div class="hero-name ani ani-pop d5" id="gittens-name" style="opacity:0">GITTENS</div>
         <div style="display:flex;align-items:baseline;gap:14px">
-          <div class="counter ani ani-fade" id="gittens-pts" style="opacity:0;font-size:clamp(80px,14vw,180px)">0</div>
+          <div class="counter ani ani-fade" id="gittens-pts" style="opacity:0;font-size:clamp(50px,9vw,118px)">0</div>
           <div class="caption ani ani-fade" id="gittens-unit" style="opacity:0;font-size:clamp(16px,2.4vw,28px);letter-spacing:.1em">PTS</div>
         </div>
         <div class="zinger ani" id="gittens-italic" style="opacity:0;font-size:clamp(13px,1.5vw,18px)"><em>while held by christopher</em></div>
@@ -861,13 +868,12 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-black',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--yellow)">AWARD · ASLEEP AT THE WHEEL</div>
-      <div class="award-name ani ani-up d2">Asleep at the wheel.</div>
-      <div class="explainer ani ani-fade d3">Longest consecutive run of gameweeks without a single accepted transaction.</div>
-      <div class="recipient ani ani-fade d4 mt-md">Peter · MaxPoints</div>
-      <div style="display:flex;align-items:baseline;gap:18px;margin-top:30px">
-        <div class="counter ani ani-fade" id="asleep-num" style="font-size:clamp(160px,28vh,360px);color:var(--yellow);opacity:0">0</div>
-        <div class="caption ani ani-fade" id="asleep-unit" style="opacity:0;font-size:clamp(20px,3vw,36px);letter-spacing:.1em">GAMEWEEKS</div>
+      <div class="award-name ani ani-up d1">Asleep at the wheel.</div>
+      <div class="explainer ani ani-fade d2">Longest consecutive run of gameweeks without a single accepted transaction.</div>
+      <div class="recipient ani ani-fade d3 mt-md">Peter · MaxPoints</div>
+      <div style="display:flex;align-items:baseline;gap:18px;margin-top:24px">
+        <div class="counter ani ani-fade" id="asleep-num" style="font-size:clamp(80px,13vh,140px);color:var(--yellow);opacity:0">0</div>
+        <div class="caption ani ani-fade" id="asleep-unit" style="opacity:0;font-size:clamp(18px,2.6vw,30px);letter-spacing:.1em">GAMEWEEKS</div>
       </div>
       <div class="zinger ani ani-fade" id="asleep-zing" style="opacity:0">GW29 to GW37. He's still online. He's just choosing not to be.</div>`
   });
@@ -894,23 +900,22 @@ CARDS.push(() => card({
   html:`<div class="text ani ani-up d1">And now the bits nobody asked for.</div>`
 }));
 
-// 27. Revolving Door — Michael
+// 27. Revolving Door — Michael (top 6 repeat-signings)
 CARDS.push(() => {
-  const items = A.revolving_by_le['73847'].filter(x => x.count >= 2).slice(0, 8);
+  const items = A.revolving_by_le['73847'].filter(x => x.count >= 2).slice(0, 6);
   return card({
     cls:'bg-orange',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · REVOLVING DOOR</div>
-      <div class="award-name ani ani-up d2">Couldn't make his mind up.</div>
-      <div class="explainer ani ani-fade d3">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
-      <div class="recipient ani ani-fade d4 mt-md">Michael · Jota win again *20</div>
+      <div class="award-name ani ani-up d1">Couldn't make his mind up.</div>
+      <div class="explainer ani ani-fade d2">Players signed two or more times by the same manager. Same player, same waiver, fresh hope.</div>
+      <div class="recipient ani ani-fade d3 mt-md">Michael · Jota win again *20</div>
       <div class="mt-md flex-col gap-sm">
-        ${items.map((p,i)=>`<div class="ani ani-left" style="animation-delay:${1+i*0.12}s;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:14px;border-top:1px solid currentColor;padding-top:6px;${i===0?'border-top:none;padding-top:0;':''}">
-          <div style="font-family:'Anton';font-size:clamp(20px,2.8vw,34px);text-transform:uppercase;line-height:1">${p.name}</div>
-          <div style="font-family:'Anton';font-size:clamp(22px,3vw,36px);line-height:1">× ${p.count}</div>
+        ${items.map((p,i)=>`<div class="ani ani-left" style="animation-delay:${0.9+i*0.1}s;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:14px;border-top:1px solid currentColor;padding-top:6px;${i===0?'border-top:none;padding-top:0;':''}">
+          <div style="font-family:'Anton';font-size:clamp(20px,2.6vw,32px);text-transform:uppercase;line-height:1">${p.name}</div>
+          <div style="font-family:'Anton';font-size:clamp(22px,2.8vw,34px);line-height:1">× ${p.count}</div>
         </div>`).join('')}
       </div>
-      <div class="zinger ani ani-fade" style="animation-delay:2.6s;margin-top:14px">Made 103 transactions chasing the perfect XI. Never found it.</div>`
+      <div class="zinger ani ani-fade" style="animation-delay:2.2s;margin-top:14px">Made 103 transactions chasing the perfect XI. Never found it.</div>`
   });
 });
 
@@ -919,11 +924,10 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-cyan',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · GOALKEEPING HOWLER</div>
-      <div class="award-name ani ani-up d2">Goalkeeping howler.</div>
-      <div class="explainer ani ani-fade d3">Started the lower-scoring of his two keepers. Across the whole season.</div>
-      <div class="recipient ani ani-fade d4 mt-md">Steven · ✨</div>
-      <div class="gk-row ani ani-fade d5">
+      <div class="award-name ani ani-up d1">Goalkeeping howler.</div>
+      <div class="explainer ani ani-fade d2">Started the lower-scoring of his two keepers. Across the whole season.</div>
+      <div class="recipient ani ani-fade d3 mt-md">Steven · ✨</div>
+      <div class="gk-row ani ani-fade d4">
         <div class="gk-icon good"><span class="gk-mark">✓</span></div>
         <div class="gk-icon bad"><span class="gk-mark">✗</span></div>
       </div>
@@ -953,14 +957,12 @@ CARDS.push(() => {
 // 29. Hot Potato — Lacroix
 CARDS.push(() => {
   const lac = A.lacroix || [];
-  // Render as a sequence of signings
   return card({
     cls:'bg-purple',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · THE HOT POTATO</div>
-      <div class="award-name ani ani-up d2">Three managers. Seven signings.</div>
-      <div class="explainer ani ani-fade d3">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
-      <div class="hp-center ani ani-pop d4" style="margin-top:18px">Lacroix</div>
+      <div class="award-name ani ani-up d1">Three managers. Seven signings.</div>
+      <div class="explainer ani ani-fade d2">Crystal Palace defender. Owned by three different managers, signed off the waiver wire seven separate times.</div>
+      <div class="hp-center ani ani-pop d4" style="margin-top:14px">Lacroix</div>
       <div class="hp-arrows ani ani-fade d6">
         ${lac.map(([le,gw],i)=>`<span class="hp-step" style="background:${HEX[le]}33;border-color:${HEX[le]}">GW${gw} · ${MGR[le].first}</span>`).join('<span style="opacity:.5">→</span>')}
       </div>
@@ -968,26 +970,25 @@ CARDS.push(() => {
   });
 });
 
-// 30. Welcome and Goodbye — Michael / Lacroix GW32→GW33
+// 30. Welcome and Goodbye — Peter / Gravenberch GW28→GW30 (Lacroix moved out to avoid duplicating the Hot Potato + Lacroix Story)
 CARDS.push(() => card({
   cls:'bg-lime',
   html:`
-    <div class="caption ani ani-fade d1">AWARD · WELCOME, AND GOODBYE</div>
-    <div class="award-name ani ani-up d2">In on Tuesday. Out by Saturday.</div>
-    <div class="explainer ani ani-fade d3">Signed a player, never started them, dropped them within three gameweeks.</div>
-    <div class="recipient ani ani-fade d4 mt-md">Michael · Jota win again *20</div>
+    <div class="award-name ani ani-up d1">In on Tuesday. Out by Saturday.</div>
+    <div class="explainer ani ani-fade d2">Signed a player, never started them, dropped them within three gameweeks.</div>
+    <div class="recipient ani ani-fade d3 mt-md">Peter · MaxPoints</div>
     <div class="wg-box mt-md">
-      <div class="wg-cell ani ani-pop d5">
+      <div class="wg-cell ani ani-pop d4">
         <div class="wg-tag">Arrived</div>
-        <div class="wg-gw">GW32</div>
+        <div class="wg-gw">GW28</div>
       </div>
-      <div class="wg-cell ani ani-pop d6">
+      <div class="wg-cell ani ani-pop d5">
         <div class="wg-tag">Departed</div>
-        <div class="wg-gw">GW33</div>
+        <div class="wg-gw">GW30</div>
       </div>
     </div>
-    <div class="hero-name ani ani-up d7 mt-md" style="font-size:clamp(54px,10vw,120px)">Lacroix</div>
-    <div class="zinger ani ani-fade d9 mt-md">He left before he ever started.</div>`
+    <div class="hero-name ani ani-up d6 mt-md">Gravenberch</div>
+    <div class="zinger ani ani-fade d8 mt-md">He left before he ever started.</div>`
 }));
 
 // 31. The Beating — christopher 93–38 Peter
@@ -995,21 +996,20 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-pink',
     html:`
-      <div class="caption ani ani-fade d1">AWARD · THE BEATING</div>
-      <div class="award-name ani ani-up d2">A 55-point hiding.</div>
-      <div class="explainer ani ani-fade d3">Biggest H2H margin of the season · GW15</div>
+      <div class="award-name ani ani-up d1">A 55-point hiding.</div>
+      <div class="explainer ani ani-fade d2">Biggest H2H margin of the season · GW15.</div>
       <div class="scoreline mt-md">
         <div class="side">
-          <div class="side-name ani ani-up d4">christopher</div>
+          <div class="side-name ani ani-up d3">christopher</div>
           <div class="side-score counter" id="beat-a" data-target="93">0</div>
         </div>
-        <div class="dash ani ani-fade d5">–</div>
+        <div class="dash ani ani-fade d4">–</div>
         <div class="side">
-          <div class="side-name ani ani-up d4">Peter</div>
+          <div class="side-name ani ani-up d3">Peter</div>
           <div class="side-score counter" id="beat-b" data-target="38">0</div>
         </div>
       </div>
-      <div class="zinger ani ani-fade d9 mt-md">Football's equivalent of taking your nephew's lunch money.</div>`
+      <div class="zinger ani ani-fade d8 mt-md">Football's equivalent of taking your nephew's lunch money.</div>`
   });
   el.addEventListener('cardEnter', () => {
     setTimeout(() => {
@@ -1027,10 +1027,9 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-black',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--cyan)">AWARD · PHANTOM XI</div>
-      <div class="award-name ani ani-up d2">Five players, zero minutes.</div>
-      <div class="explainer ani ani-fade d3">Five of his eleven starters didn't see the pitch that gameweek.</div>
-      <div class="recipient ani ani-fade d4 mt-md">Steven · ✨ &nbsp;·&nbsp; GW34</div>
+      <div class="award-name ani ani-up d1">Five players, zero minutes.</div>
+      <div class="explainer ani ani-fade d2">Five of his eleven starters didn't see the pitch that gameweek.</div>
+      <div class="recipient ani ani-fade d3 mt-md">Steven · ✨ &nbsp;·&nbsp; GW34</div>
       <div class="phantom-grid mt-md" id="phantom-grid"></div>
       <div class="zinger ani ani-fade" id="phantom-zing" style="opacity:0">Final score that week: 16. Lowest in the league all season.</div>`
   });
@@ -1076,12 +1075,11 @@ CARDS.push(() => {
 CARDS.push(() => card({
   cls:'bg-cyan',
   html:`
-    <div class="caption ani ani-fade d1">AWARD · THREE STRIKES</div>
-    <div class="award-name ani ani-up d2">Three goes at the same player.</div>
-    <div class="explainer ani ani-fade d3">Signed, dropped, signed, dropped, signed. By the same manager. In one season.</div>
-    <div class="recipient ani ani-fade d4 mt-md">Mark · Carrying Timber</div>
-    <div class="hp-center ani ani-pop d5" style="margin-top:14px;color:var(--black)">Amad</div>
-    <div class="hp-arrows ani ani-fade d7" style="font-size:clamp(15px,2vw,22px)">
+    <div class="award-name ani ani-up d1">Three goes at the same player.</div>
+    <div class="explainer ani ani-fade d2">Signed, dropped, signed, dropped, signed. By the same manager. In one season.</div>
+    <div class="recipient ani ani-fade d3 mt-md">Mark · Carrying Timber</div>
+    <div class="hp-center ani ani-pop d4" style="margin-top:14px;color:var(--black)">Amad</div>
+    <div class="hp-arrows ani ani-fade d6" style="font-size:clamp(15px,2vw,22px)">
       <span class="hp-step">✓ Signed GW24</span>
       <span style="opacity:.5">→</span>
       <span class="hp-step">✗ Dropped</span>
@@ -1092,40 +1090,34 @@ CARDS.push(() => card({
       <span style="opacity:.5">→</span>
       <span class="hp-step">✓ Signed GW34</span>
     </div>
-    <div class="zinger ani ani-fade d9 mt-md">Each time was going to be the last time.</div>`
+    <div class="zinger ani ani-fade d8 mt-md">Each time was going to be the last time.</div>`
 }));
 
-// 34. Anchored — Peter held #6 for 37 weeks
+// 34. Coin Flip — Geraint 51 — 52 Michael, GW7 (margin 1)
 CARDS.push(() => {
   const el = card({
-    cls:'bg-purple',
+    cls:'bg-lime',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--yellow)">AWARD · ANCHORED</div>
-      <div class="award-name ani ani-up d2">Last place by gameweek 3.</div>
-      <div class="explainer ani ani-fade d3">Number of gameweeks spent at the bottom of the table.</div>
-      <div class="recipient ani ani-fade d4 mt-md">Peter · MaxPoints</div>
-      <div style="display:flex;align-items:baseline;gap:14px;margin-top:24px">
-        <div class="counter ani ani-fade" id="anchor-num" style="opacity:0;font-size:clamp(160px,28vh,340px);color:var(--yellow)">0</div>
-        <div class="caption ani ani-fade" id="anchor-unit" style="opacity:0;font-size:clamp(18px,2.6vw,30px);letter-spacing:.1em">OF 38 GAMEWEEKS</div>
+      <div class="award-name ani ani-up d1">The coin flip.</div>
+      <div class="explainer ani ani-fade d2">Closest H2H result of the season. Decided by a single point in GW7.</div>
+      <div class="scoreline mt-md">
+        <div class="side">
+          <div class="side-name ani ani-up d3">Geraint</div>
+          <div class="side-score counter" id="cf-a" data-target="51">0</div>
+        </div>
+        <div class="dash ani ani-fade d4">–</div>
+        <div class="side">
+          <div class="side-name ani ani-up d3">Michael</div>
+          <div class="side-score counter" id="cf-b" data-target="52">0</div>
+        </div>
       </div>
-      <div class="zinger ani ani-fade" id="anchor-zing" style="opacity:0">Never anchored down. Just stuck.</div>`
+      <div class="zinger ani ani-fade d8 mt-md">A point in it. Michael nicked one off the champion before the champion was the champion.</div>`
   });
   el.addEventListener('cardEnter', () => {
-    setTimeout(()=>{
-      const n = el.querySelector('#anchor-num');
-      const u = el.querySelector('#anchor-unit');
-      const z = el.querySelector('#anchor-zing');
-      n.style.animation = 'fadeUp .5s ease-out forwards';
-      u.style.animation = 'fadeUp .5s ease-out forwards';
-      u.style.animationDelay = '.2s';
-      setTimeout(()=>{
-        let v=0; const target=37; const dur=2400;
-        const start = performance.now();
-        function f(t){const k=Math.min(1,(t-start)/dur);const e=1-Math.pow(1-k,3);n.textContent=Math.round(target*e);if(k<1)requestAnimationFrame(f);else n.textContent=target}
-        requestAnimationFrame(f);
-      }, 300);
-      setTimeout(()=>{ z.style.animation = 'fadeUp .6s ease-out forwards'; }, 3600);
-    }, 2300);
+    setTimeout(() => {
+      countUp(el.querySelector('#cf-a'), 51, 2200);
+      countUp(el.querySelector('#cf-b'), 52, 2200);
+    }, 1600);
   });
   return el;
 });
@@ -1156,20 +1148,19 @@ CARDS.push(() => {
   return card({
     cls:'bg-off',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--purple)">COUNTERFACTUAL · EVERYONE PLAYS PETE</div>
-      <div class="award-name ani ani-up d2" style="font-size:clamp(36px,5.5vw,72px)">If everyone only played Peter…</div>
-      <div class="explainer ani ani-fade d3">Each manager's actual score every GW, vs Peter's actual score that GW. Peter plays the average of the other five.</div>
+      <div class="award-name ani ani-up d1" style="font-size:clamp(32px,5vw,64px)">If everyone only played Peter…</div>
+      <div class="explainer ani ani-fade d2">Each manager's actual score every GW, vs Peter's actual score that GW. Peter plays the average of the other five.</div>
       <div class="cf-grid mt-md">
-        <div class="cf-card ani ani-left d4">
+        <div class="cf-card ani ani-left d3">
           <div class="cf-title">Actual table</div>
           ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
         </div>
-        <div class="cf-card ani ani-right d6">
+        <div class="cf-card ani ani-right d5">
           <div class="cf-title" style="color:var(--purple)">Everyone plays Pete</div>
           ${cfTable(cf, 73858)}
         </div>
       </div>
-      <div class="zinger ani ani-fade d8 mt-md">Christopher jumps to 2nd. Steven slips to 5th. The whole second-tier reshuffles. Geraint still wins.</div>`
+      <div class="zinger ani ani-fade d7 mt-md">Christopher jumps to 2nd. Steven slips to 5th. The whole second-tier reshuffles. Geraint still wins.</div>`
   });
 });
 
@@ -1179,20 +1170,19 @@ CARDS.push(() => {
   return card({
     cls:'bg-off',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--pink)">COUNTERFACTUAL · OPTIMAL XI EVERY WEEK</div>
-      <div class="award-name ani ani-up d2" style="font-size:clamp(36px,5.5vw,72px)">If everyone picked their best XI…</div>
-      <div class="explainer ani ani-fade d3">For each manager each GW, the highest-scoring legal XI from their 15-man squad. Recompute the H2H matches.</div>
+      <div class="award-name ani ani-up d1" style="font-size:clamp(32px,5vw,64px)">If everyone picked their best XI…</div>
+      <div class="explainer ani ani-fade d2">For each manager each GW, the highest-scoring legal XI from their 15-man squad. Recompute the H2H matches.</div>
       <div class="cf-grid mt-md">
-        <div class="cf-card ani ani-left d4">
+        <div class="cf-card ani ani-left d3">
           <div class="cf-title">Actual table</div>
           ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
         </div>
-        <div class="cf-card ani ani-right d6">
+        <div class="cf-card ani ani-right d5">
           <div class="cf-title" style="color:var(--pink)">Hindsight XI</div>
           ${cfTable(cf, 73835)}
         </div>
       </div>
-      <div class="zinger ani ani-fade d8 mt-md">Geraint wins by less. Michael and Steven swap places. Peter still last.</div>`
+      <div class="zinger ani ani-fade d7 mt-md">Geraint wins by less. Michael and Steven swap places. Peter still last.</div>`
   });
 });
 
@@ -1202,20 +1192,19 @@ CARDS.push(() => {
   return card({
     cls:'bg-off',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--orange)">COUNTERFACTUAL · NO TRANSFERS</div>
-      <div class="award-name ani ani-up d2" style="font-size:clamp(36px,5.5vw,72px)">If nobody ever transferred…</div>
-      <div class="explainer ani ani-fade d3">Each manager's GW1 starting XI, scoring every week, every week, for 38 weeks. Recompute the table.</div>
+      <div class="award-name ani ani-up d1" style="font-size:clamp(32px,5vw,64px)">If nobody ever transferred…</div>
+      <div class="explainer ani ani-fade d2">Each manager's GW1 starting XI, scoring every week, every week, for 38 weeks. Recompute the table.</div>
       <div class="cf-grid mt-md">
-        <div class="cf-card ani ani-left d4">
+        <div class="cf-card ani ani-left d3">
           <div class="cf-title">Actual table</div>
           ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
         </div>
-        <div class="cf-card ani ani-right d6">
+        <div class="cf-card ani ani-right d5">
           <div class="cf-title" style="color:var(--orange)">If nobody had moved</div>
           ${cfTable(cf, 73847)}
         </div>
       </div>
-      <div class="zinger ani ani-fade d8 mt-md">Michael, who ran 103 transactions in real life, would have finished first by leaving his GW1 team alone.</div>`
+      <div class="zinger ani ani-fade d7 mt-md">Michael, who ran 103 transactions in real life, would have finished first by leaving his GW1 team alone.</div>`
   });
 });
 
@@ -1235,7 +1224,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1" style="color:var(--pink)">STORY · 01</div>
           <div class="story-title ani ani-up d2">Six in a row, then five.</div>
           <div class="story-tag ani ani-fade d3">Steven · ✨</div>
           <div class="story-body ani ani-fade d4">
@@ -1286,7 +1274,6 @@ CARDS.push(() => card({
   html:`
     <div class="story-grid">
       <div>
-        <div class="caption ani ani-fade d1" style="color:var(--lime)">STORY · 02</div>
         <div class="story-title ani ani-up d2">The late form.</div>
         <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
         <div class="story-body ani ani-fade d4">
@@ -1310,7 +1297,6 @@ CARDS.push(() => card({
   html:`
     <div class="story-grid">
       <div>
-        <div class="caption ani ani-fade d1">STORY · 03</div>
         <div class="story-title ani ani-up d2">The identity crisis.</div>
         <div class="story-tag ani ani-fade d3">Michael · Jota win again *20</div>
         <div class="story-body ani ani-fade d4">
@@ -1332,7 +1318,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1" style="color:var(--purple)">STORY · 04</div>
           <div class="story-title ani ani-up d2">Lacroix.</div>
           <div class="story-tag ani ani-fade d3">Peter, then Michael (three times), then Christopher, then Michael, then Christopher</div>
           <div class="story-body ani ani-fade d4">
@@ -1341,11 +1326,15 @@ CARDS.push(() => {
           </div>
         </div>
         <div class="story-vis ani ani-fade d6">
-          <div style="display:flex;flex-direction:column;gap:8px;width:100%">
-            ${lac.map(([le,gw])=>`<div style="display:grid;grid-template-columns:60px 1fr;gap:10px;font-family:'Anton';font-size:clamp(14px,1.8vw,20px);align-items:center">
-              <div style="text-align:right">GW${gw}</div>
-              <div style="background:${HEX[le]};color:#0A0A0A;padding:4px 12px;border-radius:4px;display:inline-block">${MGR[le].first}</div>
-            </div>`).join('')}
+          <div style="position:relative;width:100%;max-width:380px;padding:30px 14px 6px">
+            <div style="position:absolute;left:14px;right:14px;top:50px;height:2px;background:rgba(10,10,10,.2)"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;position:relative">
+              ${lac.map(([le,gw])=>`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.05em">
+                <div style="font-family:'Anton',sans-serif;font-size:14px;line-height:1">GW${gw}</div>
+                <div style="width:18px;height:18px;border-radius:50%;background:${HEX[le]};border:2px solid #0A0A0A;flex-shrink:0"></div>
+                <div style="font-family:'Anton',sans-serif;font-size:14px;line-height:1">${MGR[le].first.charAt(0).toUpperCase()}</div>
+              </div>`).join('')}
+            </div>
           </div>
         </div>
       </div>`
@@ -1359,7 +1348,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1" style="color:var(--lime)">STORY · 05</div>
           <div class="story-title ani ani-up d2">The cliff.</div>
           <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
           <div class="story-body ani ani-fade d4">
@@ -1413,7 +1401,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1">STORY · 06</div>
           <div class="story-title ani ani-up d2">The late panic.</div>
           <div class="story-tag ani ani-fade d3">Geraint · 🏴󠁧󠁢󠁷󠁬󠁳󠁿</div>
           <div class="story-body ani ani-fade d4">
@@ -1467,7 +1454,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1">STORY · 07</div>
           <div class="story-title ani ani-up d2">The Senesi loop.</div>
           <div class="story-tag ani ani-fade d3">christopher · The Masterplan</div>
           <div class="story-body ani ani-fade d4">
@@ -1490,7 +1476,6 @@ CARDS.push(() => card({
   html:`
     <div class="story-grid">
       <div>
-        <div class="caption ani ani-fade d1">STORY · 08</div>
         <div class="story-title ani ani-up d2">Decided in October.</div>
         <div class="story-tag ani ani-fade d3">The whole league</div>
         <div class="story-body ani ani-fade d4">
@@ -1519,7 +1504,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1" style="color:var(--orange)">STORY · 09</div>
           <div class="story-title ani ani-up d2">The Mukiele migration.</div>
           <div class="story-tag ani ani-fade d3">Michael, then christopher, then Geraint, then Mark</div>
           <div class="story-body ani ani-fade d4">
@@ -1546,7 +1530,6 @@ CARDS.push(() => {
     html:`
       <div class="story-grid">
         <div>
-          <div class="caption ani ani-fade d1" style="color:var(--cyan)">STORY · 10</div>
           <div class="story-title ani ani-up d2">The chase.</div>
           <div class="story-tag ani ani-fade d3">Mark · Steven · christopher</div>
           <div class="story-body ani ani-fade d4">
@@ -1614,15 +1597,15 @@ CARDS.push(() => {
   const el = card({
     cls:'bg-off',
     html:`
-      <div class="caption ani ani-fade d1" style="color:var(--purple)">AGGREGATE · 38 GAMEWEEKS · 114 MATCHES</div>
-      <div class="award-name ani ani-up d2" style="font-size:clamp(40px,6.5vw,84px)">The whole season, in numbers.</div>
+      <div class="award-name ani ani-up d1" style="font-size:clamp(40px,6.5vw,84px)">The whole season, in numbers.</div>
+      <div class="explainer ani ani-fade d2">38 gameweeks, 114 H2H matches, six managers.</div>
       <div class="agg-grid mt-md">
         <div class="agg-item ani ani-up d3"><div class="agg-num counter" data-target="367">0</div><div class="agg-label">accepted transactions</div></div>
         <div class="agg-item ani ani-up d4"><div class="agg-num counter" data-target="3">0</div><div class="agg-label">manager-to-manager trades</div></div>
         <div class="agg-item ani ani-up d5"><div class="agg-num counter" data-target="10253">0</div><div class="agg-label">total starting-XI points</div></div>
-        <div class="agg-item ani ani-up d6"><div class="agg-num counter" data-target="215">0</div><div class="agg-label">distinct players fielded</div></div>
-        <div class="agg-item ani ani-up d7"><div class="agg-num counter" data-target="32">0</div><div class="agg-label">matches decided by 5pts or fewer</div></div>
-        <div class="agg-item ani ani-up d8"><div class="agg-num counter" data-target="93">0</div><div class="agg-label">highest single-GW score (christopher, GW15)</div></div>
+        <div class="agg-item ani ani-up d6"><div class="agg-num counter" data-target="32">0</div><div class="agg-label">matches decided by 5pts or fewer</div></div>
+        <div class="agg-item ani ani-up d7"><div class="agg-num" style="font-size:clamp(36px,5.5vw,72px)">Haaland</div><div class="agg-label">held by one manager for all 38 GWs</div></div>
+        <div class="agg-item ani ani-up d8"><div class="agg-num" style="font-size:clamp(36px,5.5vw,72px)">Gordon</div><div class="agg-label">owned by 4 different managers — most in the league</div></div>
       </div>`
   });
   el.addEventListener('cardEnter', () => {
@@ -1645,24 +1628,36 @@ CARDS.push(() => {
   return el;
 });
 
-// 52. Closing card
+// 52. Closing card — fact assembled word-by-word per spec
 CARDS.push(() => {
+  const factText = "Christopher scored more points than every manager except Geraint, and finished fourth.";
+  const words = factText.split(' ');
   const el = card({
     cls:'bg-black closing',
     html:`
       <div class="one-last ani ani-fade d1">One last thing.</div>
-      <div class="fact ani ani-up d3" id="closing-fact" style="opacity:0">
-        Christopher scored more points than every manager except Geraint, and finished fourth.
-      </div>
-      <div class="signoff ani ani-fade" id="closing-sign" style="opacity:0">Draw your own conclusions.</div>`
+      <div class="fact" id="closing-fact">${words.map(w => `<span class="cf-word" style="display:inline-block;opacity:0;transform:translateY(14px)">${w}</span>`).join(' ')}</div>
+      <div class="signoff" id="closing-sign" style="opacity:0;transform:translateY(10px)">Draw your own conclusions.</div>`
   });
   el.addEventListener('cardEnter', () => {
-    setTimeout(()=>{
-      el.querySelector('#closing-fact').style.animation = 'slideUp .8s cubic-bezier(.18,.8,.25,1) forwards';
-    }, 1400);
-    setTimeout(()=>{
-      el.querySelector('#closing-sign').style.animation = 'fadeUp .8s ease-out forwards';
-    }, 4700);
+    // Hold ~800ms after "One last thing." then assemble fact word by word over ~3s
+    const spans = el.querySelectorAll('.cf-word');
+    const perWord = Math.max(120, Math.min(280, Math.floor(3000 / spans.length)));
+    spans.forEach((s, i) => {
+      setTimeout(() => {
+        s.style.transition = 'opacity .45s ease-out, transform .45s cubic-bezier(.18,.8,.25,1)';
+        s.style.opacity = '1';
+        s.style.transform = 'translateY(0)';
+      }, 1400 + i * perWord);
+    });
+    // Sign-off: ~1500ms hold after the last word
+    const signOffDelay = 1400 + spans.length * perWord + 1500;
+    setTimeout(() => {
+      const sign = el.querySelector('#closing-sign');
+      sign.style.transition = 'opacity .6s ease-out, transform .6s cubic-bezier(.18,.8,.25,1)';
+      sign.style.opacity = '1';
+      sign.style.transform = 'translateY(0)';
+    }, signOffDelay);
   });
   return el;
 });

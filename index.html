@@ -603,6 +603,11 @@ CARDS.push(() => card({
   html:`<div class="text ani ani-up d1">The trades. All three of them.</div>`
 }));
 
+// Build a per-player breakdown line for trade cards (tenure-adjusted)
+function tradeBreakdown(detail){
+  return detail.map(d => `<div style="line-height:1.15;margin-bottom:6px"><span>${d.name}</span> <span style="opacity:.78;font-family:'Space Grotesk',sans-serif;font-size:.5em;letter-spacing:.02em">— ${d.pts} pts in ${d.weeks} wk${d.weeks===1?'':'s'} held</span></div>`).join('');
+}
+
 // 10. Trade 1: Marmoush <-> Grealish (christopher offered, peter received)
 CARDS.push(() => {
   const t = A.trades[0]; // GW4
@@ -611,21 +616,22 @@ CARDS.push(() => {
     html:`
       <div class="caption ani ani-fade d1">TRADE 01 · GAMEWEEK ${t.gw}</div>
       <div class="award-name ani ani-up d2">Marmoush, meet Grealish.</div>
+      <div class="explainer ani ani-fade d3">Points each side scored only during the weeks the recipient actually owned them.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d3">
-          <div class="who">${MGR[t.received_le].first} gave</div>
-          <div class="players">${t.offered_got.join(' · ')}</div>
-          <div class="delta">→ ${t.offered_gain} pts for ${MGR[t.offered_le].first}</div>
+        <div class="swap-side ani ani-left d4">
+          <div class="who">${MGR[t.offered_le].first} received</div>
+          <div class="players">${tradeBreakdown(t.offered_got_detail)}</div>
+          <div class="delta">Total: ${t.offered_gain} pts while held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d4">↔</div>
-        <div class="swap-side ani ani-right d5">
-          <div class="who">${MGR[t.offered_le].first} gave</div>
-          <div class="players">${t.offered_gave.join(' · ')}</div>
-          <div class="delta">→ ${t.received_gain} pts for ${MGR[t.received_le].first}</div>
+        <div class="swap-arrow ani ani-fade d5">↔</div>
+        <div class="swap-side ani ani-right d6">
+          <div class="who">${MGR[t.received_le].first} received</div>
+          <div class="players">${tradeBreakdown(t.received_got_detail)}</div>
+          <div class="delta">Total: ${t.received_gain} pts while held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Much ado about nothing</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Christopher swapped a Grealish off Peter for a Marmoush that never landed. Neither of them benefited.</div>`
+      <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Much ado about nothing</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Christopher took a Grealish off Peter for a Marmoush that never landed. Neither of them really benefited.</div>`
   });
 });
 
@@ -637,21 +643,22 @@ CARDS.push(() => {
     html:`
       <div class="caption ani ani-fade d1">TRADE 02 · GAMEWEEK ${t.gw}</div>
       <div class="award-name ani ani-up d2">The three-for-three.</div>
+      <div class="explainer ani ani-fade d3">Points each side scored only during the weeks the recipient actually owned them.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d3">
-          <div class="who">${MGR[t.received_le].first} gave</div>
-          <div class="players">${t.offered_got.join(' · ')}</div>
-          <div class="delta">→ ${t.offered_gain} pts for ${MGR[t.offered_le].first}</div>
+        <div class="swap-side ani ani-left d4">
+          <div class="who">${MGR[t.offered_le].first} received</div>
+          <div class="players" style="font-size:clamp(22px,3vw,36px);line-height:1.2">${tradeBreakdown(t.offered_got_detail)}</div>
+          <div class="delta">Total: ${t.offered_gain} pts while held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d4">↔</div>
-        <div class="swap-side ani ani-right d5">
-          <div class="who">${MGR[t.offered_le].first} gave</div>
-          <div class="players">${t.offered_gave.join(' · ')}</div>
-          <div class="delta">→ ${t.received_gain} pts for ${MGR[t.received_le].first}</div>
+        <div class="swap-arrow ani ani-fade d5">↔</div>
+        <div class="swap-side ani ani-right d6">
+          <div class="who">${MGR[t.received_le].first} received</div>
+          <div class="players" style="font-size:clamp(22px,3vw,36px);line-height:1.2">${tradeBreakdown(t.received_got_detail)}</div>
+          <div class="delta">Total: ${t.received_gain} pts while held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d7 mt-lg"><span class="verdict">Fair</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Six players changed hands. Both managers landed within 13 points of each other. The fairest trade in the league.</div>`
+      <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Fair</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Six players changed hands. Bruno carried christopher; Palmer carried Michael. Both sides finished within 13 points of each other. The fairest trade of the season.</div>`
   });
 });
 
@@ -663,21 +670,22 @@ CARDS.push(() => {
     html:`
       <div class="caption ani ani-fade d1">TRADE 03 · GAMEWEEK ${t.gw}</div>
       <div class="award-name ani ani-up d2">Isak for Evanilson.</div>
+      <div class="explainer ani ani-fade d3">Points each side scored only during the weeks the recipient actually owned them.</div>
       <div class="swap mt-md">
-        <div class="swap-side ani ani-left d3">
-          <div class="who">${MGR[t.received_le].first} gave</div>
-          <div class="players">${t.offered_got.join(' · ')}</div>
-          <div class="delta">→ ${t.offered_gain} pts for ${MGR[t.offered_le].first}</div>
+        <div class="swap-side ani ani-left d4">
+          <div class="who">${MGR[t.offered_le].first} received</div>
+          <div class="players">${tradeBreakdown(t.offered_got_detail)}</div>
+          <div class="delta">Total: ${t.offered_gain} pts while held</div>
         </div>
-        <div class="swap-arrow ani ani-fade d4">↔</div>
-        <div class="swap-side ani ani-right d5">
-          <div class="who">${MGR[t.offered_le].first} gave</div>
-          <div class="players">${t.offered_gave.join(' · ')}</div>
-          <div class="delta">→ ${t.received_gain} pts for ${MGR[t.received_le].first}</div>
+        <div class="swap-arrow ani ani-fade d5">↔</div>
+        <div class="swap-side ani ani-right d6">
+          <div class="who">${MGR[t.received_le].first} received</div>
+          <div class="players">${tradeBreakdown(t.received_got_detail)}</div>
+          <div class="delta">Total: ${t.received_gain} pts while held</div>
         </div>
       </div>
-      <div class="ani ani-stamp d7 mt-lg"><span class="verdict" style="color:var(--yellow);border-color:var(--yellow)">Steal</span></div>
-      <div class="zinger ani ani-fade d9 mt-md">Mark walked away with Evanilson. Michael got an Isak who managed 12 points before the season ran out.</div>`
+      <div class="ani ani-stamp d8 mt-lg"><span class="verdict" style="color:var(--yellow);border-color:var(--yellow)">Steal</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Mark held Evanilson 16 weeks for 59 points. Michael held Isak 8 weeks for 12. The season's clearest trade win.</div>`
   });
 });
 
@@ -730,8 +738,8 @@ MGR_ORDER.forEach(le => {
           <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">High score</div><div class="mgr-stat-val">${hl.high_pts} (GW${hl.high_gw})</div></div>
           <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">Low score</div><div class="mgr-stat-val">${hl.low_pts} (GW${hl.low_gw})</div></div>
           <div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Transactions</div><div class="mgr-stat-val">${txns}</div></div>
-          ${best ? `<div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Best move</div><div class="mgr-stat-val">${best.name} · ${best.pts} pts</div></div>`:''}
-          ${worst ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Worst move</div><div class="mgr-stat-val">${worst.name} · ${worst.pts} pts</div></div>`:''}
+          ${best ? `<div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Best move</div><div class="mgr-stat-val">${best.name} · ${best.pts} pts in ${best.held} wks</div></div>`:''}
+          ${worst ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Worst move</div><div class="mgr-stat-val">${worst.name} · ${worst.pts} pts in ${worst.held} wks</div></div>`:''}
           ${nem ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Nemesis</div><div class="mgr-stat-val">${MGR[nem.opp].first} (${nem.count}× — GW${nem.gws.join(', GW')})</div></div>`:''}
         </div>`
     });
@@ -759,28 +767,33 @@ CARDS.push(() => card({
 }));
 
 // 22. Best Trade — Mark steals Evanilson
-CARDS.push(() => card({
-  cls:'bg-grad-po',
-  html:`
-    <div class="caption ani ani-fade d1">AWARD · BEST TRADE</div>
-    <div class="award-name ani ani-up d2">The Evanilson heist.</div>
-    <div class="explainer ani ani-fade d3">Net points after the swap, while held by each side. The bigger the gap, the bigger the win.</div>
-    <div class="swap mt-md">
-      <div class="swap-side ani ani-left d4">
-        <div class="who">Mark received</div>
-        <div class="players" style="font-size:clamp(34px,5.5vw,72px)">Evanilson</div>
-        <div class="delta">→ 59 pts in 20 weeks</div>
+CARDS.push(() => {
+  const t3 = A.trades[2]; // GW18 trade
+  const markGot = t3.received_got_detail[0]; // Evanilson
+  const michGot = t3.offered_got_detail[0];  // Isak
+  return card({
+    cls:'bg-grad-po',
+    html:`
+      <div class="caption ani ani-fade d1">AWARD · BEST TRADE</div>
+      <div class="award-name ani ani-up d2">The Evanilson heist.</div>
+      <div class="explainer ani ani-fade d3">Net points after the swap, counting only the weeks each player was actually held by their new owner.</div>
+      <div class="swap mt-md">
+        <div class="swap-side ani ani-left d4">
+          <div class="who">Mark received</div>
+          <div class="players" style="font-size:clamp(34px,5.5vw,72px)">${markGot.name}</div>
+          <div class="delta">${markGot.pts} pts in ${markGot.weeks} weeks held</div>
+        </div>
+        <div class="swap-arrow ani ani-fade d5">↔</div>
+        <div class="swap-side ani ani-right d6">
+          <div class="who">Michael received</div>
+          <div class="players" style="font-size:clamp(34px,5.5vw,72px)">${michGot.name}</div>
+          <div class="delta">${michGot.pts} pts in ${michGot.weeks} weeks held</div>
+        </div>
       </div>
-      <div class="swap-arrow ani ani-fade d5">↔</div>
-      <div class="swap-side ani ani-right d6">
-        <div class="who">Michael received</div>
-        <div class="players" style="font-size:clamp(34px,5.5vw,72px)">Isak</div>
-        <div class="delta">→ 12 pts in 20 weeks</div>
-      </div>
-    </div>
-    <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Steal · +47</span></div>
-    <div class="zinger ani ani-fade d9 mt-md">Mark · Carrying Timber. He saw a striker, he got a striker, and the other striker forgot to score.</div>`
-}));
+      <div class="ani ani-stamp d8 mt-lg"><span class="verdict">Steal · +${markGot.pts - michGot.pts}</span></div>
+      <div class="zinger ani ani-fade d9 mt-md">Mark · Carrying Timber. He saw a striker, he got a striker, and the other striker forgot to score.</div>`
+  });
+});
 
 // 23. Best Draft Pick — Geraint's Haaland at #1
 CARDS.push(() => {
@@ -796,7 +809,7 @@ CARDS.push(() => {
         <div>
           <div class="hero-name ani ani-up d5" style="font-size:clamp(56px,11vw,140px);line-height:.95">${b.name}</div>
           <div class="recipient ani ani-fade d6 mt-sm">Drafted by ${MGR[b.le].first} · ${MGR[b.le].team}</div>
-          <div class="recipient ani ani-fade d7" style="margin-top:8px;opacity:.8">${b.pts} pts in ${b.held} GWs</div>
+          <div class="recipient ani ani-fade d7" style="margin-top:8px;opacity:.85">${b.pts} pts across ${b.held} weeks held — every single GW</div>
         </div>
       </div>
       <div class="zinger ani ani-fade d9 mt-lg">First pick of the draft. Best pick of the draft. Sometimes there's no twist.</div>`
@@ -817,7 +830,7 @@ CARDS.push(() => {
           <div class="counter ani ani-fade" id="madueke-pts" style="opacity:0;font-size:clamp(80px,14vw,180px)">0</div>
           <div class="caption ani ani-fade" id="madueke-unit" style="opacity:0;font-size:clamp(16px,2.4vw,28px);letter-spacing:.1em">PT</div>
         </div>
-        <div class="zinger ani" id="madueke-italic" style="opacity:0;font-size:clamp(13px,1.5vw,18px)"><em>while held by christopher</em></div>
+        <div class="zinger ani" id="madueke-italic" style="opacity:0;font-size:clamp(13px,1.5vw,18px)"><em>across 4 weeks held by christopher</em></div>
       </div>`
   });
   el.addEventListener('cardEnter', () => {

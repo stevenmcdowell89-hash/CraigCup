@@ -445,14 +445,14 @@ Peter's last accepted transaction: GW38
 ### GW4: Christopher (offered) ↔ Peter (received)
 - Christopher gave: Marmoush
 - Peter gave: Grealish
-- Christopher received pts (after trade): 24
+- Christopher received pts (after trade): 21
 - Peter received pts (after trade): 5
 
 ### GW9: Christopher (offered) ↔ Michael (received)
 - Christopher gave: Eze, Palmer, Ekitiké
 - Michael gave: Sarr, B.Fernandes, Evanilson
 - Christopher received pts (after trade): 214
-- Michael received pts (after trade): 235
+- Michael received pts (after trade): 227
 
 ### GW18: Michael (offered) ↔ Mark (received)
 - Michael gave: Evanilson
@@ -470,17 +470,17 @@ Peter's last accepted transaction: GW38
 - Pick #1: Rice → Geraint (184 pts while held)
 - Pick #4: Guéhi → Christopher (179 pts while held)
 - Pick #1: João Pedro → Geraint (177 pts while held)
-- Pick #4: Rogers → Michael (169 pts while held)
 - Pick #1: Watkins → Steven (167 pts while held)
 - Pick #6: Raya → Geraint (162 pts while held)
 - Pick #6: Saka → Steven (157 pts while held)
+- Pick #4: Rogers → Michael (157 pts while held)
 - Pick #3: J.Timber → Christopher (149 pts while held)
 - Pick #6: Mbeumo → Geraint (148 pts while held)
 - Pick #5: Enzo → Mark (147 pts while held)
 - Pick #5: Cunha → Peter (143 pts while held)
-- Pick #3: Saliba → Michael (137 pts while held)
 - Pick #6: Muñoz → Steven (136 pts while held)
 - Pick #5: Pickford → Mark (135 pts while held)
+- Pick #3: Saliba → Michael (129 pts while held)
 - Pick #2: Gyökeres → Mark (128 pts while held)
 - Pick #4: Wirtz → Michael (125 pts while held)
 - Pick #2: Neto → Peter (125 pts while held)
@@ -502,14 +502,14 @@ Peter's last accepted transaction: GW38
 - Steven GW16 signed Wilson → 106 pts while held
 - Peter GW16 signed Kelleher → 103 pts while held
 - Christopher GW16 signed Calvert-Lewin → 94 pts while held
-- Steven GW9 signed Cherki → 92 pts while held
+- Steven GW9 signed Cherki → 91 pts while held
 - Geraint GW1 signed Reijnders → 86 pts while held
 - Peter GW8 signed Hume → 84 pts while held
 - Christopher GW24 signed Anderson → 83 pts while held
 - Steven GW5 signed Roefs → 83 pts while held
 - Christopher GW25 signed Senesi → 73 pts while held
 - Mark GW2 signed Calafiori → 73 pts while held
-- Peter GW10 signed Cash → 71 pts while held
+- Christopher GW14 signed Bruno G. → 70 pts while held
 
 ## 23. High and low GW per manager
 
@@ -523,28 +523,28 @@ Peter's last accepted transaction: GW38
 ## 24. Best & worst move per manager
 
 ### Mark
-- Best: Gabriel (pick #5, via draft) — 209 pts
-- Worst: Konaté (pick #2, via draft) — 1 pts
+- Best: Gabriel (pick #29, via draft) — 209 pts
+- Worst: Konaté (pick #44, via draft) — 1 pts
 
 ### Peter
 - Best: Thiago (GW7, via waiver) — 151 pts
-- Worst: Kluivert (pick #5, via draft) — 0 pts
+- Worst: Kluivert (pick #47, via draft) — 0 pts
 
 ### Steven
-- Best: Watkins (pick #1, via draft) — 167 pts
-- Worst: Wissa (pick #1, via draft) — 0 pts
+- Best: Watkins (pick #7, via draft) — 167 pts
+- Worst: Wissa (pick #43, via draft) — 0 pts
 
 ### Geraint
 - Best: Haaland (pick #1, via draft) — 239 pts
-- Worst: Colwill (pick #1, via draft) — 0 pts
+- Worst: Colwill (pick #73, via draft) — 0 pts
 
 ### Michael
-- Best: Rogers (pick #4, via draft) — 169 pts
+- Best: Rogers (pick #16, via draft) — 157 pts
 - Worst: Andersen (GW36, via waiver) — -2 pts
 
 ### Christopher
 - Best: B.Fernandes (trade GW9, via trade) — 199 pts
-- Worst: Wood (GW9, via waiver) — 0 pts
+- Worst: Lammens (GW4, via waiver) — 0 pts
 
 ## 25. Squad changes per GW per manager
 
@@ -606,26 +606,26 @@ Peter's last accepted transaction: GW38
 
 ## 27. Most-owned players (owner-weeks)
 
-- Evanilson: 40 owner-weeks
-- Palmer: 39 owner-weeks
-- B.Fernandes: 39 owner-weeks
 - Haaland: 38 owner-weeks
 - M.Salah: 38 owner-weeks
 - Wirtz: 38 owner-weeks
 - Saka: 38 owner-weeks
 - Watkins: 38 owner-weeks
 - Gyökeres: 38 owner-weeks
+- B.Fernandes: 38 owner-weeks
 - Cunha: 38 owner-weeks
 - Mbeumo: 38 owner-weeks
 - João Pedro: 38 owner-weeks
-- Rogers: 38 owner-weeks
 - Bowen: 38 owner-weeks
 - Gibbs-White: 38 owner-weeks
 - Neto: 38 owner-weeks
 - Gabriel: 38 owner-weeks
-- Virgil: 38 owner-weeks
 - Semenyo: 38 owner-weeks
-- Saliba: 38 owner-weeks
+- Muñoz: 38 owner-weeks
+- Raya: 38 owner-weeks
+- Pickford: 38 owner-weeks
+- Guéhi: 38 owner-weeks
+- Palmer: 37 owner-weeks
 
 ## 28. Players signed by most distinct managers
 

@@ -1647,7 +1647,7 @@ window.CC = {
    "received_gave": [
     "Grealish"
    ],
-   "offered_received_pts": 24,
+   "offered_received_pts": 21,
    "received_received_pts": 5
   },
   {
@@ -1665,7 +1665,7 @@ window.CC = {
     "Evanilson"
    ],
    "offered_received_pts": 214,
-   "received_received_pts": 235
+   "received_received_pts": 227
   },
   {
    "gw": 18,
@@ -2849,5 +2849,91 @@ window.CC = {
    "in_gw": 30,
    "out_gw": 31
   }
- ]
+ ],
+ "best_worst_per_mgr": {
+  "mark": {
+   "best": {
+    "player": "Gabriel",
+    "source": "draft",
+    "label": "pick #29",
+    "pts": 209
+   },
+   "worst": {
+    "player": "Konaté",
+    "source": "draft",
+    "label": "pick #44",
+    "pts": 1
+   }
+  },
+  "peter": {
+   "best": {
+    "player": "Thiago",
+    "source": "waiver",
+    "label": "GW7",
+    "pts": 151
+   },
+   "worst": {
+    "player": "Kluivert",
+    "source": "draft",
+    "label": "pick #47",
+    "pts": 0
+   }
+  },
+  "steven": {
+   "best": {
+    "player": "Watkins",
+    "source": "draft",
+    "label": "pick #7",
+    "pts": 167
+   },
+   "worst": {
+    "player": "Wissa",
+    "source": "draft",
+    "label": "pick #43",
+    "pts": 0
+   }
+  },
+  "geraint": {
+   "best": {
+    "player": "Haaland",
+    "source": "draft",
+    "label": "pick #1",
+    "pts": 239
+   },
+   "worst": {
+    "player": "Colwill",
+    "source": "draft",
+    "label": "pick #73",
+    "pts": 0
+   }
+  },
+  "michael": {
+   "best": {
+    "player": "Rogers",
+    "source": "draft",
+    "label": "pick #16",
+    "pts": 157
+   },
+   "worst": {
+    "player": "Andersen",
+    "source": "waiver",
+    "label": "GW36",
+    "pts": -2
+   }
+  },
+  "christopher": {
+   "best": {
+    "player": "B.Fernandes",
+    "source": "trade",
+    "label": "trade GW9",
+    "pts": 199
+   },
+   "worst": {
+    "player": "Lammens",
+    "source": "waiver",
+    "label": "GW4",
+    "pts": 0
+   }
+  }
+ }
 };

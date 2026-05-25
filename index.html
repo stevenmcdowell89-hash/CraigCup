@@ -529,7 +529,7 @@ interstitial('How we got here.', 'bg-purple');
     {gw:'GW9', text:'Christopher trades three for three with Michael — six players move'},
     {gw:'GW15', text:`Christopher posts ${D.highest_gw.pts} on Peter — biggest single-week score of the season`},
     {gw:'GW17', text:'Geraint takes the lead. He never gives it back'},
-    {gw:'GW18', text:'Mark trades Evanilson for Isak — Isak finishes the season'},
+    {gw:'GW18', text:'Mark sends Isak to Michael for Evanilson — Evanilson scores 59 for him after the swap'},
     {gw:'GW28', text:'Peter makes his last transaction of the season'},
     {gw:'GW38', text:'Mark beats Christopher 46-42 — second place sealed on the final day'},
   ];
@@ -594,8 +594,8 @@ function tradeVerdict(t){
 const TRADE_BG = ['bg-orange', 'bg-cyan', 'bg-lime'];
 const TRADE_LINES = [
   'Christopher took Grealish off Peter for a Marmoush that never landed. Neither of them really benefited.',
-  'Three for three. Christopher got Bruno Fernandes and Sarr. Michael got Eze, Palmer and Ekitiké. Honours basically even.',
-  'Mark took Isak off Michael for Evanilson — and Evanilson never scored a point for Michael after the trade.',
+  'Three for three. Christopher got Bruno Fernandes, Sarr and Evanilson. Michael got Eze, Palmer and Ekitiké. Honours basically even.',
+  "Michael sent Evanilson the other way for Isak. Isak scored zero in his two weeks with Michael before being dropped. Evanilson scored 59 for Mark.",
 ];
 D.trades.forEach((t, i) => {
   const c = card(TRADE_BG[i], 'trade-card');
@@ -638,14 +638,16 @@ const MGR_BG = {
   peter:'bg-purple', michael:'bg-orange', christopher:'bg-lime',
   steven:'bg-pink', mark:'bg-cyan', geraint:'bg-yellow',
 };
-const MGR_BEST = {
-  peter:        {best:'Cunha · 143 pts', best_src:'draft pick #5',    worst:'Marmoush · 5 pts', worst_src:'trade GW4'},
-  michael:      {best:'Eze · 165 pts',   best_src:'trade GW9',         worst:'Evanilson · 0 pts', worst_src:'trade GW18'},
-  christopher:  {best:'Senesi · 73 pts', best_src:'waiver GW25',       worst:'Dewsbury-Hall · 1 pt',  worst_src:'waiver GW16'},
-  steven:       {best:'Roefs · 83 pts',  best_src:'waiver GW5',        worst:'Diouf · 0 pts',   worst_src:'waiver GW7'},
-  mark:         {best:'Isak · 59 pts',   best_src:'trade GW18',        worst:'Estêvão · 0 pts', worst_src:'waiver GW2'},
-  geraint:      {best:'Haaland · 239 pts', best_src:'draft pick #1',   worst:'Mukiele · 12 pts', worst_src:'waiver GW22'},
-};
+// Best & worst moves are pulled from D.best_worst_per_mgr (tenure-adjusted,
+// computed across draft picks, waivers, and trades).
+function fmtMove(m) {
+  if (!m) return {line:'—', src:''};
+  const ptsLabel = m.pts === 1 ? '1 pt' : `${m.pts} pts`;
+  let src = m.label;
+  if (m.source === 'draft' && m.label.startsWith('pick #')) src = `draft ${m.label}`;
+  else if (m.source === 'waiver') src = `waiver ${m.label}`;
+  return {line: `${m.player} · ${ptsLabel}`, src};
+}
 const MGR_VERDICT = {
   peter:       'Drafted hard, gave up midseason, won his last two anyway.',
   michael:     'Made the most signings in the league. Finished fifth.',
@@ -678,8 +680,11 @@ MGR_ORDER.forEach((who, idx) => {
   addRow('Points for', String(row.pf), 4);
   addRow('Best week', `${hilo.hi} (GW${hilo.hi_gw})`, 5);
   addRow('Worst week', `${hilo.lo} (GW${hilo.lo_gw})`, 6);
-  addRow('Best move', MGR_BEST[who].best + ' · ' + MGR_BEST[who].best_src, 7);
-  addRow('Worst move', MGR_BEST[who].worst + ' · ' + MGR_BEST[who].worst_src, 8);
+  const bw = D.best_worst_per_mgr[who];
+  const bestM = fmtMove(bw.best);
+  const worstM = fmtMove(bw.worst);
+  addRow('Best move', `${bestM.line} · ${bestM.src}`, 7);
+  addRow('Worst move', `${worstM.line} · ${worstM.src}`, 8);
   addRow('Nemesis', `${FN[nem.opp]} (${nem.n}× — GW${nem.gws.join(', GW')})`, 9);
   c.appendChild(stats);
 
@@ -728,19 +733,19 @@ interstitial('The awards.', 'bg-black');
   const swap = el('div', {class:'trade-swap'});
   const left = el('div', {class:'trade-side fade-up d-4'});
   left.appendChild(el('div', {class:'who'}, 'MICHAEL GOT'));
-  left.appendChild(el('div', {class:'gave'}, 'EVANILSON'));
+  left.appendChild(el('div', {class:'gave'}, 'ISAK'));
   left.appendChild(el('div', {class:'pts'}, '0', el('span', {class:'small'}, ' pts for Michael')));
   swap.appendChild(left);
   swap.appendChild(el('div', {class:'trade-arrow fade-up d-6'}, '⇄'));
   const right = el('div', {class:'trade-side right fade-up d-7'});
   right.appendChild(el('div', {class:'who'}, 'MARK GOT'));
-  right.appendChild(el('div', {class:'gave'}, 'ISAK'));
+  right.appendChild(el('div', {class:'gave'}, 'EVANILSON'));
   right.appendChild(el('div', {class:'pts'}, '59', el('span', {class:'small'}, ' pts for Mark')));
   swap.appendChild(right);
   c.appendChild(swap);
 
   const foot = el('div', {class:'trade-verdict'});
-  foot.appendChild(el('div', {class:'trade-line fade-up d-10'}, 'Mark kept Isak through to the final whistle. Evanilson was dropped within two weeks.'));
+  foot.appendChild(el('div', {class:'trade-line fade-up d-10'}, "Mark sent Isak away and got Evanilson back. Evanilson scored 59. Michael dropped Isak two weeks later for nothing."));
   foot.appendChild(el('div', {class:'verdict-stamp v-win stamp-in d-12'}, 'WIN'));
   c.appendChild(foot);
 }

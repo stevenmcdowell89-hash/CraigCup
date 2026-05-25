@@ -274,7 +274,11 @@ for trade in TRADES:
 for pid in OWNERSHIP_EVENTS:
     OWNERSHIP_EVENTS[pid].sort(key=lambda x: (x[0], 0 if x[2] == 'OUT' else 1))
 
-# Build per-player ownership intervals
+# Build per-player ownership intervals.
+# Convention: a trade/waiver/free-agent IN at GW ev means the NEW owner has
+# the player from GW ev onwards (the move took effect before GW ev started).
+# An OUT at GW ev means the previous owner held the player through GW ev-1.
+# Draft picks (ev=0) become the owner's player from GW 1.
 PLAYER_TENURE = defaultdict(list)  # pid -> list of (le, start_gw, end_gw_inclusive)
 for pid, events in OWNERSHIP_EVENTS.items():
     cur_owner = None
@@ -282,16 +286,18 @@ for pid, events in OWNERSHIP_EVENTS.items():
     for (ev, le, dir, kind) in events:
         if dir == 'IN':
             if cur_owner is not None and cur_owner != le:
-                # Should not happen normally; close it
-                PLAYER_TENURE[pid].append((cur_owner, cur_start, max(cur_start, ev - 1)))
+                # Close prior owner one GW before this IN
+                end_gw = max(cur_start, ev - 1)
+                PLAYER_TENURE[pid].append((cur_owner, cur_start, end_gw))
             cur_owner = le
-            cur_start = ev if ev > 0 else 1
+            cur_start = max(1, ev)  # draft (ev=0) starts at GW1
         elif dir == 'OUT':
             if cur_owner == le:
-                PLAYER_TENURE[pid].append((cur_owner, cur_start, ev))
+                # Previous owner held through ev-1 (the move was processed before GW ev).
+                end_gw = max(cur_start, ev - 1)
+                PLAYER_TENURE[pid].append((cur_owner, cur_start, end_gw))
                 cur_owner = None
                 cur_start = None
-            # if not the owner per our model, ignore
     if cur_owner is not None:
         PLAYER_TENURE[pid].append((cur_owner, cur_start, 38))
 
@@ -498,7 +504,7 @@ def best_worst_move(le):
     for pick in DC:
         if ID2LE.get(pick['entry']) != le or pick['element'] is None: continue
         pid = pick['element']
-        moves.append(('draft', pid, tenure_points(pid, le), f"pick #{pick['pick']}"))
+        moves.append(('draft', pid, tenure_points(pid, le), f"pick #{pick['index']}"))
     for t in ACCEPTED:
         if ID2LE.get(t.get('entry')) != le: continue
         pid = t.get('element_in')
@@ -1026,7 +1032,16 @@ data = {
     {'player': pname(pid), 'who': le_to_key(le), 'in_gw': in_gw, 'out_gw': out_gw}
     for pid, le, in_gw, out_gw in WELCOME_GOODBYE
   ],
+  # Best/worst acquisition per manager (tenure-adjusted, all sources)
+  'best_worst_per_mgr': {},
 }
+# Populate best_worst_per_mgr from the computed function
+for le in ALL_LE:
+    best, worst, _ = best_worst_move(le)
+    data['best_worst_per_mgr'][le_to_key(le)] = {
+        'best':  {'player': pname(best[1]),  'source': best[0],  'label': best[3],  'pts': best[2]}  if best  else None,
+        'worst': {'player': pname(worst[1]), 'source': worst[0], 'label': worst[3], 'pts': worst[2]} if worst else None,
+    }
 
 import json as _json
 with open('analysis_data.js', 'w') as f:

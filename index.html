@@ -125,18 +125,24 @@ body{font-family:'Inter',sans-serif}
 .verdict{display:inline-block;font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);padding:8px 18px;border:3px solid currentColor;letter-spacing:.04em;align-self:start;justify-self:start;text-transform:uppercase;line-height:1}
 
 /* Manager card */
-.mgr{position:relative;width:100%;height:100%;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start;align-content:start;padding-top:8px}
-@media (max-width:760px){.mgr{grid-template-columns:1fr;gap:18px}}
-.mgr-pos{position:absolute;right:-2vw;top:-3vh;font-family:'Anton',sans-serif;font-size:clamp(220px,42vw,580px);line-height:.8;opacity:.16;z-index:1;pointer-events:none}
-.mgr-content{position:relative;z-index:2}
-.mgr-name{font-family:'Anton',sans-serif;font-size:clamp(72px,12vw,180px);line-height:.9;text-transform:uppercase}
-.mgr-team{font-family:'Space Grotesk',sans-serif;font-size:clamp(18px,2.6vw,30px);font-weight:500;margin-top:4px;opacity:.92}
-.mgr-stats{display:flex;flex-direction:column;gap:clamp(6px,1.4vh,12px);margin-top:4px}
-.mgr-stat{display:grid;grid-template-columns:auto 1fr;gap:12px;border-top:1px solid currentColor;padding-top:6px;opacity:.95}
+/* Manager card layout — text on left, position number on right (no overlap) */
+.mgr-card .card-inner{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,0.8fr);gap:28px;align-items:start;align-content:start;padding-top:4px}
+@media (max-width:760px){
+  .mgr-card .card-inner{grid-template-columns:1fr;gap:14px}
+  .mgr-pos-cell{order:-1;text-align:left}
+}
+.mgr-pos-cell{display:flex;align-items:flex-start;justify-content:flex-end;overflow:hidden}
+.mgr-pos{font-family:'Anton',sans-serif;font-size:clamp(140px,28vw,360px);line-height:.8;opacity:.32;pointer-events:none;text-align:right}
+@media (max-width:760px){.mgr-pos{font-size:clamp(110px,30vw,180px);opacity:.4}}
+.mgr-left{display:flex;flex-direction:column;gap:8px;min-width:0}
+.mgr-name{font-family:'Anton',sans-serif;font-size:clamp(56px,9vw,128px);line-height:.92;text-transform:uppercase;overflow-wrap:anywhere}
+.mgr-team{font-family:'Space Grotesk',sans-serif;font-size:clamp(16px,2.3vw,26px);font-weight:500;opacity:.92}
+.mgr-stats{display:flex;flex-direction:column;gap:clamp(4px,1vh,8px);margin-top:8px}
+.mgr-stat{display:grid;grid-template-columns:auto 1fr;gap:10px;border-top:1px solid currentColor;padding-top:5px;opacity:.95;min-width:0}
 .mgr-stat:first-child{border-top:none;padding-top:0}
-.mgr-stat-label{font-family:'Space Grotesk',sans-serif;font-size:clamp(11px,1.3vw,14px);text-transform:uppercase;letter-spacing:.1em;opacity:.75;align-self:start}
-.mgr-stat-val{font-family:'Anton',sans-serif;font-size:clamp(16px,2.2vw,28px);line-height:1.1;text-transform:uppercase}
-.mgr-verdict{font-family:'Space Grotesk',sans-serif;font-style:italic;font-size:clamp(13px,1.6vw,20px);margin-top:12px;opacity:.95;line-height:1.35}
+.mgr-stat-label{font-family:'Space Grotesk',sans-serif;font-size:clamp(10px,1.2vw,13px);text-transform:uppercase;letter-spacing:.08em;opacity:.75;align-self:start;white-space:nowrap}
+.mgr-stat-val{font-family:'Anton',sans-serif;font-size:clamp(14px,1.9vw,24px);line-height:1.15;text-transform:uppercase;overflow-wrap:anywhere}
+.mgr-verdict{font-family:'Space Grotesk',sans-serif;font-style:italic;font-size:clamp(12px,1.5vw,18px);margin-top:10px;opacity:.92;line-height:1.35}
 
 /* Goalkeeping howler hero */
 .gk-row{display:flex;gap:30px;align-items:center;justify-content:center;margin:14px 0}
@@ -160,18 +166,18 @@ body{font-family:'Inter',sans-serif}
 /* Counter style */
 .counter{font-family:'Anton',sans-serif;font-variant-numeric:tabular-nums;line-height:.85}
 
-/* Counterfactual table */
-.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%}
-@media (max-width:700px){.cf-grid{grid-template-columns:1fr}}
+/* Counterfactual table — compact so card fits at 360x640 */
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+@media (max-width:700px){
+  .cf-grid{grid-template-columns:1fr;gap:10px}
+  /* On phone only the counterfactual table is shown; the actual table is on card 3 */
+  .cf-grid .cf-actual{display:none}
+}
 .cf-table{font-family:'Space Grotesk',sans-serif;width:100%;border-collapse:collapse}
-.cf-table th{font-family:'Anton',sans-serif;font-size:clamp(14px,1.6vw,18px);text-align:left;padding:6px 8px;border-bottom:1px solid currentColor;text-transform:uppercase;letter-spacing:.05em;opacity:.7}
-.cf-table td{font-size:clamp(13px,1.5vw,17px);padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.08);font-variant-numeric:tabular-nums}
-.cf-table .rank{font-family:'Anton',sans-serif;font-size:clamp(16px,2vw,22px);width:1em;color:currentColor;opacity:.8}
-.cf-table .delta{font-weight:700}
-.cf-table .delta-up{color:#00C853}
-.cf-table .delta-down{color:#FF1493}
-.cf-card .cf-title{font-family:'Anton',sans-serif;font-size:clamp(28px,4.2vw,48px);line-height:1;text-transform:uppercase;margin-bottom:6px}
-.cf-card .cf-sub{font-family:'Space Grotesk',sans-serif;font-size:clamp(13px,1.5vw,17px);margin-bottom:14px;line-height:1.4;opacity:.9}
+.cf-table th{font-family:'Anton',sans-serif;font-size:clamp(11px,1.3vw,15px);text-align:left;padding:3px 6px;border-bottom:1px solid currentColor;text-transform:uppercase;letter-spacing:.05em;opacity:.7}
+.cf-table td{font-size:clamp(11px,1.3vw,15px);padding:3px 6px;border-bottom:1px solid rgba(0,0,0,.08);font-variant-numeric:tabular-nums;line-height:1.2}
+.cf-table .rank{font-family:'Anton',sans-serif;font-size:clamp(13px,1.7vw,18px);width:1em;color:currentColor;opacity:.8}
+.cf-card .cf-title{font-family:'Anton',sans-serif;font-size:clamp(18px,2.5vw,28px);line-height:1;text-transform:uppercase;margin-bottom:6px}
 
 /* Stories */
 .story-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start;width:100%}
@@ -722,21 +728,23 @@ MGR_ORDER.forEach(le => {
     return card({
       cls: MGR_BG[le] + ' mgr-card',
       html: `
-        <div class="mgr-pos ani ani-pop d1">#${s.rank}</div>
-        <div class="mgr-content" style="grid-column:1/2">
+        <div class="mgr-left">
           <div class="mgr-name ani ani-left d2">${MGR[le].first}</div>
           <div class="mgr-team ani ani-fade d3">${MGR[le].team}</div>
+          <div class="mgr-stats">
+            <div class="mgr-stat ani ani-left d4"><div class="mgr-stat-label">W–D–L</div><div class="mgr-stat-val">${s.w}–${s.d}–${s.l}</div></div>
+            <div class="mgr-stat ani ani-left d5"><div class="mgr-stat-label">Points for</div><div class="mgr-stat-val">${s.pf}</div></div>
+            <div class="mgr-stat ani ani-left d5"><div class="mgr-stat-label">High score</div><div class="mgr-stat-val">${hl.high_pts} (GW${hl.high_gw})</div></div>
+            <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">Low score</div><div class="mgr-stat-val">${hl.low_pts} (GW${hl.low_gw})</div></div>
+            <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">Transactions</div><div class="mgr-stat-val">${txns}</div></div>
+            ${best ? `<div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Best move</div><div class="mgr-stat-val">${best.name} · ${best.pts} pts in ${best.held} wks</div></div>`:''}
+            ${worst ? `<div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Worst move</div><div class="mgr-stat-val">${worst.name} · ${worst.pts} pts in ${worst.held} wks</div></div>`:''}
+            ${nem ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Nemesis</div><div class="mgr-stat-val">${MGR[nem.opp].first} (${nem.count}× — GW${nem.gws.join(', GW')})</div></div>`:''}
+          </div>
           <div class="mgr-verdict ani ani-fade d9">${MGR_VERDICT[le]}</div>
         </div>
-        <div class="mgr-stats" style="grid-column:2/3">
-          <div class="mgr-stat ani ani-left d4"><div class="mgr-stat-label">W–D–L</div><div class="mgr-stat-val">${s.w}–${s.d}–${s.l}</div></div>
-          <div class="mgr-stat ani ani-left d5"><div class="mgr-stat-label">Points for</div><div class="mgr-stat-val">${s.pf}</div></div>
-          <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">High score</div><div class="mgr-stat-val">${hl.high_pts} (GW${hl.high_gw})</div></div>
-          <div class="mgr-stat ani ani-left d6"><div class="mgr-stat-label">Low score</div><div class="mgr-stat-val">${hl.low_pts} (GW${hl.low_gw})</div></div>
-          <div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Transactions</div><div class="mgr-stat-val">${txns}</div></div>
-          ${best ? `<div class="mgr-stat ani ani-left d7"><div class="mgr-stat-label">Best move</div><div class="mgr-stat-val">${best.name} · ${best.pts} pts in ${best.held} wks</div></div>`:''}
-          ${worst ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Worst move</div><div class="mgr-stat-val">${worst.name} · ${worst.pts} pts in ${worst.held} wks</div></div>`:''}
-          ${nem ? `<div class="mgr-stat ani ani-left d8"><div class="mgr-stat-label">Nemesis</div><div class="mgr-stat-val">${MGR[nem.opp].first} (${nem.count}× — GW${nem.gws.join(', GW')})</div></div>`:''}
+        <div class="mgr-pos-cell">
+          <div class="mgr-pos ani ani-pop d1">#${s.rank}</div>
         </div>`
     });
   });
@@ -1148,10 +1156,10 @@ CARDS.push(() => {
   return card({
     cls:'bg-off',
     html:`
-      <div class="award-name ani ani-up d1" style="font-size:clamp(32px,5vw,64px)">If everyone only played Peter…</div>
-      <div class="explainer ani ani-fade d2">Each manager's actual score every GW, vs Peter's actual score that GW. Peter plays the average of the other five.</div>
-      <div class="cf-grid mt-md">
-        <div class="cf-card ani ani-left d3">
+      <div class="award-name ani ani-up d1" style="font-size:clamp(26px,4vw,48px);line-height:1">If everyone only played Peter…</div>
+      <div class="explainer ani ani-fade d2" style="font-size:clamp(12px,1.6vw,16px);margin-top:2px">Each manager vs Peter's actual score every GW. Peter plays the average of the other five.</div>
+      <div class="cf-grid" style="margin-top:10px">
+        <div class="cf-card cf-actual ani ani-left d3">
           <div class="cf-title">Actual table</div>
           ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
         </div>
@@ -1160,7 +1168,7 @@ CARDS.push(() => {
           ${cfTable(cf, 73858)}
         </div>
       </div>
-      <div class="zinger ani ani-fade d7 mt-md">Christopher jumps to 2nd. Steven slips to 5th. The whole second-tier reshuffles. Geraint still wins.</div>`
+      <div class="zinger ani ani-fade d7" style="margin-top:10px;font-size:clamp(12px,1.5vw,17px)">Christopher jumps to 2nd. The whole second-tier reshuffles. Geraint still wins.</div>`
   });
 });
 
@@ -1170,10 +1178,10 @@ CARDS.push(() => {
   return card({
     cls:'bg-off',
     html:`
-      <div class="award-name ani ani-up d1" style="font-size:clamp(32px,5vw,64px)">If everyone picked their best XI…</div>
-      <div class="explainer ani ani-fade d2">For each manager each GW, the highest-scoring legal XI from their 15-man squad. Recompute the H2H matches.</div>
-      <div class="cf-grid mt-md">
-        <div class="cf-card ani ani-left d3">
+      <div class="award-name ani ani-up d1" style="font-size:clamp(26px,4vw,48px);line-height:1">If everyone picked their best XI…</div>
+      <div class="explainer ani ani-fade d2" style="font-size:clamp(12px,1.6vw,16px);margin-top:2px">Highest-scoring legal XI from each manager's 15-man squad every GW. H2H recomputed.</div>
+      <div class="cf-grid" style="margin-top:10px">
+        <div class="cf-card cf-actual ani ani-left d3">
           <div class="cf-title">Actual table</div>
           ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
         </div>
@@ -1182,7 +1190,7 @@ CARDS.push(() => {
           ${cfTable(cf, 73835)}
         </div>
       </div>
-      <div class="zinger ani ani-fade d7 mt-md">Geraint wins by less. Michael and Steven swap places. Peter still last.</div>`
+      <div class="zinger ani ani-fade d7" style="margin-top:10px;font-size:clamp(12px,1.5vw,17px)">Geraint wins by less. Michael and Steven swap. Peter still last.</div>`
   });
 });
 
@@ -1192,10 +1200,10 @@ CARDS.push(() => {
   return card({
     cls:'bg-off',
     html:`
-      <div class="award-name ani ani-up d1" style="font-size:clamp(32px,5vw,64px)">If nobody ever transferred…</div>
-      <div class="explainer ani ani-fade d2">Each manager's GW1 starting XI, scoring every week, every week, for 38 weeks. Recompute the table.</div>
-      <div class="cf-grid mt-md">
-        <div class="cf-card ani ani-left d3">
+      <div class="award-name ani ani-up d1" style="font-size:clamp(26px,4vw,48px);line-height:1">If nobody ever transferred…</div>
+      <div class="explainer ani ani-fade d2" style="font-size:clamp(12px,1.6vw,16px);margin-top:2px">Each manager's GW1 starting XI scoring every week. No waivers, no trades, no second guesses.</div>
+      <div class="cf-grid" style="margin-top:10px">
+        <div class="cf-card cf-actual ani ani-left d3">
           <div class="cf-title">Actual table</div>
           ${cfTable(A.standings.map(s=>({le:s.le,w:s.w,d:s.d,l:s.l,total:s.total})), 73835)}
         </div>
@@ -1204,7 +1212,7 @@ CARDS.push(() => {
           ${cfTable(cf, 73847)}
         </div>
       </div>
-      <div class="zinger ani ani-fade d7 mt-md">Michael, who ran 103 transactions in real life, would have finished first by leaving his GW1 team alone.</div>`
+      <div class="zinger ani ani-fade d7" style="margin-top:10px;font-size:clamp(12px,1.5vw,17px)">Michael, who ran 103 transactions in real life, would have finished first by leaving his GW1 team alone.</div>`
   });
 });
 
@@ -1630,7 +1638,7 @@ CARDS.push(() => {
 
 // 52. Closing card — fact assembled word-by-word per spec
 CARDS.push(() => {
-  const factText = "Christopher scored more points than every manager except Geraint, and finished fourth.";
+  const factText = "Mikkel Damsgaard scored 113 points this season. No manager in the Craig Cup ever owned him.";
   const words = factText.split(' ');
   const el = card({
     cls:'bg-black closing',
